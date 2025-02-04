@@ -1,0 +1,9 @@
+{
+    "[m68k]": {
+        "editor.rulers": []
+    },
+    "files.associations": {
+        "RASTER.C": "cpp",
+        "TST_RAST.C": "cpp"
+    }
+}
