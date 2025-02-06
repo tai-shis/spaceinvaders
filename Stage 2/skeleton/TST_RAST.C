@@ -1,12 +1,15 @@
 #include <osbind.h>
 #include "raster.h"
+#include "player.c"
 
 int main()
 {
 	void *base = Physbase();
 
-	plot_something_1(base, 100, 100);
-	plot_something_2(base, 200, 200);
+	plot_hline(base, 300, 400, 200);
+	plot_vline(bsae, 300, 150, 300);
+	
+	plot_bitmap32(base, 320, 200, player_bitmap, 32);
 
 	return 0;
 }
