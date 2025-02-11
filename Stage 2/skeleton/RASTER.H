@@ -15,4 +15,6 @@ void plot_vline(UINT8 *base, int x, int y1, int y2);
 
 void plot_hline(UINT8 *base, int x1, int x2, int y);
 
+void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
+
 #endif

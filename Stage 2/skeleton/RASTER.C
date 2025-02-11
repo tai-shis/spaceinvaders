@@ -115,3 +115,18 @@ void plot_hline(UINT8 *base, int x1, int x2, int y) {
 	}
 	return;
 }
+
+
+/* for 8 bit font sizes */
+void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
+	UINT8 *start = base;
+	int i;
+	start = (start + (y * 80) + (x >> 3)); /* get the start pos*/
+	ch = ch * 8; /* index in font map */
+
+	for (i = 0; i < 8; i++) {
+		*start |= font[ch];
+		start += 80;
+		ch++;
+	}
+}
