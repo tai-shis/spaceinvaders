@@ -3,7 +3,7 @@
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
-	start = (start + (x * 80) + (y >> 3));
+	start = (start + (y * 80) + (x >> 3));
 
 	for (i = 0; i < height; i += 1) {
 		*start |= bitmap[i];
@@ -14,7 +14,7 @@ void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int h
 void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height) {
 	int i;
 	UINT16 *start = base;
-	start = (start + (x * 40) + (y >> 4));
+	start = (start + (y * 40) + (x >> 4));
 
 	for (i = 0; i < height; i += 1) {
 		*start |= bitmap[i];
@@ -25,7 +25,7 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height) {
 	int i;
 	UINT32 *start = base;
-	start = (start + (x * 20) + (y >> 5));
+	start = (start + (y * 20) + (x >> 5));
 
 	for (i = 0; i < height; i += 1) {
 		*start |= bitmap[i];
@@ -61,7 +61,7 @@ void plot_vline (UINT8 *base, int x, int y1, int y2){
 
 		/* For loop taken from tutorial 4 */
 		for ( ; y1 <= y2; y1++) {
-			*screen_byte = pattern;
+			*screen_byte |= pattern;
 			screen_byte = screen_byte + 80;
 		}
 	}
@@ -95,19 +95,19 @@ void plot_hline(UINT8 *base, int x1, int x2, int y) {
 		}
 
 		/* THIS DOES NOT COVER THE CASE WHERE x2-x1 IS < 8 */
-		start = 0xFF >> (x1 & 7);
+		start = 0xFF >> ((x1 & 7));
 		end = 0xFF << (7 - (x2 & 7));
 		screen_byte = base + y * 80 + (x1 >> 3);
 		line_end = base + y * 80 + (x2 >> 3); /* End address (rounded down by 8) */
 
 		/* Plot start line */
 		*screen_byte = start;	
-		screen_byte += 8;
+		screen_byte += 1;
 
 		/* Plot 0xFFs */
 		while (screen_byte < line_end) {
-			*screen_byte = 0xFF;
-			screen_byte += 8;
+			*screen_byte |= 0xFF;
+			screen_byte += 1;
 		}
 		
 		/* Plot end line */
