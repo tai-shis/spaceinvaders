@@ -1,6 +1,6 @@
 #include <osbind.h>
 #include "raster.h"
-#include "player.c"
+#include "bitmaps.c"
 
 int main()
 {
