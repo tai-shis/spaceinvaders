@@ -5,6 +5,8 @@
     "files.associations": {
         "RASTER.C": "cpp",
         "TST_RAST.C": "cpp",
-        "PLOT_CH.C": "cpp"
+        "PLOT_CH.C": "cpp",
+        "render.h": "c",
+        "TST_REND.C": "cpp"
     }
 }
