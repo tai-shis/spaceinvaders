@@ -190,13 +190,13 @@ int main () {
         55,1,-1
     };
     
-    Model environment = {
+    Model enviro = {
         player, aliens, score, 0, 0, 608, 368, 32, 32, 10, 25
     };
 
     printf("%u", aliens.r1[0].x);
 
-    move_aliens(&environment, &aliens);
+    move_aliens(&enviro, &aliens);
 
     printf("%u", aliens.r1[0].x);
 
