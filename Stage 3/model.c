@@ -31,9 +31,9 @@ int move_aliens(Model *model, Aliens *aliens) {
 
     /* Uses return value of lower_aliens() to check if game ends */
     /* Also checks if next step will be out of bounds, and if so it lowers aliens instead */
-    if ((aliens->r1[0].x + aliens->delta_x) <= model->lowbound_x) {
+    if (((aliens->r1[0].x + aliens->delta_x) <= model->lowbound_x) && (aliens->delta_x == -1)) {
         return lower_aliens(model, aliens);
-    } else if ((aliens->r1[0].x + aliens->delta_x) >= model->highbound_x) {
+    } else if (((aliens->r1[0].x + aliens->delta_x) >= model->highbound_x) && (aliens->delta_x == 1)) {
         return lower_aliens(model, aliens);
     } else {
         int i;
