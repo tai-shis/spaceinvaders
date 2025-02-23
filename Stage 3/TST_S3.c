@@ -81,6 +81,11 @@ int main()
         1
     };
 
+    printf("%d\n", test.aliens.r1[0].x);
+
+    move_aliens(&test, &test.aliens);
+
+    printf("%d\n", test.aliens.r1[0].x);
 
     return 0;
 }
