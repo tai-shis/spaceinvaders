@@ -1,0 +1,9 @@
+tst_s3: tst_s3.o model.o
+	cc68x -g tst_s3.o model.o -o tst_s3
+
+tst_s3.o: tst_s3.c model.h
+	cc68x -g -c tst_s3.c
+
+model.o: model.c model.h
+	cc68x -g -c model.c
+	

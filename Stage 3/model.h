@@ -8,7 +8,7 @@ typedef struct Player {
     UINT8 l, w;             /* Size of hitbox for collsion detection  */
     UINT8 lives;            /* How many lives this player has */
     int delta_x;          /* Signed integer, -1, 0, or 1 depending on movement */
-    int b_type;  /* Will be 1 */
+    int bullet_type;  /* Will be 1 */
 } Player;
 
 typedef struct Alien {
@@ -27,7 +27,7 @@ typedef struct Aliens{
     Alien r5[11];
     UINT8 totalAliens;
     int delta_x;          /* -1(left) or 1(right) depending on direction of movement */
-    int b_type;  /* Will be -1 */
+    int bullet_type;  /* Will be -1 */
 } Aliens;
 
 typedef struct Bullet {
@@ -45,7 +45,7 @@ typedef struct Model {
     Player player;
     Aliens aliens;
     Score score;
-    UINT16 low_x, low_y, high_x, high_y; /* Bounds of play area. highbounds should be bound - alien_w */ 
+    UINT16 lowbound_x, lowbound_y, highbound_x, highbound_y; /* Bounds of play area. highbounds should be bound - alien_w */ 
     UINT8 alien_l, alien_w;    /* Used for movement and collision detection */      
     int alien_dx;
     int bullet_dy;

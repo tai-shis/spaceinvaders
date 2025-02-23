@@ -16,10 +16,10 @@ void move_player(Model *model, Player *player) {
 void alien_direc_change(Model *model, Aliens *alien_arr) {
     /* Changes direction of movement (left or right), called when aliens are lowered */
     if (alien_arr->delta_x > 0) {
-        alien_arr->delta_x = -model->alien_delta_x;
+        alien_arr->delta_x = -model->alien_dx;
     }
     else {
-        alien_arr->delta_x = model->alien_delta_x;
+        alien_arr->delta_x = model->alien_dx;
     }
     return;
 }
