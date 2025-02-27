@@ -7,8 +7,8 @@ typedef struct Player {
     UINT16 x, y;            /* Position Coordinates, y should be constant, set in the constructor */
     UINT8 l, w;             /* Size of hitbox for collsion detection  */
     UINT8 lives;            /* How many lives this player has */
-    int delta_x;          /* Signed integer, -1, 0, or 1 depending on movement */
-    int bullet_type;  /* Will be 1 */
+    int delta_x;            /* Signed integer, -1, 0, or 1 depending on movement */
+    int bullet_type;        /* Will be 1 */
 } Player;
 
 typedef struct Alien {
@@ -51,20 +51,67 @@ typedef struct Model {
     int bullet_dy;
 } Model;
 
+/** 
+ * @brief Moves the player based on the delta_x value
+ * 
+ * @param model Model struct
+ * @param player Player struct
+ */
 void move_player(Model *model, Player *player);
 
+/** 
+ * @brief Changes direction of movement (left or right), called when aliens are lowered
+ * 
+ * @param model Model struct
+ * @param player Player struct
+ */
 void alien_direc_change(Model *model, Aliens *alien_arr);
 
+/** 
+ * @brief Moves the aliens based on the delta_x value
+ * 
+ * @param model Model struct
+ * @param aliens Aliens struct
+ */
 int move_aliens(Model *model, Aliens *aliens);
 
+/** 
+ * @brief Called when aliens x position meets edge, edge detection happens in move_aliens
+ * 
+ * @param model Model struct
+ * @param alien_arr Aliens struct
+ */
 int lower_aliens(Model *model, Aliens *alien_arr);
 
+/** 
+ * @brief Called when bullet hitbox hits alien hitbox
+ * 
+ * @param alien Alien struct
+ * @param curr_score Score struct
+ */
 void destroy_alien(Alien alien, Score curr_score);
 
+/** 
+ * @brief Moves the bullet based on the y_direction value
+ * 
+ * @param model Model struct
+ * @param bullet Bullet struct
+ */
 int move_bullet(Model *model, Bullet *bullet);
 
+/** 
+ * @brief Adds alien score to the total score
+ * 
+ * @param score_to_add Score to add
+ * @param curr_score Score struct
+ */
 void add_score (int score_to_add, Score curr_score);
 
+/** 
+ * @brief Updates the score
+ * 
+ * @param score Score struct
+ */
 void update_score(Score *score);
 
 #endif
