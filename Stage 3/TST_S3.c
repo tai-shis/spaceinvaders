@@ -1,5 +1,8 @@
 #include "model.h"
+#include <osbind.h>
 #include <stdio.h>
+
+#define yield while(!Cconis()){} Cnecin();
 
 int main()
 {
@@ -7,7 +10,7 @@ int main()
         { 0, 0, 32, 32, 3, 0, 1 },
         {
             { /* r1 */
-                { 0, 0, 32, 32, 250, 0 },
+                { 0, 0, 32, 32, 250, 0},
                 {32, 0, 32, 32, 250, 0},
                 {64, 0, 32, 32, 250, 0},
                 {96, 0, 32, 32, 250, 0},
@@ -71,21 +74,29 @@ int main()
                 {320, 128, 32, 32, 50, 0}
             },
             55,
-            1,
+            8,
             -1
         },
         { 0, 0, 0 },
-        0, 0, 0, 0,
+        0, 0, 630, 400,
         32, 32,
-        32,
+        8,
         1
     };
 
-    printf("%d\n", test.aliens.r1[0].x);
-
+    printf("Alien Movement Testing: Press any key to begin\n");
+    yield;
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
     move_aliens(&test, &test.aliens);
-
-    printf("%d\n", test.aliens.r1[0].x);
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
+    move_aliens(&test, &test.aliens);
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
+    move_aliens(&test, &test.aliens);
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
+    move_aliens(&test, &test.aliens);
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
+    move_aliens(&test, &test.aliens);
+    printf("(x,y): %d,%d\n", test.aliens.r1[0].x, test.aliens.r1[0].y);
 
     return 0;
 }

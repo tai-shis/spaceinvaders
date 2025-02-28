@@ -26,8 +26,8 @@ typedef struct Aliens{
     Alien r4[11];
     Alien r5[11];
     UINT8 totalAliens;
-    int delta_x;          /* -1(left) or 1(right) depending on direction of movement */
-    int bullet_type;  /* Will be -1 */
+    int delta_x;           /* -8(left) or 8(right) depending on direction of movement */
+    int bullet_type;       /* Will be -1 */
 } Aliens;
 
 typedef struct Bullet {

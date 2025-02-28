@@ -31,21 +31,26 @@ int move_aliens(Model *model, Aliens *aliens) {
 
     /* Uses return value of lower_aliens() to check if game ends */
     /* Also checks if next step will be out of bounds, and if so it lowers aliens instead */
-    if (((aliens->r1[0].x + aliens->delta_x) <= model->lowbound_x) && (aliens->delta_x == -1)) {
-        return lower_aliens(model, aliens);
-    } else if (((aliens->r1[0].x + aliens->delta_x) >= model->highbound_x) && (aliens->delta_x == 1)) {
-        return lower_aliens(model, aliens);
-    } else {
-        int i;
-        for (i = 0; i < 11; i++) {
-            aliens->r1[i].x += aliens->delta_x;
-            aliens->r2[i].x += aliens->delta_x;
-            aliens->r3[i].x += aliens->delta_x;
-            aliens->r4[i].x += aliens->delta_x;
-            aliens->r5[i].x += aliens->delta_x;
+    int i;
+    
+    if (aliens->delta_x == -1) {
+        if ((aliens->r1[0].x + aliens->delta_x) <= model->lowbound_x) {
+            return lower_aliens(model, aliens);
         }
-        return 0;
+    } else if (aliens->delta_x == 1) {
+        if ((aliens->r1[0].x + aliens->delta_x) >= model->highbound_x) {
+            return lower_aliens(model, aliens);
+        }
     }
+
+    for (i = 0; i < 11; i++) {
+        aliens->r1[i].x += aliens->delta_x;
+        aliens->r2[i].x += aliens->delta_x;
+        aliens->r3[i].x += aliens->delta_x;
+        aliens->r4[i].x += aliens->delta_x;
+        aliens->r5[i].x += aliens->delta_x;
+    }
+    return 0;
 }
 
 int lower_aliens(Model *model, Aliens *alien_arr) {
