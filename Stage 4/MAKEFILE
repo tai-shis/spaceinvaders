@@ -1,0 +1,11 @@
+tst_s4: tst_s4.o render.o raster.o
+	cc68x -g tst_s4.o render.o raster.o -o tst_s4
+
+tst_s4.o: tst_s4.c model.h render.h
+	cc68x -g -c tst_s4.c
+
+raster.o: raster.c raster.h
+	cc68x -g -c raster.c
+
+render.o: render.c render.h
+	cc68x -g -c render.c

@@ -7,6 +7,8 @@
         "TST_RAST.C": "cpp",
         "PLOT_CH.C": "cpp",
         "render.h": "c",
-        "TST_REND.C": "cpp"
+        "TST_REND.C": "cpp",
+        "events.h": "c",
+        "model.h": "c"
     }
 }

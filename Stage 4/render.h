@@ -1,11 +1,9 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "../Stage 2/types.h"
-#include "../Stage 3/model.h"
+#include "model.h"
 
-
-void render(const Model *model, UINT32 *base, UINT32 f);
+void render(const Model *model, UINT32 *base, int f);
 
 void render_player(const Player *player, UINT32 *base);
 

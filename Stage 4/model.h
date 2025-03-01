@@ -57,6 +57,7 @@ typedef struct Model {
 /** 
  * @brief Moves the player based on the delta_x value
  * 
+ * @param model Model struct
  * @param player Player struct
  */
 void move_player(Player *player);
@@ -64,14 +65,15 @@ void move_player(Player *player);
 /** 
  * @brief Changes direction of movement (left or right), called when aliens are lowered
  * 
- * @param alien_arr All aliens
- * @param alien_dx Horizontal velocity of the alien
+ * @param model Model struct
+ * @param player Player struct
  */
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
 
 /** 
  * @brief Moves the aliens based on the delta_x value
  * 
+ * @param model Model struct
  * @param aliens Aliens struct
  */
 int move_aliens(Aliens *aliens);
@@ -79,9 +81,8 @@ int move_aliens(Aliens *aliens);
 /** 
  * @brief Called when aliens x position meets edge, edge detection happens in move_aliens
  * 
+ * @param model Model struct
  * @param alien_arr Aliens struct
- * @param highbout Upper screen boundary
- * @param alien_dx Horizontal velocity of the alien
  */
 int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx);
 
@@ -115,36 +116,5 @@ void add_score (int score_to_add, Score curr_score);
  * @param score Score struct
  */
 void update_score(Score *score);
-
-/** 
- * @brief Checks if the bullet given collides with any Aliens
- * 
- * @param aliens All Aliens struct
- * @param bullet Bullet instance
- */
-int check_aliens_hit(Aliens *aliens, Bullet *bullet);
-
-/** 
- * @brief Checks if the bullet given collides the given row of Aliens
- * 
- * @param row Row to check for collision
- * @param bullet Bullet instance
- */
-int check_row_hit(Alien *row[], Bullet *bullet);
-
-/** 
- * @brief Checks if the bullet given collides the player
- * 
- * @param player Player struct
- * @param bullet Bullet instance
- */
-int check_player_hit(Player *player, Bullet *bullet);
-
-/** 
- * @brief Checks if the game should end
- * 
- * @param model Gamestate
- */
-int check_endgame(Model *model)
 
 #endif

@@ -1,5 +1,3 @@
-#include "TYPES.H"
-
 UINT32 alien1_bitmap[2][32] = {
     {
         0x00000000,
