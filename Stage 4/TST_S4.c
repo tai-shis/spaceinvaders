@@ -117,7 +117,7 @@ int main() {
         2
     };
 
-    UINT32 *base = Physbase();
+    void *base = Physbase();
 
     render(&test, base, 1);
 }
