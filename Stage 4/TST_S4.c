@@ -2,8 +2,6 @@
 #include "render.h"
 #include <osbind.h>
 
-#define yield while(!Cconis()){} Cnecin();
-
 int main() {
     Model test = {
         { 288, 368, 32, 32, 3, 0, 1 },
