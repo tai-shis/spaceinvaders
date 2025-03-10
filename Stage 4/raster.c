@@ -3,10 +3,10 @@
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
-	start = (start + (y * 80) + (x >> 3));
+	start = (start + (y * 80) + (x >> 3)); /* Get to relative byte */
 
 	for (i = 0; i < height; i += 1) {
-		*start |= bitmap[i];
+		*start |= (bitmap[i] >> (x & 7)); /* Shift the bitmap to correct bit */
 		start += 80;
 	}
 }
@@ -17,7 +17,7 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 	start = (start + (y * 40) + (x >> 4));
 
 	for (i = 0; i < height; i += 1) {
-		*start |= bitmap[i];
+		*start |= (bitmap[i] >> (x & 7));
 		start += 40;
 	}
 }
@@ -28,7 +28,7 @@ void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned in
 	start = (start + (y * 20) + (x >> 5));
 
 	for (i = 0; i < height; i += 1) {
-		*start |= bitmap[i];
+		*start |= (bitmap[i] >> (x & 7));
 		start += 20;
 	}
 }
