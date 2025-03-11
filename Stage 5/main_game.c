@@ -137,9 +137,11 @@ void asyncHandle(Model *model) {
             model->quit = 1;
             break;
         case 'a':
+            /* Not sure if this is the right change to be made */
             model->player.x -= model->player.speed;
             break;
         case 'd':
+            /* Not sure if this is the right change to be made */
             model->player.x += model->player.speed;
             break;
         case ' ':
