@@ -118,13 +118,13 @@ void spaceInvader() {
     render(&model, base, 1);
 
     while (!model.quit) {
-        /* Get input */
-        /* Update model */
-        /* Render */
+        /* asycnHandle does user input */
+        /* syncHandle updates synchronous aspects of model */
+        /* Render updated model */
 
         asyncHandle(&model);
         syncHandle(&model);
-        
+
         render(&model, base, 1);
     }
 }
