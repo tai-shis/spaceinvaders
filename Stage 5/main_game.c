@@ -112,21 +112,52 @@ void spaceInvader() {
             {0,0,0,0,0},
             {0,0,0,0,0}
         },
-        2
+        2,0
     };
+
     render(&model, base, 1);
 
-    int quit = 0;
-    while (!quit) {
+    while (!model.quit) {
         /* Get input */
         /* Update model */
         /* Render */
 
-        char ch = keystroke();
-        if (ch == 'q') {
-            quit = 1;
-        }
+        asyncHandle(&model);
+        syncHandle(&model);
+        
+        render(&model, base, 1);
+    }
+}
 
+void asyncHandle(Model *model) {
+    char ch = keystroke();
+
+    switch (ch) {
+        case 'q':
+            model->quit = 1;
+            break;
+        case 'a':
+            model->player.x -= model->player.speed;
+            break;
+        case 'd':
+            model->player.x += model->player.speed;
+            break;
+        case ' ':
+            model->player.shoot = 1;
+            break;
+    }
+}
+
+void syncHandle(Model *model) {
+    /* Update aliens */
+    update_aliens(model);
+
+    /* Update bullets */
+    update_bullets(model);
+
+    /* Check for endgame */
+    if (check_endgame(model)) {
+        model->quit = 1;
     }
 }
 

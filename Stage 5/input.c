@@ -6,4 +6,6 @@ char keystroke(){
     if (Cconis()) {
         return (char)Cnecin();
     }
+    
+    return "\0";
 }

@@ -52,6 +52,7 @@ typedef struct Model {
     int bullet_dy;
     Bullet active[30];  /* max active bullet entities */
     int active_count; 
+    int quit;
 } Model;
 
 /** 
