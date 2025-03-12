@@ -121,11 +121,21 @@ void spaceInvader() {
         /* asycnHandle does user input */
         /* syncHandle updates synchronous aspects of model */
         /* Render updated model */
+        UINT32 currTime, prevTime, diffTime;
 
         asyncHandle(&model);
-        syncHandle(&model);
 
-        render(&model, base, 1);
+        /* Not sure if the below works */
+        currTime = getTime();
+        diffTime = currTime - prevTime;
+
+        if (diffTime > 0) {
+            prevTime = currTime;
+            syncHandle(&model);
+
+            render(&model, base, 1);
+            prevTime = currTime;
+        }
     }
 }
 
