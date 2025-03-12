@@ -1,4 +1,4 @@
-#include "main_game.h"
+#include "game.h"
 #include <osbind.h>
 
 void spaceInvader() {
@@ -137,15 +137,15 @@ void asyncHandle(Model *model) {
             model->quit = 1;
             break;
         case 'a':
-            /* Not sure if this is the right change to be made */
-            model->player.x -= model->player.speed;
+            async_move_player(model, ch);
             break;
         case 'd':
-            /* Not sure if this is the right change to be made */
-            model->player.x += model->player.speed;
+            async_move_player(model, ch);
             break;
         case ' ':
-            model->player.shoot = 1;
+            /* Not sure 100% on how this function works */
+            /* Documentation says -1 for bullet movemen up? */
+            async_shoot(model, -1);
             break;
     }
 }

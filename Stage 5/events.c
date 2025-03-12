@@ -1,9 +1,9 @@
 #include "events.h"
 
 void async_move_player(Model *model, char key) {
-    if(key == 'l') {
+    if(key == 'a') {
         model->player.delta_x = -8; /* How many px to move */
-    } else if(key == 'r') {
+    } else if(key == 'd') {
         model->player.delta_x = 8;
     } else {
         model->player.delta_x = 0;
