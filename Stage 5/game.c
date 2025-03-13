@@ -73,7 +73,8 @@ void spaceInvader() {
             },
             55,
             8,
-            -1
+            -1,
+            0
         },
         { 0, 544, 8},
         0, 0, 630, 400,
@@ -115,27 +116,27 @@ void spaceInvader() {
         2,0
     };
 
+    UINT32 timeThen, timeNow, timeElapsed;
+    timeThen = 0;
+
     render(&model, base, 1);
 
     while (!model.quit) {
-        /* asycnHandle does user input */
-        /* syncHandle updates synchronous aspects of model */
-        /* Render updated model */
-        UINT32 currTime, prevTime, diffTime;
+        /* Get input */
+        /* Update model */
+        /* Render */
+        timeNow = getTime();
+        timeElapsed = timeNow - timeThen
 
         asyncHandle(&model);
 
-        /* Not sure if the below works */
-        currTime = getTime();
-        diffTime = currTime - prevTime;
-
-        if (diffTime > 0) {
-            prevTime = currTime;
-            syncHandle(&model);
-
-            render(&model, base, 1);
-            prevTime = currTime;
+        if(timeElapsed > 0 ){
+            /* Uses time elapsed, time now, and time then probably to handle updates*/
+            syncHandle(&model, timeElapsed);
+            timeThen = timeNow;
         }
+        
+        render(&model, base, 1);
     }
 }
 
@@ -153,17 +154,19 @@ void asyncHandle(Model *model) {
             async_move_player(model, ch);
             break;
         case ' ':
-            /* Not sure 100% on how this function works */
-            /* Documentation says -1 for bullet movemen up? */
             async_shoot(model, -1);
             break;
     }
 }
 
-void syncHandle(Model *model) {
-    /* Update aliens */
-    update_aliens(model);
-
+void syncHandle(Model *model, UINT32 timeElapsed) {
+    /* Update aliens based on clock cycle, perhaps double buffer can be done every 1/2th cycle */
+    /* Essentially check if elapsed time % 128 == 0 */
+    /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
+    if((timeElapsed & 0x7F) == 0) { 
+        update_aliens(model); 
+        model->aliens.render = 1;
+    }
     /* Update bullets */
     update_bullets(model);
 

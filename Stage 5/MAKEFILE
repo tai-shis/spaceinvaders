@@ -1,0 +1,14 @@
+game: game.o 
+	cc68x -g game.o  -o game
+
+game.o: game.c events.o raster.o render.o
+	cc68x -g game.c
+
+events.o: events.c
+	cc68x -g events.c
+
+raster.o: raster.c	
+	cc68x -g raster.c
+
+render.o: render.c
+	cc68x -g render.c
