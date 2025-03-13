@@ -11,4 +11,6 @@ int update_aliens(Model *model);
 
 void update_bullets(Model *model);
 
+int check_endgame(Model *model);
+
 #endif

@@ -2,7 +2,7 @@
 #include <osbind.h>
 
 void spaceInvader() {
-    void base = Physbase();
+    void *base = Physbase();
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
         {
@@ -126,7 +126,7 @@ void spaceInvader() {
         /* Update model */
         /* Render */
         timeNow = getTime();
-        timeElapsed = timeNow - timeThen
+        timeElapsed = timeNow - timeThen;
 
         asyncHandle(&model);
 
@@ -168,7 +168,9 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
         model->aliens.render = 1;
     }
     /* Update bullets */
-    update_bullets(model);
+    if (model->active_count > 0) {
+        update_bullets(model);
+    }
 
     /* Check for endgame */
     if (check_endgame(model)) {
@@ -177,10 +179,11 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
 }
 
 UINT32 getTime() {
-    long timer = (long *) 0x462;
+    long *timer = (long *)0x462;
     long currTime;
+    long oldSsp;
 
-    long oldSsp = Super(0);
+    oldSsp = Super(0);
     currTime = *timer;
     Super(oldSsp);
 

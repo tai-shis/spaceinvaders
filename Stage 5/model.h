@@ -119,4 +119,10 @@ void add_score (int score_to_add, Score curr_score);
  */
 void update_score(Score *score);
 
+int check_aliens_hit(Aliens *aliens, Bullet *bullet);
+
+int check_row_hit(Alien *row[], Bullet *bullet);
+
+int check_player_hit(Player *player, Bullet *bullet);
+
 #endif

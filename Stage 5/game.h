@@ -1,12 +1,19 @@
-#include "model.h"
+#ifndef GAME_H
+#define GAME_H
+
 #include "render.h"
 #include "types.h"
 #include "events.h"
+#include "model.h"
+#include "raster.h"
+#include "input.h"
 
 void spaceInvader(const Model *model, void *base);
 
 void asyncHandle(Model *model);
 
-void syncHandle(Model *model);
+void syncHandle(Model *model, UINT32 timeElapsed);
 
 UINT32 getTime();
+
+#endif

@@ -62,14 +62,13 @@ int update_aliens(Model *model) {
 }
 
 void update_bullets(Model *model) {
-    /* TODO: add collision detection with aliens array */
     /* For now, will detect if bullet goes out of bounds */
     int i, deactivate, hit;
     for(i = 0; i < 30; i += 1) {
         /* Find only active bullets */
         if(model->active[i].is_active == 1) {
             /* Update position, use return to deactivate or not */
-            deactivate = move_bullet(&model, &model->active[i]);
+            deactivate = move_bullet(model, &model->active[i]);
             
             if(model->active[i].delta_y == 1) { 
                 /* Check for alien collision */
@@ -80,7 +79,7 @@ void update_bullets(Model *model) {
                 }
             } else {
                 /* Otherwise check for player collision */
-                hit = check_player_hit(&model->player, model->active[i]);
+                hit = check_player_hit(&model->player, &model->active[i]);
             }
 
             if((deactivate == -1) || hit) {
