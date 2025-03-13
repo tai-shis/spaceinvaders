@@ -28,6 +28,7 @@ typedef struct Aliens{
     UINT8 totalAliens;
     int delta_x;           /* -8(left) or 8(right) depending on direction of movement */
     int bullet_type;       /* Will be -1 */
+    char render;             /* For deciding if the whole aliens should be rendered */
 } Aliens;
 
 typedef struct Bullet {

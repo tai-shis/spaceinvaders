@@ -74,9 +74,13 @@ void update_bullets(Model *model) {
             if(model->active[i].delta_y == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);
+                if(hit == 1) {
+                    /* Done specifically this way so we dont override if render is already on */
+                    model->aliens.render = 1; /* If collision is detected, make sure to render next render cycle */
+                }
             } else {
                 /* Otherwise check for player collision */
-                hit = check_player_hit(&model->player, model->active[i])
+                hit = check_player_hit(&model->player, model->active[i]);
             }
 
             if((deactivate == -1) || hit) {

@@ -3,11 +3,24 @@
 #include "bitmaps.c"
 
 void render(const Model *model, void *base, int f) {
+    /* Always render player for simplicity */
     render_player(&model->player, base);
-    render_aliens(&model->aliens, base, f);
-    /* Not used for now */
-    render_bullet(&model->active[0], base);
-    render_score(&model->score, base);
+
+    /* Check if there are any bullets that need to be rendered */
+    if (model->active_count > 0) {
+        int i;
+        for (i = 0; i < 30; i += 1) {
+            if (model->active[i].is_active == 1) {
+                render_bullet(&model->active[i], base);
+            }
+        }
+    }
+
+    /* If aliens need to be rendereed, also render score probably */
+    if (model->aliens.render == 1) {
+        render_aliens(&model->aliens, base, f);
+        render_score(&model->score, base);
+    }
 }
 
 void render_player(const Player *player, UINT32 *base) {
