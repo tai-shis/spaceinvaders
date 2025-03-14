@@ -5,9 +5,6 @@ tst_rast: tst_rast.o raster.o rast_asm.o bitmaps.o
 tst_rast.o: tst_rast.c raster.h
 	cc68x -g -c tst_rast.c
 
-raster.o: raster.c raster.h
-	cc68x -g -c raster.c
-
 rast_asm.o: rast_asm.s
 	gen -D -L2 rast_asm.s
 
@@ -24,21 +21,12 @@ tst_s3.o: tst_s3.c model.h events.h
 model.o: model.c model.h
 	cc68x -g -c model.c
 
-events.o: events.c events.h
-	cc68x -g -c events.c
-
 # Make for stage 4 of the project
 tst_s4: tst_s4.o render.o raster.o
 	cc68x -g tst_s4.o render.o raster.o -o tst_s4.prg
 
 tst_s4.o: tst_s4.c model.h render.h
 	cc68x -g -c tst_s4.c
-
-raster.o: raster.c raster.h
-	cc68x -g -c raster.c
-
-render.o: render.c render.h
-	cc68x -g -c render.c
 
 # Make for stage 5 of the project
 game: game.o events.o raster.o render.o
@@ -47,14 +35,17 @@ game: game.o events.o raster.o render.o
 game.o: game.c game.h model.h render.h raster.h input.h events.h types.h
 	cc68x -g game.c
 
-events.o: events.c events.h
-	cc68x -g events.c
-
-raster.o: raster.c raster.h
-	cc68x -g raster.c
-
-render.o: render.c render.h
+# render.o for all stages
+render.o: render.c render.h raster.h
 	cc68x -g render.c
+
+# raster.o for all stages
+raster.o: raster.c raster.h
+	cc68x -g -c raster.c
+
+# events.o for all stages
+events.o: events.c events.h
+	cc68x -g -c events.c
 
 # Make clean
 clean:

@@ -1,5 +1,4 @@
 #include "render.h"
-#include "raster.h"
 #include "bitmaps.c"
 
 void render(const Model *model, void *base, int f) {

@@ -2,6 +2,7 @@
 #define RENDER_H
 
 #include "model.h"
+#include "raster.h"
 
 void render(const Model *model, void *base, int f);
 
