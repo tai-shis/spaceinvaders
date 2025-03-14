@@ -1,7 +1,9 @@
 #include "game.h"
 #include <osbind.h>
 
-void spaceInvader() {
+extern void clear_screen(UINT32 base);
+
+int main() {
     void *base = Physbase();
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
@@ -119,7 +121,9 @@ void spaceInvader() {
     UINT32 timeThen, timeNow, timeElapsed;
     timeThen = 0;
 
-    render(&model, base, 1);
+    clear_screen((UINT32)base);
+
+    render(&model, base, 0);
 
     while (!model.quit) {
         /* Get input */
@@ -136,8 +140,12 @@ void spaceInvader() {
             timeThen = timeNow;
         }
         
-        render(&model, base, 1);
+        render(&model, base, timeElapsed);
+        Vsync();
+        /* clear_screen((UINT32)base); */
     }
+
+    return 0;
 }
 
 void asyncHandle(Model *model) {
@@ -156,6 +164,8 @@ void asyncHandle(Model *model) {
         case ' ':
             async_shoot(model, -1);
             break;
+        case 27:
+            model->quit = 1;    
     }
 }
 

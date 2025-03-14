@@ -7,5 +7,5 @@ char keystroke(){
         return (char)Cnecin();
     }
     
-    return "\0";
+    return '\0';
 }

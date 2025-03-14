@@ -8,8 +8,6 @@
 #include "raster.h"
 #include "input.h"
 
-void spaceInvader(const Model *model, void *base);
-
 void asyncHandle(Model *model);
 
 void syncHandle(Model *model, UINT32 timeElapsed);

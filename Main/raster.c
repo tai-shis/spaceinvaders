@@ -17,7 +17,7 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 	start = (start + (y * 40) + (x >> 4));
 
 	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7));
+		*start |= (bitmap[i] >> (x & 15));
 		start += 40;
 	}
 }
@@ -28,7 +28,7 @@ void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned in
 	start = (start + (y * 20) + (x >> 5));
 
 	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7));
+		*start |= (bitmap[i]);
 		start += 20;
 	}
 }
