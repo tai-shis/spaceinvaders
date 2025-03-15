@@ -6,7 +6,10 @@ void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int h
 	start = (start + (y * 80) + (x >> 3)); /* Get to relative byte */
 
 	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7)); /* Shift the bitmap to correct bit */
+		*start |= (bitmap[i] >> (x & 7));
+		if ((x & 7) > 0) {
+			*(start + 1) |= (bitmap[i] << (8 - (x & 7)));
+		}
 		start += 80;
 	}
 }
@@ -18,6 +21,9 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 
 	for (i = 0; i < height; i += 1) {
 		*start |= (bitmap[i] >> (x & 15));
+		if ((x & 15) > 0) {
+			*(start + 1) |= (bitmap[i] << (16 - (x & 15)));
+		}
 		start += 40;
 	}
 }
@@ -28,7 +34,10 @@ void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned in
 	start = (start + (y * 20) + (x >> 5));
 
 	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i]);
+		*start |= (bitmap[i] >> (x & 31));
+		if ((x & 31) > 0) {
+			*(start + 1) |= (bitmap[i] << (32 - (x & 31)));
+		}
 		start += 20;
 	}
 }

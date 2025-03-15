@@ -22,8 +22,7 @@
 #tst_s4.o: tst_s4.c model.h render.h
 #	cc68x -g -c tst_s4.c
 
-# Make for stage 5 of the project
-
+# Make for game
 game: game.o events.o render.o raster.o model.o input.o clear_qk.o
 	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o  -o game.prg
 

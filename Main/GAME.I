@@ -496,7 +496,7 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
 
 
     int game_state;
-    if((timeElapsed & 0x7F) == 0 ) {
+    if((timeElapsed & 0x7F) == 0) {
         game_state = update_aliens(model);
         if (game_state == -1) {
             model->quit = 1;
