@@ -12,6 +12,8 @@ void asyncHandle(Model *model);
 
 void syncHandle(Model *model, UINT32 timeElapsed);
 
+void swapBuffers (void **active, void **inactive);
+
 UINT32 getTime();
 
 #endif

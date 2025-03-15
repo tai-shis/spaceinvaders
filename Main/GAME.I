@@ -313,16 +313,118 @@ void asyncHandle(Model *model);
 
 void syncHandle(Model *model, UINT32 timeElapsed);
 
+void swapBuffers (void **active, void **inactive);
+
 UINT32 getTime();
 # 1 "game.c" 2
-# 1 "C:/c68/include/osbind.h" 1
+# 1 "C:/c68/include/stdio.h" 1
+# 20 "C:/c68/include/stdio.h"
+typedef unsigned long  size_t;
+# 69 "C:/c68/include/stdio.h"
+typedef	struct
+	{
+	long		_cnt;
+	unsigned char	*_ptr;
+	unsigned char	*_base;
+	unsigned int	_flag;
+	int		_file;
+	long		_bsiz;
+	unsigned char	_ch;
+	}
+	FILE;
+
+
+typedef unsigned long fpos_t;
+# 92 "C:/c68/include/stdio.h"
+extern	FILE	_iob[];
+# 108 "C:/c68/include/stdio.h"
+ char *	ctermid	(char *) ;
+
+
+
+
+ int	remove	(const char *) ;
+ int	rename	(const char *, const char *) ;
+ char *	tmpnam	(char *) ;
+ FILE *	tmpfile	(void) ;
+
+ int	fclose	(FILE *) ;
+ int	fflush	(FILE *) ;
+
+ FILE *	fopen	(const char *, const char *) ;
+ FILE *	freopen	(const char *, const char *, FILE *) ;
+
+ void	setbuf	(FILE *, char *) ;
+ int	setvbuf	(FILE *, char *, int, size_t) ;
+# 132 "C:/c68/include/stdio.h"
+ int  fscanf  (FILE *, const char *, ...) ;
+ int  scanf   (const char *, ...) ;
+ int  sscanf  (const char *, const char *, ...) ;
+
+
+ int	fprintf	(FILE *, const char *, ...) ;
+ int	printf	(const char *, ...) ;
+ int	sprintf	(char *, const char *, ...) ;
+
+ int 	vfprintf (FILE *, const char *, char * ) ;
+ int 	vprintf	 (const char *, char * ) ;
+ int 	vsprintf (char *, const char *, char * ) ;
+
+ int	vscanf  (const char *, char * ) ;
+ int	vfscanf (FILE *, const char *, char * ) ;
+ int	vsscanf	(const char *, const char *, char * ) ;
+
+
+ int	fgetc	(FILE *) ;
+ char	*fgets	(char *, int, FILE *) ;
+ char	*gets	(char *) ;
+ int	fputc	(int c, FILE *) ;
+ int	fputs	(const char *, FILE *) ;
+ int	puts	(const char *) ;
+
+ size_t	fread	(void *, size_t, size_t, FILE *) ;
+ size_t	fwrite	(const void *, size_t, size_t, FILE *) ;
+
+ int	fgetpos	(FILE *, fpos_t *) ;
+ int	fsetpos	(FILE *, fpos_t *) ;
+
+ int	fseek	(FILE *, long, int) ;
+ long	ftell	(FILE *) ;
+ void	rewind	(FILE *) ;
+
+ void	perror	(const char *) ;
+
+
+ FILE	*fdopen	(int, const char *) ;
+
+
+ FILE *	fopenp	(const char *, const char *) ;
+ int 	fungetc	(int, FILE *) ;
+ int	pclose	(FILE *) ;
+ FILE *	popen	(const char *, const char *) ;
+ void	setlinebuf	(FILE *) ;
+
+ void	_binmode	(int) ;
+ long 	getl	(FILE *) ;
+ long 	putl	(long, FILE *) ;
+ short 	getw	(FILE *) ;
+ short 	putw	(short, FILE *) ;
+ void	_getbuf	(FILE *fp) ;
+# 192 "C:/c68/include/stdio.h"
+ int	_filbuf	(FILE *) ;
 # 2 "game.c" 2
+# 1 "C:/c68/include/osbind.h" 1
+# 3 "game.c" 2
 
 
 extern void clear_screen(UINT32 base);
 
+UINT8 preBuffer[32255];
+
 int main() {
     void *base = (void*)_trap_14_w((short)0x2) ;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
+    void *active = base;
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
         {
@@ -437,11 +539,16 @@ int main() {
     };
     int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
+
+
+    printf("\033E\033f\n");
+
     timeThen = getTime();
 
-    clear_screen((UINT32)base);
+    clear_screen((UINT32)active);
 
-    render(&model, base, f);
+    render(&model, active, f);
+    render(&model, inactive, f);
 
     while (!model.quit) {
 
@@ -452,21 +559,22 @@ int main() {
 
         asyncHandle(&model);
 
-        if(timeElapsed > 0 ){
+        if(timeElapsed > 10){
 
             syncHandle(&model, timeElapsed);
             timeThen = timeNow;
             f++;
         }
 
-        clear_screen((UINT32)base);
-        render(&model, base, f);
-        (void)_trap_14_w((short)0x25) ;
-
+        clear_screen((UINT32)inactive);
+        render(&model, inactive, f);
+        swapBuffers(&active, &inactive);
     }
 
 
-    clear_screen((UINT32)base);
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
+    (void)_trap_14_wllw((short)0x5,(long)(-1),(long)base,(short)(-1)) ;
     return 0;
 }
 
@@ -514,14 +622,22 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     }
 }
 
+void swapBuffers (void **active, void **inactive) {
+    void *temp = *active;
+    *active = *inactive;
+    *inactive = temp;
+    (void)_trap_14_wllw((short)0x5,(long)(-1),(long)*active,(short)(-1)) ;
+    (void)_trap_14_w((short)0x25) ;
+}
+
 UINT32 getTime() {
-    long *timer = (long *)0x462;
-    long currTime;
-    long oldSsp;
+    UINT32 *timer = (UINT32 *)0x462;
+    UINT32 currTime;
+    UINT32 oldSsp;
 
     oldSsp = _trap_1_wl((short)0x20,(long)(0)) ;
     currTime = *timer;
     _trap_1_wl((short)0x20,(long)(oldSsp)) ;
 
-    return (UINT32)currTime;
+    return currTime;
 }

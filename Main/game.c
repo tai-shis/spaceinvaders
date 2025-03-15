@@ -1,10 +1,15 @@
 #include "game.h"
+#include <stdio.h>
 #include <osbind.h>
 
 extern void clear_screen(UINT32 base);
 
+UINT8 preBuffer[32255];
+
 int main() {
     void *base = Physbase();
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
+    void *active = base;
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
         {
@@ -119,11 +124,16 @@ int main() {
     };
     int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
+
+    /* Below clears screen from cursor and mouse */
+    printf("\033E\033f\n");
+
     timeThen = getTime();
 
-    clear_screen((UINT32)base);
+    clear_screen((UINT32)active);
 
-    render(&model, base, f);
+    render(&model, active, f);
+    render(&model, inactive, f);
 
     while (!model.quit) {
         /* Get input */
@@ -134,21 +144,22 @@ int main() {
 
         asyncHandle(&model);
 
-        if(timeElapsed > 0 ){
+        if(timeElapsed > 10){
             /* Uses time elapsed, time now, and time then probably to handle updates*/
             syncHandle(&model, timeElapsed);
             timeThen = timeNow;
             f++;
         }
         
-        clear_screen((UINT32)base);
-        render(&model, base, f);
-        Vsync();
-        
+        clear_screen((UINT32)inactive);
+        render(&model, inactive, f);
+        swapBuffers(&active, &inactive);
     }
 
     /* Clear whole screen when done game */
-    clear_screen((UINT32)base);
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
+    Setscreen(-1, base, -1);
     return 0;
 }
 
@@ -196,14 +207,22 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     }
 }
 
+void swapBuffers (void **active, void **inactive) {
+    void *temp = *active;
+    *active = *inactive;
+    *inactive = temp;
+    Setscreen(-1, *active, -1);
+    Vsync();
+}
+
 UINT32 getTime() {
-    long *timer = (long *)0x462;
-    long currTime;
-    long oldSsp;
+    UINT32 *timer = (UINT32 *)0x462;
+    UINT32 currTime;
+    UINT32 oldSsp;
 
     oldSsp = Super(0);
     currTime = *timer;
     Super(oldSsp);
 
-    return (UINT32)currTime;
+    return currTime;
 }
