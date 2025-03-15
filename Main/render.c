@@ -28,7 +28,7 @@ void render_player(const Player *player, UINT32 *base) {
 }
 
 void render_alien(const Alien *alien, UINT32 *base, UINT32 *bitmap) {
-    plot_bitmap32(base, 0, 0, bitmap, 32);
+    plot_bitmap32(base, alien->x, alien->y, bitmap, 32);
 }
 
 void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
