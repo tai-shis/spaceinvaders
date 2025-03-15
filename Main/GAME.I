@@ -435,13 +435,13 @@ int main() {
         },
         2,0
     };
-
+    int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
-    timeThen = 0;
+    timeThen = getTime();
 
     clear_screen((UINT32)base);
 
-    render(&model, base, 0);
+    render(&model, base, f);
 
     while (!model.quit) {
 
@@ -456,9 +456,11 @@ int main() {
 
             syncHandle(&model, timeElapsed);
             timeThen = timeNow;
+            f++;
         }
 
-        render(&model, base, timeElapsed);
+        clear_screen((UINT32)base);
+        render(&model, base, f);
         (void)_trap_14_w((short)0x25) ;
 
     }
@@ -493,8 +495,12 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
 
 
 
-    if((timeElapsed & 0x7F) == 0) {
-        update_aliens(model);
+    int game_state;
+    if((timeElapsed & 0x7F) == 0 ) {
+        game_state = update_aliens(model);
+        if (game_state == -1) {
+            model->quit = 1;
+        }
         model->aliens.render = 1;
     }
 

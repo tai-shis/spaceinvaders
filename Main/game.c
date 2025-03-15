@@ -117,13 +117,13 @@ int main() {
         },
         2,0
     };
-
+    int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
-    timeThen = 0;
+    timeThen = getTime();
 
     clear_screen((UINT32)base);
 
-    render(&model, base, 0);
+    render(&model, base, f);
 
     while (!model.quit) {
         /* Get input */
@@ -138,11 +138,13 @@ int main() {
             /* Uses time elapsed, time now, and time then probably to handle updates*/
             syncHandle(&model, timeElapsed);
             timeThen = timeNow;
+            f++;
         }
         
-        render(&model, base, timeElapsed);
+        clear_screen((UINT32)base);
+        render(&model, base, f);
         Vsync();
-        /* clear_screen((UINT32)base); */
+        
     }
 
     /* Clear whole screen when done game */
@@ -175,8 +177,12 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     /* Update aliens based on clock cycle, perhaps double buffer can be done every 1/2th cycle */
     /* Essentially check if elapsed time % 128 == 0 */
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
+    int game_state;
     if((timeElapsed & 0x7F) == 0) { 
-        update_aliens(model); 
+        game_state = update_aliens(model);
+        if (game_state == -1) {
+            model->quit = 1;
+        }  
         model->aliens.render = 1;
     }
     /* Update bullets */
