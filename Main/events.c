@@ -13,8 +13,8 @@ void async_move_player(Model *model, char key) {
 
     if((int)model->player.x <= (int)model->lowbound_x) {
         model->player.x = model->lowbound_x;
-    } else if (model->player.x >= model->highbound_x) {
-        model->player.x = model->highbound_x;
+    } else if ((model->player.x + 22) > model->highbound_x) {
+        model->player.x = model->highbound_x - 22;
     } else {
         return;
     }
@@ -52,7 +52,7 @@ int update_aliens(Model *model) {
             return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
         }
     } else if (model->aliens.delta_x == 8) {
-        if ((int)(model->aliens.r1[0].x + model->aliens.delta_x) > (int)model->highbound_x) {
+        if ((int)(model->aliens.r1[10].x + model->aliens.delta_x + 16) > (int)model->highbound_x) {
             return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
         }
     } 

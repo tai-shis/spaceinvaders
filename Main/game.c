@@ -144,11 +144,13 @@ int main() {
 
         asyncHandle(&model);
 
-        if(timeElapsed > 10){
+        if(timeElapsed > 0){
             /* Uses time elapsed, time now, and time then probably to handle updates*/
             syncHandle(&model, timeElapsed);
-            timeThen = timeNow;
-            f++;
+            /* timeThen = timeNow; */
+            if((timeElapsed & 0x7F) > 120) { 
+                f++;
+            }
         }
         
         clear_screen((UINT32)inactive);
@@ -189,7 +191,7 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     /* Essentially check if elapsed time % 128 == 0 */
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
     int game_state;
-    if((timeElapsed & 0x7F) == 0) { 
+    if((timeElapsed & 0x7F) > 120) { 
         game_state = update_aliens(model);
         if (game_state == -1) {
             model->quit = 1;

@@ -43,7 +43,7 @@ int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx) {
     
     alien_direc_change(alien_arr, alien_dx);
 
-    if((int)alien_arr->r5[0].y >= highbound-32) {
+    if((int)alien_arr->r5[0].y + 32 > highbound - 48) {
         return -1; /* Game over */
     } else {
         return 0;

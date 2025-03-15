@@ -16,6 +16,7 @@ void render(const Model *model, void *base, int f) {
     }
 
     /* If aliens need to be rendereed, also render score probably */
+    
     if (model->aliens.render == 1) {
         render_aliens(&model->aliens, base, (f&1));
         render_score(&model->score, base);

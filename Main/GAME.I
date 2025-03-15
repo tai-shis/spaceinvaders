@@ -559,11 +559,13 @@ int main() {
 
         asyncHandle(&model);
 
-        if(timeElapsed > 10){
+        if(timeElapsed > 0){
 
             syncHandle(&model, timeElapsed);
-            timeThen = timeNow;
-            f++;
+
+            if((timeElapsed & 0x7F) > 120) {
+                f++;
+            }
         }
 
         clear_screen((UINT32)inactive);
@@ -604,7 +606,7 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
 
 
     int game_state;
-    if((timeElapsed & 0x7F) == 0) {
+    if((timeElapsed & 0x7F) > 120) {
         game_state = update_aliens(model);
         if (game_state == -1) {
             model->quit = 1;
