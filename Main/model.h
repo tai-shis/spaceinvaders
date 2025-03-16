@@ -34,8 +34,9 @@ typedef struct Aliens{
 typedef struct Bullet {
     UINT16 x, y;        /* x coordinate should be set and not changed when the object is created */
     UINT8 l, w;         /* Hitbox */
-    int delta_y;        /* -1 or 1, moving down or up respectively */
-    char is_active;     /* Tombstone for array check */
+    int delta_y;        /* displacement of bullet (should be 4) */
+    int direc;          /* -1 or 1, moving down or up respectively */
+    int is_active;     /* Tombstone for array check */
 } Bullet;
 
 typedef struct Score {

@@ -179,198 +179,108 @@ L1:
 	dc.w	0,544,8,0,0,630,400
 	dc.b	32,32
 	even
-	dc.w	8,1,304,300
-	dc.b	8,16
-	even
-	dc.w	1
+	dc.w	8,4,0,0
 	dc.b	0,0
 	even
-	dc.w	0,50
-	dc.b	8,16
-	even
-	dc.w	-1
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0
+	dc.w	0,0,0,0,0
 	dc.b	0,0
 	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	0,0
-	dc.b	0,0
-	even
-	dc.w	0
-	dc.b	0,0
-	even
-	dc.w	2,0
+	dc.w	0,0,0,0,0
 L2:
 	dc.b	27,69,27,102,10,0
 	even
 _main:
-	link	a6,#-920
+	link	a6,#-980
 	movem.l	d3/d4/d5/d6/a3/a4/a5,-(a7)
-	lea	-906(a6),a0
-	move.l	a0,d5
 	lea	-8(a6),a3
-	lea	-12(a6),a4
-	lea	_clear_screen,a5
+	lea	-966(a6),a0
+	move.l	a0,d5
+	lea	_clear_screen,a4
+	lea	-12(a6),a5
 	;line	129
 	move.w	#2,-(a7)
 	jsr	__trap_14_w
@@ -380,10 +290,10 @@ _main:
 	add.l	#255,d0
 	and.l	#-256,d0
 	move.l	d0,(a3)
-	move.l	d6,(a4)
+	move.l	d6,(a5)
 	lea	L1,a0
 	move.l	d5,a1
-	move.w	#222,d0
+	move.w	#237,d0
 L3:
 	move.l	(a0)+,(a1)+
 	dbra	d0,L3
@@ -395,101 +305,105 @@ L3:
 	addq.l	#4,a7
 	;line	131
 	jsr	_getTime
-	move.l	d0,-912(a6)
+	move.l	d0,-972(a6)
 	;line	133
-	move.l	(a4),-(a7)
-	jsr	(a5)
+	move.l	(a5),-(a7)
+	jsr	(a4)
 	addq.l	#4,a7
-	;line	135
+	;line	134
+	move.l	(a3),-(a7)
+	jsr	(a4)
+	addq.l	#4,a7
+	;line	136
 	move.w	d3,-(a7)
-	move.l	(a4),-(a7)
+	move.l	(a5),-(a7)
 	move.l	d5,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	136
+	;line	137
 	move.w	d3,-(a7)
 	move.l	(a3),-(a7)
 	move.l	d5,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	138
+	;line	139
 	bra	L5
 L4:
-	;line	142
-	jsr	_getTime
-	move.l	d0,-916(a6)
 	;line	143
-	move.l	-916(a6),d0
-	sub.l	-912(a6),d0
+	jsr	_getTime
+	move.l	d0,-976(a6)
+	;line	144
+	move.l	-976(a6),d0
+	sub.l	-972(a6),d0
 	move.l	d0,d4
-	;line	145
+	;line	146
 	move.l	d5,-(a7)
 	jsr	_asyncHandle
 	addq.l	#4,a7
-	;line	147
+	;line	148
 	tst.l	d4
 	bls	L7
-	;line	149
+	;line	150
 	move.l	d4,-(a7)
 	move.l	d5,-(a7)
 	jsr	_syncHandle
 	addq.l	#8,a7
-	;line	151
+	;line	152
 	moveq	#127,d0
 	and.l	d4,d0
 	cmp.l	#120,d0
 	bls	L8
-	;line	152
+	;line	153
 	addq.w	#1,d3
 L8:
 L7:
-	;line	156
-	move.l	(a3),-(a7)
-	jsr	(a5)
-	addq.l	#4,a7
 	;line	157
+	move.l	(a3),-(a7)
+	jsr	(a4)
+	addq.l	#4,a7
+	;line	158
 	move.w	d3,-(a7)
 	move.l	(a3),-(a7)
 	move.l	d5,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	158
+	;line	159
 	move.l	a3,-(a7)
-	move.l	a4,-(a7)
+	move.l	a5,-(a7)
 	jsr	_swapBuffers
 	addq.l	#8,a7
 L5:
 	tst.w	-14(a6)
 	beq	L4
 L6:
-	;line	162
-	move.l	(a4),-(a7)
-	jsr	(a5)
-	addq.l	#4,a7
 	;line	163
-	move.l	(a3),-(a7)
-	jsr	(a5)
+	move.l	(a5),-(a7)
+	jsr	(a4)
 	addq.l	#4,a7
 	;line	164
+	move.l	(a3),-(a7)
+	jsr	(a4)
+	addq.l	#4,a7
+	;line	165
 	move.w	#-1,-(a7)
 	move.l	d6,-(a7)
 	pea	-1
 	move.w	#5,-(a7)
 	jsr	__trap_14_wllw
-	;line	165
+	;line	166
 	moveq	#0,d0
 L9:
-	movem.l	-948(a6),d3/d4/d5/d6/a3/a4/a5
+	movem.l	-1008(a6),d3/d4/d5/d6/a3/a4/a5
 	unlk	a6
 	rts
 _asyncHandle:
 	link	a6,#-2
 	movem.l	d3/d4,-(a7)
 	move.l	8(a6),d3
-	;line	171
+	;line	172
 	jsr	_keystroke
 	move.b	d0,d4
-	;line	171
+	;line	172
 	move.b	d4,d0
 	sub.b	#113,d0
 	beq	L11
@@ -497,46 +411,46 @@ _asyncHandle:
 	beq	L12
 	subq.b	#3,d0
 	beq	L13
-	sub.b	#-68,d0
+	sub.b	#15,d0
 	beq	L14
-	addq.b	#5,d0
+	sub.b	#-88,d0
 	beq	L15
 	bra	L10
 L11:
-	;line	173
-	move.l	d3,a0
-	move.w	#1,892(a0)
 	;line	174
+	move.l	d3,a0
+	move.w	#1,952(a0)
+	;line	175
 	bra	L10
 L12:
-	;line	176
+	;line	177
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,-(a7)
 	move.l	d3,-(a7)
 	jsr	_async_move_player
-	;line	177
+	;line	178
 	bra	L10
 L13:
-	;line	179
+	;line	180
 	move.b	d4,d0
 	ext.w	d0
 	move.w	d0,-(a7)
 	move.l	d3,-(a7)
 	jsr	_async_move_player
-	;line	180
+	;line	181
 	bra	L10
 L14:
-	;line	182
-	move.w	#-1,-(a7)
+	;line	183
+	clr.w	-(a7)
 	move.l	d3,-(a7)
 	jsr	_async_shoot
-	;line	183
+	;line	184
 	bra	L10
 L15:
-	;line	185
+	;line	186
 	move.l	d3,a0
-	move.w	#1,892(a0)
+	move.w	#1,952(a0)
 L10:
 	movem.l	-10(a6),d3/d4
 	unlk	a6
@@ -545,41 +459,41 @@ _syncHandle:
 	link	a6,#-2
 	move.l	a3,-(a7)
 	move.l	8(a6),a3
-	;line	194
+	;line	195
 	move.l	12(a6),d0
 	and.l	#127,d0
 	cmp.l	#120,d0
 	bls	L16
-	;line	195
+	;line	196
 	move.l	a3,-(a7)
 	jsr	_update_aliens
 	addq.l	#4,a7
 	move.w	d0,-2(a6)
-	;line	196
+	;line	197
 	cmp.w	#-1,-2(a6)
 	bne	L17
-	;line	197
-	move.w	#1,892(a3)
+	;line	198
+	move.w	#1,952(a3)
 L17:
-	;line	199
+	;line	200
 	move.b	#1,568(a3)
 L16:
-	;line	202
-	tst.w	890(a3)
-	ble	L18
 	;line	203
+	tst.w	950(a3)
+	ble	L18
+	;line	204
 	move.l	a3,-(a7)
 	jsr	_update_bullets
 	addq.l	#4,a7
 L18:
-	;line	207
+	;line	208
 	move.l	a3,-(a7)
 	jsr	_check_endgame
 	addq.l	#4,a7
 	tst.w	d0
 	beq	L19
-	;line	208
-	move.w	#1,892(a3)
+	;line	209
+	move.w	#1,952(a3)
 L19:
 	move.l	-6(a6),a3
 	unlk	a6
@@ -588,22 +502,22 @@ _swapBuffers:
 	link	a6,#-4
 	move.l	a3,-(a7)
 	move.l	8(a6),a3
-	;line	214
+	;line	215
 	move.l	(a3),-4(a6)
-	;line	214
-	move.l	12(a6),a0
-	move.l	(a0),(a3)
 	;line	215
 	move.l	12(a6),a0
-	move.l	-4(a6),(a0)
+	move.l	(a0),(a3)
 	;line	216
+	move.l	12(a6),a0
+	move.l	-4(a6),(a0)
+	;line	217
 	move.w	#-1,-(a7)
 	move.l	(a3),-(a7)
 	pea	-1
 	move.w	#5,-(a7)
 	jsr	__trap_14_wllw
 	lea	12(a7),a7
-	;line	217
+	;line	218
 	move.w	#37,-(a7)
 	jsr	__trap_14_w
 	move.l	-8(a6),a3
@@ -611,22 +525,22 @@ _swapBuffers:
 	rts
 _getTime:
 	link	a6,#-12
-	;line	225
+	;line	226
 	move.l	#1122,-4(a6)
-	;line	225
+	;line	226
 	pea	0
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
 	addq.l	#6,a7
 	move.l	d0,-12(a6)
-	;line	226
+	;line	227
 	move.l	-4(a6),a0
 	move.l	(a0),-8(a6)
-	;line	227
+	;line	228
 	move.l	-12(a6),-(a7)
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
-	;line	229
+	;line	230
 	move.l	-8(a6),d0
 L20:
 	unlk	a6

@@ -1,4 +1,5 @@
 #include "events.h"
+#include <stdio.h>
 
 void async_move_player(Model *model, char key) {
     if(key == 'a') {
@@ -27,9 +28,9 @@ void async_shoot(Model *model, int cooldown) {
     /* For now, make a new bullet object when this is called, is ineffecient though */
     /* -1 for moving up, edit bulletX once mapping is done */
     int i;
-    Bullet temp = {0, 0, 8, 16, -1};
-    temp.x = model->player.x + 16;
-    temp.y = model->player.y;
+    Bullet temp = {0, 0, 8, 16, 4, 1, 1};
+    temp.x = model->player.x + 16;  /* Center of player */
+    temp.y = model->player.y + 18;  /* Top of player + bullet height (and some change)*/
 
     if((cooldown != 0) || (model->active_count == 30)) {
         /* Either at max entities or cooldown not reached yet */
@@ -37,12 +38,12 @@ void async_shoot(Model *model, int cooldown) {
     } else {
         /* Find next empty location in array */
         for(i = 0; i < 30; i+=1) {
-            if(model->active[i].is_active == 0) {
+            if(!model->active[i].is_active) {
                 model->active[i] = temp;
+                model->active_count += 1;
                 break;
             }
         }
-        model->active_count += 1;
     }
 }
 
@@ -66,11 +67,11 @@ void update_bullets(Model *model) {
     int i, deactivate, hit;
     for(i = 0; i < 30; i += 1) {
         /* Find only active bullets */
-        if(model->active[i].is_active == 1) {
+        if(model->active[i].is_active) {
             /* Update position, use return to deactivate or not */
             deactivate = move_bullet(model, &model->active[i]);
             
-            if(model->active[i].delta_y == 1) { 
+            if(model->active[i].direc == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);
                 if(hit == 1) {

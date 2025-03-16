@@ -44,7 +44,8 @@ typedef struct Bullet {
     UINT16 x, y;
     UINT8 l, w;
     int delta_y;
-    char is_active;
+    int direc;
+    int is_active;
 } Bullet;
 
 typedef struct Score {
@@ -64,21 +65,21 @@ typedef struct Model {
     int active_count;
     int quit;
 } Model;
-# 65 "./model.h"
+# 66 "./model.h"
 void move_player(Player *player);
-# 73 "./model.h"
+# 74 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 81 "./model.h"
+# 82 "./model.h"
 int move_aliens(Aliens *aliens);
-# 89 "./model.h"
+# 90 "./model.h"
 int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx);
-# 97 "./model.h"
+# 98 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 105 "./model.h"
+# 106 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 113 "./model.h"
+# 114 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 120 "./model.h"
+# 121 "./model.h"
 void update_score(Score *score);
 
 int check_aliens_hit(Aliens *aliens, Bullet *bullet);
@@ -502,40 +503,40 @@ int main() {
         0, 0, 630, 400,
         32, 32,
         8,
-        1,
+        4,
         {
-            {304, 300, 8, 16, 1},
-            {0, 50, 8, 16,-1},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0},
-            {0,0,0,0,0}
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0}
         },
-        2,0
+        0,0
     };
     int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
@@ -546,6 +547,7 @@ int main() {
     timeThen = getTime();
 
     clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
 
     render(&model, active, f);
     render(&model, inactive, f);
@@ -593,8 +595,8 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case ' ':
-            async_shoot(model, -1);
+        case 's':
+            async_shoot(model, 0);
             break;
         case 27:
             model->quit = 1;
