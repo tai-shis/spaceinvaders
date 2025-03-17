@@ -62,9 +62,9 @@ int move_bullet(Model *model, Bullet *bullet) {
     /* Should be called every tick to handle the bullet's movement */
     /* If returns -1, event handlers should remove this object instance */
     if (bullet->direc == -1) {
-        bullet->y -= bullet->delta_y;
-    } else {
         bullet->y += bullet->delta_y;
+    } else {
+        bullet->y -= bullet->delta_y;
     }
 
     if (bullet->y <= model->lowbound_y) {
