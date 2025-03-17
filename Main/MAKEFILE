@@ -24,7 +24,7 @@
 
 # Make for game
 game: game.o events.o render.o raster.o model.o input.o clear_qk.o
-	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o  -o game.prg
+	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o -o game.prg
 
 game.o: game.c game.h 
 	cc68x -g -c game.c 
