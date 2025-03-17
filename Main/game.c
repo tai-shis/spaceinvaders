@@ -125,7 +125,7 @@ int main() {
     int f = 0;
     UINT32 timeThen, timeNow, timeElapsed;
 
-    /* Below clears screen from cursor and mouse */
+    /* Line below clears screen from cursor and mouse */
     printf("\033E\033f\n");
 
     timeThen = getTime();
@@ -137,9 +137,6 @@ int main() {
     render(&model, inactive, f);
 
     while (!model.quit) {
-        /* Get input */
-        /* Update model */
-        /* Render */
         timeNow = getTime();
         timeElapsed = timeNow - timeThen;
 
@@ -179,11 +176,9 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case 's':
+        case ' ':
             async_shoot(model, 0);
-            break;
-        case 27:
-            model->quit = 1;    
+            break;  
     }
 }
 

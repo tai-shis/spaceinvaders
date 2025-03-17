@@ -120,10 +120,31 @@ void add_score (int score_to_add, Score curr_score);
  */
 void update_score(Score *score);
 
+/**
+ * @brief Checks if a bullet has hit an alien
+ * 
+ * @param aliens Aliens struct
+ * @param bullet Bullet struct
+ * @return 1 if bullet has hit, 0 otherwise
+ */
 int check_aliens_hit(Aliens *aliens, Bullet *bullet);
 
+/**
+ * @brief Checks if a bullet has hit a specific alien in a row
+ * 
+ * @param row Alien row
+ * @param bullet Bullet struct
+ * @return 1 if bullet has hit, 0 otherwise
+ */
 int check_row_hit(Alien *row[], Bullet *bullet);
 
+/**
+ * @brief Checks if the player has been hit by a bullet
+ * 
+ * @param player Player struct
+ * @param bullet Bullet struct
+ * @return 1 if player has been hit, 0 otherwise
+ */
 int check_player_hit(Player *player, Bullet *bullet);
 
 #endif

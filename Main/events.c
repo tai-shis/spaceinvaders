@@ -28,7 +28,7 @@ void async_shoot(Model *model, int cooldown) {
     /* For now, make a new bullet object when this is called, is ineffecient though */
     /* -1 for moving up, edit bulletX once mapping is done */
     int i;
-    Bullet temp = {0, 0, 8, 16, -4, -1, 1};
+    Bullet temp = {0, 0, 8, 16, 4, 1, 1};
     temp.x = model->player.x + 14;  /* Center of player */
     temp.y = model->player.y + 18;  /* Top of player + bullet height (and some change)*/
 
@@ -71,6 +71,7 @@ void update_bullets(Model *model) {
             /* Update position, use return to deactivate or not */
             deactivate = move_bullet(model, &model->active[i]);
             
+            /* should be == 1, but game bombs out for some reason */
             if(model->active[i].direc == -1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);

@@ -69,7 +69,7 @@ int move_bullet(Model *model, Bullet *bullet) {
 
     if (bullet->y <= model->lowbound_y) {
         return -1;
-    } else if (bullet->y+32 > model->highbound_y) {
+    } else if ((bullet->y + 16) >= model->highbound_y) {
         return -1;
     } else {
         return 0;
@@ -109,11 +109,12 @@ int check_aliens_hit(Aliens *aliens, Bullet *bullet) {
     return 0;
 }
 
+/* Also checks for height (y) */
 int check_row_hit(Alien *row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i]->alive) {
-            if((bullet->x > row[i]->x) && (bullet->x < row[i]->x + 32) && (bullet->y >= row[i]->y + 30)) {
+            if((bullet->x > row[i]->x) && (bullet->x < row[i]->x + 32) && (bullet->y >= (row[i]->y) + 32)) {
                 /* bullet hits alien */
                 row[i]->alive = 0;
                 return 1;
