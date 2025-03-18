@@ -61,7 +61,7 @@ void destroy_alien(Alien alien, Score curr_score) {
 int move_bullet(Model *model, Bullet *bullet) {
     /* Should be called every tick to handle the bullet's movement */
     /* If returns -1, event handlers should remove this object instance */
-    if (bullet->direc == 1) {
+    if (bullet->direc == -1) {
         bullet->y -= bullet->delta_y;
     } else {
         bullet->y += bullet->delta_y;
@@ -69,7 +69,7 @@ int move_bullet(Model *model, Bullet *bullet) {
 
     if (bullet->y <= model->lowbound_y) {
         return -1;
-    } else if (bullet->y >= model->highbound_y) {
+    } else if (bullet->y+32 > model->highbound_y) {
         return -1;
     } else {
         return 0;
