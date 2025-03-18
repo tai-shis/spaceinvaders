@@ -136,7 +136,7 @@ int check_aliens_hit(Aliens *aliens, Bullet *bullet);
  * @param bullet Bullet struct
  * @return 1 if bullet has hit, 0 otherwise
  */
-int check_row_hit(Alien *row[], Bullet *bullet);
+int check_row_hit(Alien row[], Bullet *bullet);
 
 /**
  * @brief Checks if the player has been hit by a bullet

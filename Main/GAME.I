@@ -81,11 +81,11 @@ int move_bullet(Model *model, Bullet *bullet);
 void add_score (int score_to_add, Score curr_score);
 # 121 "./model.h"
 void update_score(Score *score);
-
+# 130 "./model.h"
 int check_aliens_hit(Aliens *aliens, Bullet *bullet);
-
-int check_row_hit(Alien *row[], Bullet *bullet);
-
+# 139 "./model.h"
+int check_row_hit(Alien row[], Bullet *bullet);
+# 148 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
 # 4 "./render.h" 2
 # 1 "./raster.h" 1
@@ -553,9 +553,6 @@ int main() {
     render(&model, inactive, f);
 
     while (!model.quit) {
-
-
-
         timeNow = getTime();
         timeElapsed = timeNow - timeThen;
 
@@ -595,11 +592,9 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case 's':
+        case ' ':
             async_shoot(model, 0);
             break;
-        case 27:
-            model->quit = 1;
     }
 }
 

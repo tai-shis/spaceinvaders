@@ -72,7 +72,7 @@ void update_bullets(Model *model) {
             deactivate = move_bullet(model, &model->active[i]);
             
             /* should be == 1, but game bombs out for some reason */
-            if(model->active[i].direc == -1) { 
+            if(model->active[i].direc == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);
                 if(hit == 1) {

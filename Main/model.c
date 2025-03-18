@@ -110,13 +110,13 @@ int check_aliens_hit(Aliens *aliens, Bullet *bullet) {
 }
 
 /* Also checks for height (y) */
-int check_row_hit(Alien *row[], Bullet *bullet) {
+int check_row_hit(Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
-        if (row[i]->alive) {
-            if((bullet->x > row[i]->x) && (bullet->x < row[i]->x + 32) && (bullet->y >= (row[i]->y) + 32)) {
+        if (row[i].alive) {
+            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y >= ((row[i].y) + 32))) {
                 /* bullet hits alien */
-                row[i]->alive = 0;
+                row[i].alive = 0;
                 return 1;
             }
         }
