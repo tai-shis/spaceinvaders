@@ -18,7 +18,7 @@
 # Make for stage 4 of the project
 #tst_s4: tst_s4.o render.o raster.o
 #	cc68x -g tst_s4.o render.o raster.o -o tst_s4.prg
-#
+
 #tst_s4.o: tst_s4.c model.h render.h
 #	cc68x -g -c tst_s4.c
 
