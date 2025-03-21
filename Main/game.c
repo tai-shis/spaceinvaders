@@ -156,9 +156,10 @@ int main() {
         swapBuffers(&active, &inactive);
     }
 
-    /* Clear whole screen when done game */
+    /* Clear both buffers when done game */
     clear_screen((UINT32)active);
     clear_screen((UINT32)inactive);
+    /* Set base back */
     Setscreen(-1, base, -1);
     return 0;
 }
