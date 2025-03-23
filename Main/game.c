@@ -134,18 +134,17 @@ int main() {
     clear_screen((UINT32)inactive);
 
     render(&model, active, f);
-    render(&model, inactive, f);
 
     while (!model.quit) {
         timeNow = getTime();
         timeElapsed = timeNow - timeThen;
 
         asyncHandle(&model);
-
+        
         if(timeElapsed > 0){
             /* Uses time elapsed, time now, and time then probably to handle updates*/
             syncHandle(&model, timeElapsed);
-            /* timeThen = timeNow; */
+            
             if((timeElapsed & 0x7F) > 120) { 
                 f++;
             }
@@ -177,7 +176,7 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case ' ':
+        case 's':
             async_shoot(model, 0);
             break;  
     }

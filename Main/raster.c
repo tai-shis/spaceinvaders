@@ -3,7 +3,7 @@
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
-	start = (start + (y * 80) + (x >> 3)); /* Get to relative byte */
+	start = (start + (y * 80) + (x >> 3));
 
 	for (i = 0; i < height; i += 1) {
 		*start |= (bitmap[i] >> (x & 7));

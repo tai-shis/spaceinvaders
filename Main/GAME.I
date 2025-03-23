@@ -550,7 +550,6 @@ int main() {
     clear_screen((UINT32)inactive);
 
     render(&model, active, f);
-    render(&model, inactive, f);
 
     while (!model.quit) {
         timeNow = getTime();
@@ -575,6 +574,7 @@ int main() {
 
     clear_screen((UINT32)active);
     clear_screen((UINT32)inactive);
+
     (void)_trap_14_wllw((short)0x5,(long)(-1),(long)base,(short)(-1)) ;
     return 0;
 }
@@ -592,7 +592,7 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case ' ':
+        case 's':
             async_shoot(model, 0);
             break;
     }

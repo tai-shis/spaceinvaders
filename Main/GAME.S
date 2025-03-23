@@ -277,9 +277,9 @@ _main:
 	link	a6,#-980
 	movem.l	d3/d4/d5/d6/a3/a4/a5,-(a7)
 	lea	-8(a6),a3
+	lea	_clear_screen,a4
 	lea	-966(a6),a0
 	move.l	a0,d5
-	lea	_clear_screen,a4
 	lea	-12(a6),a5
 	;line	129
 	move.w	#2,-(a7)
@@ -298,7 +298,7 @@ L3:
 	move.l	(a0)+,(a1)+
 	dbra	d0,L3
 	move.w	(a0)+,(a1)+
-	moveq	#0,d3
+	moveq	#0,d4
 	;line	129
 	pea	L2
 	jsr	_printf
@@ -315,59 +315,53 @@ L3:
 	jsr	(a4)
 	addq.l	#4,a7
 	;line	136
-	move.w	d3,-(a7)
+	move.w	d4,-(a7)
 	move.l	(a5),-(a7)
 	move.l	d5,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	137
-	move.w	d3,-(a7)
-	move.l	(a3),-(a7)
-	move.l	d5,-(a7)
-	jsr	_render
-	lea	10(a7),a7
-	;line	139
+	;line	138
 	bra	L5
 L4:
-	;line	140
+	;line	139
 	jsr	_getTime
 	move.l	d0,-976(a6)
-	;line	141
+	;line	140
 	move.l	-976(a6),d0
 	sub.l	-972(a6),d0
-	move.l	d0,d4
-	;line	143
+	move.l	d0,d3
+	;line	142
 	move.l	d5,-(a7)
 	jsr	_asyncHandle
 	addq.l	#4,a7
-	;line	145
-	tst.l	d4
+	;line	144
+	tst.l	d3
 	bls	L7
-	;line	147
-	move.l	d4,-(a7)
+	;line	146
+	move.l	d3,-(a7)
 	move.l	d5,-(a7)
 	jsr	_syncHandle
 	addq.l	#8,a7
-	;line	149
+	;line	148
 	moveq	#127,d0
-	and.l	d4,d0
+	and.l	d3,d0
 	cmp.l	#120,d0
 	bls	L8
-	;line	150
-	addq.w	#1,d3
+	;line	149
+	addq.w	#1,d4
 L8:
 L7:
-	;line	154
+	;line	153
 	move.l	(a3),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
-	;line	155
-	move.w	d3,-(a7)
+	;line	154
+	move.w	d4,-(a7)
 	move.l	(a3),-(a7)
 	move.l	d5,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	156
+	;line	155
 	move.l	a3,-(a7)
 	move.l	a5,-(a7)
 	jsr	_swapBuffers
@@ -376,11 +370,11 @@ L5:
 	tst.w	-14(a6)
 	beq	L4
 L6:
-	;line	160
+	;line	159
 	move.l	(a5),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
-	;line	161
+	;line	160
 	move.l	(a3),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
@@ -411,7 +405,7 @@ _asyncHandle:
 	beq	L12
 	subq.b	#3,d0
 	beq	L13
-	sub.b	#-68,d0
+	sub.b	#15,d0
 	beq	L14
 	bra	L10
 L11:

@@ -86,35 +86,34 @@ void update_score(Score *score) {
 }
 
 int check_aliens_hit(Aliens *aliens, Bullet *bullet) {
-    if(check_row_hit(aliens->r1, bullet)) {
+    if(check_row_hit(aliens->r1, bullet) == 1) {
         aliens->totalAliens -= 1;
         return 1;
     } 
-    if(check_row_hit(aliens->r2, bullet)) {
+    if(check_row_hit(aliens->r2, bullet) == 1) {
         aliens->totalAliens -= 1;
         return 1;
     } 
-    if(check_row_hit(aliens->r3, bullet)) {
+    if(check_row_hit(aliens->r3, bullet) == 1) {
         aliens->totalAliens -= 1;
         return 1;
     } 
-    if(check_row_hit(aliens->r4, bullet)) {
+    if(check_row_hit(aliens->r4, bullet) == 1) {
         aliens->totalAliens -= 1;
         return 1;
     } 
-    if(check_row_hit(aliens->r5, bullet)) {
+    if(check_row_hit(aliens->r5, bullet) == 1) {
         aliens->totalAliens -= 1;
         return 1;
     }
     return 0;
 }
 
-/* Also checks for height (y) */
 int check_row_hit(Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i].alive) {
-            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y >= ((row[i].y) + 32))) {
+            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 32))) {
                 /* bullet hits alien */
                 row[i].alive = 0;
                 return 1;
@@ -124,7 +123,7 @@ int check_row_hit(Alien row[], Bullet *bullet) {
 }
 
 int check_player_hit(Player *player, Bullet *bullet) {
-    if ((bullet->x > player->x) && (bullet->x < player->x + 32) && ((bullet->y + 16) >= player->y)) {
+    if ((bullet->x >= player->x) && (bullet->x <= (player->x + 32)) && ((bullet->y + 8) >= player->y)) {
         player->lives -= 1;
         return 1;
     }

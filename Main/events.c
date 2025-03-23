@@ -26,12 +26,12 @@ void async_shoot(Model *model, int cooldown) {
     /* will just be used as an arbitrary check if the player can shoot or not */
     
     /* For now, make a new bullet object when this is called, is ineffecient though */
-    /* -1 for moving up, edit bulletX once mapping is done */
+    /* 1 for moving up, edit bulletX once mapping is done */
     int i;
     Bullet temp = {0, 0, 8, 16, 4, 1, 1};
     temp.x = model->player.x + 14;  /* Center of player */
-    temp.y = model->player.y + 18;  /* Top of player + bullet height (and some change)*/
-
+    temp.y = model->player.y - 6;  /* Top of player - bullet height (and some change)*/
+    
     if((cooldown != 0) || (model->active_count == 30)) {
         /* Either at max entities or cooldown not reached yet */
         return;
@@ -41,7 +41,7 @@ void async_shoot(Model *model, int cooldown) {
             if(!model->active[i].is_active) {
                 model->active[i] = temp;
                 model->active_count += 1;
-                break;
+                return;
             }
         }
     }
@@ -64,14 +64,13 @@ int update_aliens(Model *model) {
 
 void update_bullets(Model *model) {
     /* For now, will detect if bullet goes out of bounds */
-    int i, deactivate, hit;
+    int i, deactivate, hit = 0;
     for(i = 0; i < 30; i += 1) {
         /* Find only active bullets */
         if(model->active[i].is_active) {
             /* Update position, use return to deactivate or not */
             deactivate = move_bullet(model, &model->active[i]);
             
-            /* should be == 1, but game bombs out for some reason */
             if(model->active[i].direc == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);
@@ -83,9 +82,10 @@ void update_bullets(Model *model) {
                 /* Otherwise check for player collision */
                 hit = check_player_hit(&model->player, &model->active[i]);
             }
-
+    
             if((deactivate == -1) || hit) {
                 model->active[i].is_active = 0;
+                model->active_count -= 1;
             }
         }
     }
