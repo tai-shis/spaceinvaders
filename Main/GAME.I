@@ -91,34 +91,33 @@ int check_player_hit(Player *player, Bullet *bullet);
 # 1 "./raster.h" 1
 # 1 "./types.h" 1
 # 4 "./raster.h" 2
-
-
-
-
+# 13 "./raster.h"
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
-
+# 22 "./raster.h"
 void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height);
-
+# 31 "./raster.h"
 void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height);
-
+# 41 "./raster.h"
 void plot_vline(UINT8 *base, int x, int y1, int y2);
-
+# 51 "./raster.h"
 void plot_hline(UINT8 *base, int x1, int x2, int y);
-
+# 62 "./raster.h"
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
+
+
+void clear_player(UINT32 *base);
 # 5 "./render.h" 2
-
-
+# 14 "./render.h"
 void render(const Model *model, void *base, int f);
-
+# 22 "./render.h"
 void render_player(const Player *player, UINT32 *base);
-
+# 31 "./render.h"
 void render_alien(const Alien *alien, UINT32 *base, UINT32 *bitmap);
-
+# 40 "./render.h"
 void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f);
-
+# 48 "./render.h"
 void render_bullet(const Bullet *bullet, UINT8 *base);
-
+# 56 "./render.h"
 void render_score(const Score *score, UINT16 *base);
 # 4 "./game.h" 2
 # 1 "./types.h" 1
@@ -126,16 +125,15 @@ void render_score(const Score *score, UINT16 *base);
 # 1 "./events.h" 1
 # 1 "./model.h" 1
 # 4 "./events.h" 2
-
-
+# 12 "./events.h"
 void async_move_player(Model *model, char key);
-
+# 20 "./events.h"
 void async_shoot(Model *model, int cooldown);
-
+# 27 "./events.h"
 int update_aliens(Model *model);
-
+# 34 "./events.h"
 void update_bullets(Model *model);
-
+# 41 "./events.h"
 int check_endgame(Model *model);
 # 6 "./game.h" 2
 # 1 "./model.h" 1
@@ -306,6 +304,9 @@ typedef struct
 # 3 "./input.h" 2
 
 
+
+
+
 char keystroke();
 # 9 "./game.h" 2
 # 1 "./psg.h" 1
@@ -332,13 +333,15 @@ void start_music();
 
 char update_music(UINT32 time_elapsed, UINT32 time_before, int note);
 # 11 "./game.h" 2
-
-
+# 18 "./game.h"
 void asyncHandle(Model *model);
-
+# 26 "./game.h"
 void syncHandle(Model *model, UINT32 timeElapsed);
-
+# 34 "./game.h"
 void swapBuffers (void **active, void **inactive);
+
+
+
 
 UINT32 getTime();
 # 1 "game.c" 2
@@ -595,7 +598,11 @@ int main() {
             }
         }
 
-        clear_screen((UINT32)inactive);
+        if (model.aliens.render == 1) {
+            clear_screen((UINT32)inactive);
+        } else{
+            clear_player((UINT32)inactive);
+        }
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 

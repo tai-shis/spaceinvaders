@@ -149,3 +149,4 @@ void clear_player(UINT32 *base) {
 		*start = 0;
 		start += 20;
 	}
+}
