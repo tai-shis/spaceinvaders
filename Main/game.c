@@ -123,26 +123,29 @@ int main() {
         0,0
     };
     int f = 0;
-    UINT32 timeThen, timeNow, timeElapsed;
+    int note = 0;
+    UINT32 timeStart, timeNow, timeElapsed, timeBefore;
 
     /* Line below clears screen from cursor and mouse */
     printf("\033E\033f\n");
 
-    timeThen = getTime();
+    timeStart = getTime();
 
     clear_screen((UINT32)active);
     clear_screen((UINT32)inactive);
 
     render(&model, active, f);
+    
+    start_music();
+    note = 1;
 
     while (!model.quit) {
         timeNow = getTime();
-        timeElapsed = timeNow - timeThen;
+        timeElapsed = timeNow - timeStart;
 
         asyncHandle(&model);
         
         if(timeElapsed > 0){
-            /* Uses time elapsed, time now, and time then probably to handle updates*/
             syncHandle(&model, timeElapsed);
             
             if((timeElapsed & 0x7F) > 120) { 
@@ -153,6 +156,12 @@ int main() {
         clear_screen((UINT32)inactive);
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
+
+        if (update_music(time_elapsed, time_before, note)) {
+            note++;
+        } 
+        
+        timeBefore = timeElapsed;
     }
 
     /* Clear both buffers when done game */

@@ -23,8 +23,8 @@
 #	cc68x -g -c tst_s4.c
 
 # Make for game
-game: game.o events.o render.o raster.o model.o input.o clear_qk.o
-	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o -o game.prg
+game: game.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o
+	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o -o game.prg
 
 game.o: game.c game.h 
 	cc68x -g -c game.c 
@@ -49,6 +49,12 @@ bitmaps.o: bitmaps.c
 
 clear_qk.o: clear_qk.s
 	gen -D -L2 clear_qk.s
+
+psg.o: psg.c psg.h
+	cc68x -g -c psg.c
+
+music.o: music.c music.h
+	cc68x -g -c music.c
 
 clean:
 	$(RM) *.o *.prg 
