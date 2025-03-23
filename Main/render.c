@@ -38,23 +38,33 @@ void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
     /* Render r1-r5 */
     int i;
     for(i = 0; i < 11; i++) {
-        render_alien(&aliens->r1[i], base, alien3_bitmap[f]);
+        if (aliens->r1[i].alive) {
+            render_alien(&aliens->r1[i], base, alien3_bitmap[f]);
+        }
     }
 
     for(i = 0; i < 11; i++) {
-        render_alien(&aliens->r2[i], base, alien1_bitmap[f]);
+        if (aliens->r2[i].alive) {
+            render_alien(&aliens->r2[i], base, alien1_bitmap[f]);
+        }
     }
 
     for(i = 0; i < 11; i++) {
-        render_alien(&aliens->r3[i], base, alien1_bitmap[f]);
+        if (aliens->r3[i].alive) {
+            render_alien(&aliens->r3[i], base, alien1_bitmap[f]);
+        }
     }
 
     for(i = 0; i < 11; i++) {
+        if (aliens->r4[i].alive) {
         render_alien(&aliens->r4[i], base, alien2_bitmap[f]);
+        }
     }
 
     for(i = 0; i < 11; i++) {
+        if (aliens->r5[i].alive) {
         render_alien(&aliens->r5[i], base, alien2_bitmap[f]);
+        }
     }
 }
 
