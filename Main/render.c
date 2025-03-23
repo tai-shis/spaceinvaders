@@ -70,7 +70,7 @@ void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
 
 void render_bullet(const Bullet *bullet, UINT8 *base) {
     /* Change height based on length of bullet */
-    plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmap, 16);
+    plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[0], 16);
 }
 
 void render_score(const Score *score, UINT16 *base) {
