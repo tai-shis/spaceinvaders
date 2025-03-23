@@ -155,7 +155,11 @@ int main() {
             }
         }
         
-        clear_screen((UINT32)inactive);
+        if (model->aliens.render == 1):
+            clear_screen((UINT32)inactive);
+        else: 
+            clear_player((UINT32)inactive);
+
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 

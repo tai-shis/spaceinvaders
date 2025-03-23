@@ -139,3 +139,13 @@ void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
 		ch++;
 	}
 }
+
+void clear_player(UINT32 *base) {
+	UINT32 *start = base;
+	int i;
+	start += 360 * 20;
+
+	for (i = 0; i < 800; i++) {
+		*start = 0;
+		start += 20;
+	}

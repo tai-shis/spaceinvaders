@@ -61,4 +61,7 @@ void plot_hline(UINT8 *base, int x1, int x2, int y);
  */
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
 
+
+void clear_player(UINT32 *base);
+
 #endif
