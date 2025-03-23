@@ -1,7 +1,7 @@
 #include "render.h"
 #include "bitmaps.c"
 
-void render(const Model *model, void *base, int f) {
+void render(Model *model, void *base, int f) {
     int i;
 
     /* Always render player for simplicity */
@@ -20,7 +20,7 @@ void render(const Model *model, void *base, int f) {
     if (model->aliens.render == 1) {
         render_aliens(&model->aliens, base, (f&1));
         render_score(&model->score, base);
-        model->aliens.render == 0;
+        model->aliens.render = 0;
     }
 }
 
