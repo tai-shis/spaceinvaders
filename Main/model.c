@@ -85,25 +85,30 @@ void update_score(Score *score) {
     /* redisplay score */
 }
 
-int check_aliens_hit(Aliens *aliens, Bullet *bullet) {
-    if(check_row_hit(aliens->r1, bullet) == 1) {
-        aliens->totalAliens -= 1;
+int check_aliens_hit(Model *model, Bullet *bullet) {
+    if(check_row_hit(model->aliens.r1, bullet) == 1) {
+        model->aliens.totalAliens -= 1;
+        model->score.score += model->aliens.r1[0].score;
         return 1;
     } 
-    if(check_row_hit(aliens->r2, bullet) == 1) {
-        aliens->totalAliens -= 1;
+    if(check_row_hit(model->aliens.r2, bullet) == 1) {
+        model->aliens.totalAliens -= 1;
+        model->score.score += model->aliens.r2[0].score;
         return 1;
     } 
-    if(check_row_hit(aliens->r3, bullet) == 1) {
-        aliens->totalAliens -= 1;
+    if(check_row_hit(model->aliens.r3, bullet) == 1) {
+        model->aliens.totalAliens -= 1;
+        model->score.score += model->aliens.r3[0].score;
         return 1;
     } 
-    if(check_row_hit(aliens->r4, bullet) == 1) {
-        aliens->totalAliens -= 1;
+    if(check_row_hit(model->aliens.r4, bullet) == 1) {
+        model->aliens.totalAliens -= 1;
+        model->score.score += model->aliens.r4[0].score;
         return 1;
     } 
-    if(check_row_hit(aliens->r5, bullet) == 1) {
-        aliens->totalAliens -= 1;
+    if(check_row_hit(model->aliens.r5, bullet) == 1) {
+        model->aliens.totalAliens -= 1;
+        model->score.score += model->aliens.r5[0].score;
         return 1;
     }
     return 0;
@@ -113,7 +118,7 @@ int check_row_hit(Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i].alive) {
-            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 32))) {
+            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 22))) {
                 /* bullet hits alien */
                 row[i].alive = 0;
                 return 1;

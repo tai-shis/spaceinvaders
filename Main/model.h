@@ -127,7 +127,7 @@ void update_score(Score *score);
  * @param bullet Bullet struct
  * @return 1 if bullet has hit, 0 otherwise
  */
-int check_aliens_hit(Aliens *aliens, Bullet *bullet);
+int check_aliens_hit(Model *model, Bullet *bullet);
 
 /**
  * @brief Checks if a bullet has hit a specific alien in a row

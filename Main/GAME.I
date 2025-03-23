@@ -82,7 +82,7 @@ void add_score (int score_to_add, Score curr_score);
 # 121 "./model.h"
 void update_score(Score *score);
 # 130 "./model.h"
-int check_aliens_hit(Aliens *aliens, Bullet *bullet);
+int check_aliens_hit(Model *model, Bullet *bullet);
 # 139 "./model.h"
 int check_row_hit(Alien row[], Bullet *bullet);
 # 148 "./model.h"
