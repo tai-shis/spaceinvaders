@@ -36,18 +36,18 @@ const UINT16 noteTunings[12][3] = {
 UINT16 song_a[48][2] = {
     /* Fallen Down from undertale */
     {F_SHARP, 2},
-    {F_SHARP, 2},
     {C_SHARP, 2},
     {F_SHARP, 2},
     {C_SHARP, 2},
     {F_SHARP, 2},
+    {C_SHARP, 2},
     
-    {C_SHARP, 2},
     {F_SHARP, 2},
     {C_SHARP, 2},
     {F_SHARP, 2},
     {C_SHARP, 2},
     {F_SHARP, 2},
+    {C_SHARP, 2},
     
     {B, 1},
     {A, 1},
@@ -95,11 +95,11 @@ UINT16 song_a[48][2] = {
 void start_music() {
 
     /* First notes */
-    set_tone(0, noteTunings[song_a[0][0]][song_a[0][1]]);
+    set_tone(0, noteTunings[F_SHARP][2]);
     
     set_volume(0, 0xD);
 
-    enable_channel(0, 1, 0);
+    enable_channel(0, 0, 1);
     
 
     /* Disabled for now */
@@ -114,7 +114,7 @@ char update_music(UINT32 time_elapsed, UINT32 time_before, int note) {
     
 
     /* 3/4 Time Signature, updates every 1/8th note */
-    if ((time_elapsed - time_before) > 12) {
+    if ((time_elapsed - time_before) > 20) {
        set_tone(0, noteTunings[song_a[note][0]][song_a[note][1]]); 
        return 1;
     }

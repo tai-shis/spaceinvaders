@@ -125,6 +125,7 @@ int main() {
     };
     int f = 0;
     int note = 0;
+    int temp;
     UINT32 timeStart, timeNow, timeElapsed, timeBefore;
 
     /* Line below clears screen from cursor and mouse */
@@ -158,12 +159,17 @@ int main() {
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 
-        if (update_music(timeElapsed, timeBefore, note)) {
+        temp = update_music(timeElapsed, timeBefore, note);
+        if (temp == 1) {        
+            timeBefore = timeElapsed;
             note++;
+            if (note == 48) {
+                note = 0;
+            }
         } 
-        
-        timeBefore = timeElapsed;
     }
+
+    stop_sound();
 
     /* Clear both buffers when done game */
     clear_screen((UINT32)active);
