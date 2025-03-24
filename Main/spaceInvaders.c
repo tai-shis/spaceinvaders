@@ -1,6 +1,4 @@
-#include "game.h"
-#include <stdio.h>
-#include <osbind.h>
+#include "spaceInvaders.h"
 
 extern void clear_screen(UINT32 base);
 

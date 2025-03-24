@@ -1,5 +1,10 @@
-/* Setup functions which call low level input routines (maybe using <osbind.h>) */
-/* Detect clock ticks in here? */
+/**
+    * @file input.h
+    * @brief Header file for input.c
+    * @date 2025-02-25
+    * @details Function to handle keyboard input.
+*/
+
 #include <osbind.h>
 
 /**

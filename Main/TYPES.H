@@ -1,3 +1,9 @@
+/**
+    * @file types.h
+    * @brief This file contains the unsigned type definitions throughout the project.
+    * @date 8/11/2019
+*/
+
 #ifndef TYPES_H
 #define TYPES_H
 

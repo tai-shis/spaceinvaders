@@ -1,3 +1,10 @@
+/**
+    * @file raster.h
+    * @brief Header file for raster.c
+    * @date 2025-02-04
+    * @details Plotting functions for bitmaps, lines, and clearing player and alien areas.
+*/
+
 #ifndef RASTER_H
 #define RASTER_H
 

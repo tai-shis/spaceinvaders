@@ -1,3 +1,10 @@
+/**
+    * @file events.h
+    * @brief Header file for events.c
+    * @date 2025-02-12
+    * @details Functions to handle player movement, shooting, aliens movement, bullets movement and collisions, and game end conditions.
+*/
+
 #ifndef EVENTS_H
 #define EVENTS_H
 

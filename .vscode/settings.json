@@ -12,6 +12,8 @@
         "model.h": "c",
         "psg.h": "c",
         "music.h": "c",
-        "game.h": "c"
+        "game.h": "c",
+        "effects.h": "c",
+        "stdio.h": "c"
     }
 }

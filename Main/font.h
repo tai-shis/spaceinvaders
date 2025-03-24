@@ -1,3 +1,10 @@
+/**
+    * @file font.h
+    * @brief Header file for font.c
+    * @date 2025-02-04
+    * @details This file contains the font bitmaps for the system font.
+*/
+
 #ifndef FONT_H
 #define FONT_H
 

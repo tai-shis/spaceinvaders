@@ -1,3 +1,11 @@
+/**
+    * @file model.h
+    * @brief Header file for model.c
+    * @date 2025-02-12
+    * @details All types of data structures for the game, like player, alien, bullet, score, and model (game environment) are defined here.
+    * @details Functions for moving player, aliens, bullets, updating score, collsion detection, and other game logic are also defined here.
+*/
+
 #ifndef MODEL_H
 #define MODEL_H
 

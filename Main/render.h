@@ -1,3 +1,10 @@
+/**
+    * @file render.h
+    * @brief Header file for render.c
+    * @date 2025-02-12
+    * @details Functions that render the game objects on the screen.
+*/
+
 #ifndef RENDER_H
 #define RENDER_H
 

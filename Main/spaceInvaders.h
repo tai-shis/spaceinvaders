@@ -1,5 +1,16 @@
+/**
+    * @authors Harinder Punia & Tai Shishiba
+    * @file spaceInvaders.h
+    * @brief Header file for spaceInvaders.c
+    * @date 2025-02-25
+    * @details Functions for handling player input, synchrounous game logic, double buffering, and getting clock time.
+*/
+
 #ifndef GAME_H
 #define GAME_H
+
+#include <stdio.h>
+#include <osbind.h>
 
 #include "render.h"
 #include "types.h"
