@@ -23,11 +23,11 @@
 #	cc68x -g -c tst_s4.c
 
 # Make for game
-game: spaceInvaders.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o
-	cc68x -g game.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o -o spaceInvaders.prg
+space: space.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o effects.o
+	cc68x -g space.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o effects.o -o space.prg
 
-spaceInvaders.o: spaceInvaders.c spaceInvaders.h 
-	cc68x -g -c spaceInvaders.c 
+space.o: space.c space.h 
+	cc68x -g -c space.c 
 
 render.o: render.c render.h
 	cc68x -g -c render.c
@@ -55,6 +55,9 @@ psg.o: psg.c psg.h
 
 music.o: music.c music.h
 	cc68x -g -c music.c
+
+effects.o: effects.c effects.h
+	cc68x -g -c effects.c
 
 clean:
 	$(RM) *.o *.prg 

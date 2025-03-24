@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file render.h
     * @brief Header file for render.c
     * @date 2025-02-12

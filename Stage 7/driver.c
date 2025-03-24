@@ -1,3 +1,10 @@
+/**
+    * @file driver.c
+    * @brief Test driver file for Stage 7
+    * @date 2025-03-25
+    * @details Tests all functionality for psg and effects. Does not test for music as it relies on timing which is done in Stage 5's game code.
+*/
+
 #include "music.h"
 #include "effects.h"
 

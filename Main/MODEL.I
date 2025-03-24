@@ -1,13 +1,11 @@
 # 1 "model.c" 1
 # 1 "./model.h" 1
 # 1 "./types.h" 1
-
-
-
+# 11 "./types.h"
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
-# 4 "./model.h" 2
+# 13 "./model.h" 2
 
 
 typedef struct Player {
@@ -63,27 +61,27 @@ typedef struct Model {
     int active_count;
     int quit;
 } Model;
-# 66 "./model.h"
+# 75 "./model.h"
 void move_player(Player *player);
-# 74 "./model.h"
+# 83 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 82 "./model.h"
+# 91 "./model.h"
 int move_aliens(Aliens *aliens);
-# 90 "./model.h"
+# 99 "./model.h"
 int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx);
-# 98 "./model.h"
+# 107 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 106 "./model.h"
+# 115 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 114 "./model.h"
+# 123 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 121 "./model.h"
-void update_score(Score *score);
 # 130 "./model.h"
-int check_aliens_hit(Model *model, Bullet *bullet);
+void update_score(Score *score);
 # 139 "./model.h"
-int check_row_hit(Alien row[], Bullet *bullet);
+int check_aliens_hit(Model *model, Bullet *bullet);
 # 148 "./model.h"
+int check_row_hit(Alien row[], Bullet *bullet);
+# 157 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
 # 1 "model.c" 2
 

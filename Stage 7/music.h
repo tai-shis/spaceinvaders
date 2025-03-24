@@ -1,3 +1,10 @@
+/**
+    * @file music.h
+    * @brief Header file for music.c
+    * @date 2025-03-23
+    * @details Contains functions for playing music, and updating music.
+ */
+
 #ifndef MUSIC_H
 #define MUSIC_H
 
@@ -36,8 +43,18 @@ const UINT16 noteTunings[12][3] = {
     /* B */         {{0x01FA}, {0x00FD},  {0x007E}},
 };
 
+/**
+ * @brief Starts the music playback.
+ */
 void start_music();
 
+/**
+ * @brief Updates the music based on the elapsed time and the current note.
+ * @param time_elapsed The time elapsed in-game
+ * @param time_before The time since the last update.
+ * @param note The note index from song array to play.
+ * @return Whether or not the note was updated.
+ */
 char update_music(UINT32 time_elapsed, UINT32 time_before, int note);
 
 #endif

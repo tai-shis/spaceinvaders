@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba 
     * @file raster.h
     * @brief Header file for raster.c
     * @date 2025-02-04

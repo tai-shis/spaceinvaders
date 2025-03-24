@@ -1,3 +1,10 @@
+/**
+ * @file bitmaps.c
+ * @brief Contains bitmap data for various game elements.
+ * @date 2025-02-04
+ * @details This file includes bitmap definitions for aliens, the player, bullets, and numbers used in the game.
+ */
+
 #include "TYPES.H"
 
 UINT32 alien1_bitmap[2][32] = {

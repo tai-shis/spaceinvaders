@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file font.h
     * @brief Header file for font.c
     * @date 2025-02-04

@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file model.h
     * @brief Header file for model.c
     * @date 2025-02-12

@@ -66,7 +66,7 @@ void start_music() {
     
     set_volume(0, 0xA);
 
-    enable_channel(0, 0, 1);
+    enable_channel(0, 1, 0);
     
 
     /* Disabled for now */

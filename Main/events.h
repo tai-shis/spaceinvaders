@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file events.h
     * @brief Header file for events.c
     * @date 2025-02-12

@@ -1,4 +1,4 @@
-#include "spaceInvaders.h"
+#include "space.h"
 
 extern void clear_screen(UINT32 base);
 
