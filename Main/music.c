@@ -97,7 +97,7 @@ void start_music() {
     /* First notes */
     set_tone(0, noteTunings[F_SHARP][2]);
     
-    set_volume(0, 0xD);
+    set_volume(0, 0xA);
 
     enable_channel(0, 0, 1);
     

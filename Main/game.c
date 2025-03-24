@@ -8,8 +8,8 @@ UINT8 preBuffer[32255];
 
 int main() {
     void *base = Physbase();
-    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
     void *active = base;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
@@ -150,16 +150,13 @@ int main() {
         if(timeElapsed > 0){
             syncHandle(&model, timeElapsed);
             
-            if((timeElapsed & 0x7F) > 120) { 
+            if((timeElapsed & 0x7F) > 122) { 
                 f++;
             }
         }
-        
-        if (model.aliens.render == 1) {
-            clear_screen((UINT32)inactive);
-        } else{
-            clear_player((UINT32)inactive);
-        }
+
+        clear_screen((UINT32)inactive);
+
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 
@@ -207,12 +204,11 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     /* Essentially check if elapsed time % 128 == 0 */
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
     int game_state;
-    if((timeElapsed & 0x7F) > 120) { 
+    if((timeElapsed & 0x7F) > 122) { 
         game_state = update_aliens(model);
         if (game_state == -1) {
             model->quit = 1;
-        }  
-        model->aliens.render = 1;
+        }
     }
     /* Update bullets */
     if (model->active_count > 0) {

@@ -125,7 +125,6 @@ void plot_hline(UINT8 *base, int x1, int x2, int y) {
 	return;
 }
 
-
 /* for 8 bit font sizes */
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
 	UINT8 *start = base;
@@ -147,6 +146,17 @@ void clear_player(UINT32 *base) {
 
 	for (i = 0; i < 800; i++) {
 		*start = 0;
-		start += 20;
+		start += 1;
+	}
+}
+
+void clear_aliens(UINT32 *base, int y) {
+	UINT32 *start = base;
+	int i;
+	start += y * 20;
+
+	for (i = 0; i < 7200; i++) {
+		*start = 0;
+		start += 1;
 	}
 }

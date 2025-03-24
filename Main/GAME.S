@@ -276,21 +276,21 @@ L2:
 _main:
 	link	a6,#-988
 	movem.l	d3/d4/d5/d6/d7/a3/a4/a5,-(a7)
-	lea	-8(a6),a3
+	lea	-12(a6),a3
 	lea	_clear_screen,a4
 	lea	-966(a6),a0
 	move.l	a0,d6
-	lea	-12(a6),a5
+	lea	-8(a6),a5
 	;line	132
 	move.w	#2,-(a7)
 	jsr	__trap_14_w
 	addq.l	#2,a7
 	move.l	d0,d7
+	move.l	d7,(a5)
 	move.l	#_preBuffer,d0
 	add.l	#255,d0
 	and.l	#-256,d0
 	move.l	d0,(a3)
-	move.l	d7,(a5)
 	lea	L1,a0
 	move.l	d6,a1
 	move.w	#237,d0
@@ -350,38 +350,28 @@ L4:
 	;line	153
 	moveq	#127,d0
 	and.l	d3,d0
-	cmp.l	#120,d0
+	cmp.l	#122,d0
 	bls	L8
 	;line	154
 	addq.w	#1,d5
 L8:
 L7:
 	;line	158
-	cmp.b	#1,-398(a6)
-	bne	L9
-	;line	159
 	move.l	(a3),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
-	bra	L10
-L9:
-	;line	161
-	move.l	(a3),-(a7)
-	jsr	_clear_player
-	addq.l	#4,a7
-L10:
-	;line	163
+	;line	160
 	move.w	d5,-(a7)
 	move.l	(a3),-(a7)
 	move.l	d6,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	164
+	;line	161
 	move.l	a3,-(a7)
 	move.l	a5,-(a7)
 	jsr	_swapBuffers
 	addq.l	#8,a7
-	;line	166
+	;line	163
 	move.w	d4,-(a7)
 	move.l	-988(a6),-(a7)
 	move.l	d3,-(a7)
@@ -389,43 +379,43 @@ L10:
 	lea	10(a7),a7
 	ext.w	d0
 	move.w	d0,-972(a6)
-	;line	167
+	;line	164
 	cmp.w	#1,-972(a6)
-	bne	L11
-	;line	168
+	bne	L9
+	;line	165
 	move.l	d3,-988(a6)
-	;line	169
+	;line	166
 	addq.w	#1,d4
-	;line	170
+	;line	167
 	cmp.w	#48,d4
-	bne	L12
-	;line	171
+	bne	L10
+	;line	168
 	moveq	#0,d4
-L12:
-L11:
+L10:
+L9:
 L5:
 	tst.w	-14(a6)
 	beq	L4
 L6:
-	;line	176
+	;line	173
 	jsr	_stop_sound
-	;line	179
+	;line	176
 	move.l	(a5),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
-	;line	180
+	;line	177
 	move.l	(a3),-(a7)
 	jsr	(a4)
 	addq.l	#4,a7
-	;line	182
+	;line	179
 	move.w	#-1,-(a7)
 	move.l	d7,-(a7)
 	pea	-1
 	move.w	#5,-(a7)
 	jsr	__trap_14_wllw
-	;line	183
+	;line	180
 	moveq	#0,d0
-L13:
+L11:
 	movem.l	-1020(a6),d3/d4/d5/d6/d7/a3/a4/a5
 	unlk	a6
 	rts
@@ -433,27 +423,36 @@ _asyncHandle:
 	link	a6,#-2
 	movem.l	d3/d4,-(a7)
 	move.l	8(a6),d3
-	;line	189
+	;line	186
 	jsr	_keystroke
 	move.b	d0,d4
-	;line	189
+	;line	186
 	move.b	d4,d0
 	sub.b	#113,d0
-	beq	L15
+	beq	L13
 	sub.b	#-16,d0
-	beq	L16
+	beq	L14
 	subq.b	#3,d0
-	beq	L17
+	beq	L15
 	sub.b	#15,d0
-	beq	L18
-	bra	L14
-L15:
-	;line	191
+	beq	L16
+	bra	L12
+L13:
+	;line	188
 	move.l	d3,a0
 	move.w	#1,952(a0)
+	;line	189
+	bra	L12
+L14:
+	;line	191
+	move.b	d4,d0
+	ext.w	d0
+	move.w	d0,-(a7)
+	move.l	d3,-(a7)
+	jsr	_async_move_player
 	;line	192
-	bra	L14
-L16:
+	bra	L12
+L15:
 	;line	194
 	move.b	d4,d0
 	ext.w	d0
@@ -461,23 +460,14 @@ L16:
 	move.l	d3,-(a7)
 	jsr	_async_move_player
 	;line	195
-	bra	L14
-L17:
+	bra	L12
+L16:
 	;line	197
-	move.b	d4,d0
-	ext.w	d0
-	move.w	d0,-(a7)
-	move.l	d3,-(a7)
-	jsr	_async_move_player
-	;line	198
-	bra	L14
-L18:
-	;line	200
 	clr.w	-(a7)
 	move.l	d3,-(a7)
 	jsr	_async_shoot
-L14:
-	;line	201
+L12:
+	;line	198
 	movem.l	-10(a6),d3/d4
 	unlk	a6
 	rts
@@ -485,42 +475,40 @@ _syncHandle:
 	link	a6,#-2
 	move.l	a3,-(a7)
 	move.l	8(a6),a3
-	;line	210
+	;line	207
 	move.l	12(a6),d0
 	and.l	#127,d0
-	cmp.l	#120,d0
-	bls	L19
-	;line	211
+	cmp.l	#122,d0
+	bls	L17
+	;line	208
 	move.l	a3,-(a7)
 	jsr	_update_aliens
 	addq.l	#4,a7
 	move.w	d0,-2(a6)
-	;line	212
+	;line	209
 	cmp.w	#-1,-2(a6)
-	bne	L20
-	;line	213
+	bne	L18
+	;line	210
 	move.w	#1,952(a3)
-L20:
-	;line	215
-	move.b	#1,568(a3)
-L19:
-	;line	218
+L18:
+L17:
+	;line	214
 	tst.w	950(a3)
-	ble	L21
-	;line	219
+	ble	L19
+	;line	215
 	move.l	a3,-(a7)
 	jsr	_update_bullets
 	addq.l	#4,a7
-L21:
-	;line	223
+L19:
+	;line	219
 	move.l	a3,-(a7)
 	jsr	_check_endgame
 	addq.l	#4,a7
 	tst.w	d0
-	beq	L22
-	;line	224
+	beq	L20
+	;line	220
 	move.w	#1,952(a3)
-L22:
+L20:
 	move.l	-6(a6),a3
 	unlk	a6
 	rts
@@ -528,22 +516,22 @@ _swapBuffers:
 	link	a6,#-4
 	move.l	a3,-(a7)
 	move.l	8(a6),a3
-	;line	230
+	;line	226
 	move.l	(a3),-4(a6)
-	;line	230
+	;line	226
 	move.l	12(a6),a0
 	move.l	(a0),(a3)
-	;line	231
+	;line	227
 	move.l	12(a6),a0
 	move.l	-4(a6),(a0)
-	;line	232
+	;line	228
 	move.w	#-1,-(a7)
 	move.l	(a3),-(a7)
 	pea	-1
 	move.w	#5,-(a7)
 	jsr	__trap_14_wllw
 	lea	12(a7),a7
-	;line	233
+	;line	229
 	move.w	#37,-(a7)
 	jsr	__trap_14_w
 	move.l	-8(a6),a3
@@ -551,24 +539,24 @@ _swapBuffers:
 	rts
 _getTime:
 	link	a6,#-12
-	;line	241
+	;line	237
 	move.l	#1122,-4(a6)
-	;line	241
+	;line	237
 	pea	0
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
 	addq.l	#6,a7
 	move.l	d0,-12(a6)
-	;line	242
+	;line	238
 	move.l	-4(a6),a0
 	move.l	(a0),-8(a6)
-	;line	243
+	;line	239
 	move.l	-12(a6),-(a7)
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
-	;line	245
+	;line	241
 	move.l	-8(a6),d0
-L23:
+L21:
 	unlk	a6
 	rts
 	globl	_asyncHandle

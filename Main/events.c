@@ -28,7 +28,7 @@ void async_shoot(Model *model, int cooldown) {
     /* For now, make a new bullet object when this is called, is ineffecient though */
     /* 1 for moving up, edit bulletX once mapping is done */
     int i;
-    Bullet temp = {0, 0, 8, 16, 4, 1, 1};
+    Bullet temp = {0, 0, 8, 16, 8, 1, 1};
     temp.x = model->player.x + 14;  /* Center of player */
     temp.y = model->player.y - 6;  /* Top of player - bullet height (and some change)*/
     
@@ -59,6 +59,7 @@ int update_aliens(Model *model) {
     } 
 
     move_aliens(&model->aliens);
+    model->aliens.render = 1;
     return 0;
 }
 

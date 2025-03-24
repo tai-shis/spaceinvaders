@@ -61,7 +61,19 @@ void plot_hline(UINT8 *base, int x1, int x2, int y);
  */
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
 
-
+/**
+ * @brief Clears the screen in the player's area
+ * 
+ * @param base The base address of the screen
+ */
 void clear_player(UINT32 *base);
+
+/**
+ * @brief Clears the screen in the alien's area
+ * 
+ * @param base The base address of the screen
+ * @param y The top y coordinate of the alien's area
+ */
+void clear_aliens(UINT32 *base, int y);
 
 #endif

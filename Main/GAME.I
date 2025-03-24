@@ -103,9 +103,10 @@ void plot_vline(UINT8 *base, int x, int y1, int y2);
 void plot_hline(UINT8 *base, int x1, int x2, int y);
 # 62 "./raster.h"
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
-
-
+# 69 "./raster.h"
 void clear_player(UINT32 *base);
+# 77 "./raster.h"
+void clear_aliens(UINT32 *base, int y);
 # 5 "./render.h" 2
 # 14 "./render.h"
 void render(const Model *model, void *base, int f);
@@ -451,8 +452,8 @@ UINT8 preBuffer[32255];
 
 int main() {
     void *base = (void*)_trap_14_w((short)0x2) ;
-    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
     void *active = base;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
@@ -593,16 +594,13 @@ int main() {
         if(timeElapsed > 0){
             syncHandle(&model, timeElapsed);
 
-            if((timeElapsed & 0x7F) > 120) {
+            if((timeElapsed & 0x7F) > 122) {
                 f++;
             }
         }
 
-        if (model.aliens.render == 1) {
-            clear_screen((UINT32)inactive);
-        } else{
-            clear_player((UINT32)inactive);
-        }
+        clear_screen((UINT32)inactive);
+
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 
@@ -650,12 +648,11 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
 
 
     int game_state;
-    if((timeElapsed & 0x7F) > 120) {
+    if((timeElapsed & 0x7F) > 122) {
         game_state = update_aliens(model);
         if (game_state == -1) {
             model->quit = 1;
         }
-        model->aliens.render = 1;
     }
 
     if (model->active_count > 0) {

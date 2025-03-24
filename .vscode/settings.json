@@ -10,6 +10,8 @@
         "TST_REND.C": "cpp",
         "events.h": "c",
         "model.h": "c",
-        "psg.h": "c"
+        "psg.h": "c",
+        "music.h": "c",
+        "game.h": "c"
     }
 }

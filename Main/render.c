@@ -1,26 +1,28 @@
 #include "render.h"
 #include "bitmaps.c"
 
+extern void clear_screen(UINT32 base);
+
 void render(Model *model, void *base, int f) {
     int i;
 
     /* Always render player for simplicity */
     render_player(&model->player, base);
 
-    /* Check if there are any bullets that need to be rendered */
-    if (model->active_count > 0) {
-        for (i = 0; i < 30; i += 1) {
-            if (model->active[i].is_active) {
-                render_bullet(&model->active[i], base);
-            }
-        }
-    }
-
-    /* If aliens need to be rendered, also render score probably */
+    /* If aliens need to be rendered, also render score probably */ 
     if (model->aliens.render == 1) {
         render_aliens(&model->aliens, base, (f&1));
         render_score(&model->score, base);
-        model->aliens.render = 0;
+        model->aliens.render == 1;
+    }
+
+    /* Check if there are any bullets that need to be rendered */
+    if (model->active_count > 0) {
+        for (i = 0; i < 30; i += 1) {
+            if (model->active[i].is_active) {   
+                render_bullet(&model->active[i], base);
+            }
+        }
     }
 }
 
