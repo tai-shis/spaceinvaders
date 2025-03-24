@@ -165,7 +165,7 @@ int main() {
             if (note == 48) {
                 note = 0;
             }
-        } 
+        }
     }
 
     stop_sound();

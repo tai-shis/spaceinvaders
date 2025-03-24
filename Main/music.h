@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file music.h
     * @brief Header file for music.c
     * @date 2025-03-23
