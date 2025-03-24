@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file psg.h
     * @brief Header file for psg.c
     * @date 2025-03-23

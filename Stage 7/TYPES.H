@@ -1,4 +1,5 @@
 /**
+    * @authors Harinder Punia & Tai Shishiba
     * @file types.h
     * @brief This file contains the unsigned type definitions throughout the project.
     * @date 8/11/2019
