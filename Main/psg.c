@@ -1,8 +1,8 @@
 #include <osbind.h>
 #include "psg.h"
 
-volatile const char *PSG_reg_select = 0xFF8800;
-volatile const char *PST_reg_write  = 0xFF8802;
+volatile char *PSG_reg_select = 0xFF8800;
+volatile char *PSG_reg_write  = 0xFF8802;
 
 void write_psg(int reg, UINT8 val) {
     long old_ssp = Super(0);
@@ -23,15 +23,15 @@ void set_tone(int channel, int tuning) {
     switch(channel) {
         case 0:
             write_psg(0, (UINT8)(tuning & 0xFF));
-            write_psg(1, (UINT8)((tuning >> 8));  /* here. */
+            write_psg(1, (UINT8)(tuning >> 8));  /* here. */
             break;
         case 1:
-            write_psg(2, (UINT8)((tuning & 0xFF));
-            write_psg(3, (UINT8)((tuning >> 8));  /* here. */
+            write_psg(2, (UINT8)(tuning & 0xFF));
+            write_psg(3, (UINT8)(tuning >> 8));  /* here. */
             break;
         case 2:
-            write_psg(4, (UINT8)((tuning & 0xFF));
-            write_psg(5, (UINT8)((tuning >> 8));  /* here. */
+            write_psg(4, (UINT8)(tuning & 0xFF));
+            write_psg(5, (UINT8)(tuning >> 8));  /* here. */
             break;
         default:
             return;
@@ -40,16 +40,16 @@ void set_tone(int channel, int tuning) {
 
 void set_volume(int channel, int volume) {
     /* Maximum value for 5 bits of data */
-    if (tuning > 0x1F) {
+    if (volume > 0x1F) {
         return;
     }
 
     switch(channel) {
         case 0:
-            write_psg(8, (UINT8)(volume);
+            write_psg(8, (UINT8)(volume));
             break;
         case 1:
-            write_psg(9, (UINT8)(volume);
+            write_psg(9, (UINT8)(volume));
             break;
         case 2:
             write_psg(10, (UINT8)(volume));
@@ -85,29 +85,31 @@ void enable_channel(int channel, int tone_on, int noise_on) {
     /* This looks slightly complicated, but this is done so that we dont overwrite other registers' settings */
     switch(channel) {
         case 0:
-            if (tone_on):
+            if (tone_on) {
                 value |= 0x1;
                 write_psg(7, value);
-            else:
+            } else {
                 value &= 0xFE;
                 write_psg(7, value);  
+            }
             break;
         case 1:
-            if (tone_on):
+            if (tone_on) {
                 value |= 0x2;
                 write_psg(7, value);
-
-            else:
+            } else {
                 value &= 0xFD;
                 write_psg(7, value);  
+            }
             break;
         case 2:
-            if (tone_on):
+            if (tone_on){
                 value |= 0x4;
                 write_psg(7, value);
-            else:
+            } else {
                 value &= 0xFB;
                 write_psg(7, value);  
+            }
             break;
         default:
             return;
@@ -115,29 +117,31 @@ void enable_channel(int channel, int tone_on, int noise_on) {
 
     switch(channel) {
         case 0:
-            if (noise_on):
+            if (noise_on) { 
                 value |= 0x8;
                 write_psg(7, value);
-            else:
+            } else {
                 value &= 0xF7;
                 write_psg(7, value);  
+            }
             break;
         case 1:
-            if (noise_on):
+            if (noise_on) {
                 value |= 0x10;
                 write_psg(7, value);
-
-            else:
+            } else {
                 value &= 0xEF;
                 write_psg(7, value);  
+            }
             break;
         case 2:
-            if (noise_on):
+            if (noise_on) {
                 value |= 0x20;
                 write_psg(7, value);
-            else:
+            } else {
                 value &= 0xDF;
                 write_psg(7, value);  
+            } 
             break;
         default:
             return;

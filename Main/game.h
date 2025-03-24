@@ -7,6 +7,8 @@
 #include "model.h"
 #include "raster.h"
 #include "input.h"
+#include "psg.h"
+#include "music.h"
 
 void asyncHandle(Model *model);
 

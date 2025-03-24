@@ -308,6 +308,30 @@ typedef struct
 
 char keystroke();
 # 9 "./game.h" 2
+# 1 "./psg.h" 1
+# 1 "./TYPES.H" 1
+# 4 "./psg.h" 2
+
+
+void write_psg(int reg, UINT8 val);
+
+void set_tone(int channel, int tuning);
+
+void set_volume(int channel, int volume);
+
+void enable_channel(int channel, int tone_on, int noise_on);
+
+void stop_sound();
+# 10 "./game.h" 2
+# 1 "./music.h" 1
+# 1 "./psg.h" 1
+# 4 "./music.h" 2
+
+
+void start_music();
+
+char update_music(UINT32 time_elapsed, UINT32 time_before, int note);
+# 11 "./game.h" 2
 
 
 void asyncHandle(Model *model);
@@ -426,6 +450,7 @@ int main() {
     void *base = (void*)_trap_14_w((short)0x2) ;
     void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
     void *active = base;
+
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
         {
@@ -539,26 +564,29 @@ int main() {
         0,0
     };
     int f = 0;
-    UINT32 timeThen, timeNow, timeElapsed;
+    int note = 0;
+    UINT32 timeStart, timeNow, timeElapsed, timeBefore;
 
 
     printf("\033E\033f\n");
 
-    timeThen = getTime();
+    timeStart = getTime();
 
     clear_screen((UINT32)active);
     clear_screen((UINT32)inactive);
 
     render(&model, active, f);
 
+    start_music();
+    note = 1;
+
     while (!model.quit) {
         timeNow = getTime();
-        timeElapsed = timeNow - timeThen;
+        timeElapsed = timeNow - timeStart;
 
         asyncHandle(&model);
 
         if(timeElapsed > 0){
-
             syncHandle(&model, timeElapsed);
 
             if((timeElapsed & 0x7F) > 120) {
@@ -569,6 +597,12 @@ int main() {
         clear_screen((UINT32)inactive);
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
+
+        if (update_music(timeElapsed, timeBefore, note)) {
+            note++;
+        }
+
+        timeBefore = timeElapsed;
     }
 
 

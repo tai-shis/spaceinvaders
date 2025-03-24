@@ -10,6 +10,7 @@ int main() {
     void *base = Physbase();
     void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
     void *active = base;
+
     Model model = {
         { 288, 368, 32, 32, 3, 0, 1 },
         {
@@ -157,7 +158,7 @@ int main() {
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 
-        if (update_music(time_elapsed, time_before, note)) {
+        if (update_music(timeElapsed, timeBefore, note)) {
             note++;
         } 
         
