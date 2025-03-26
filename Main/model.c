@@ -121,6 +121,7 @@ int check_row_hit(Alien row[], Bullet *bullet) {
             if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 22))) {
                 /* bullet hits alien */
                 row[i].alive = 0;
+                play_hit();
                 return 1;
             }
         }

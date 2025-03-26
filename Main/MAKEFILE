@@ -23,8 +23,8 @@
 #	cc68x -g -c tst_s4.c
 
 # Make for game
-space: space.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o effects.o
-	cc68x -g space.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o effects.o -o space.prg
+space: space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o clear_qk.o
+	cc68x -g space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o clear_qk.o -o space.prg
 
 space.o: space.c space.h 
 	cc68x -g -c space.c 

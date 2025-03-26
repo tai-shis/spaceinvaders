@@ -11,6 +11,7 @@
 #define MODEL_H
 
 #include "types.h"
+#include "effects.h"
 
 typedef struct Player {
     UINT16 x, y;            /* Position Coordinates, y should be constant, set in the constructor */

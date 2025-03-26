@@ -6,6 +6,51 @@ typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
 # 13 "./model.h" 2
+# 1 "./effects.h" 1
+# 1 "./psg.h" 1
+# 1 "./TYPES.H" 1
+# 12 "./psg.h" 2
+# 19 "./psg.h"
+ void write_psg(int reg, UINT8 val);
+# 26 "./psg.h"
+ void set_tone(int channel, int tuning);
+# 33 "./psg.h"
+ void set_volume(int channel, int volume);
+# 41 "./psg.h"
+ void enable_channel(int channel, int tone_on, int noise_on);
+
+
+
+
+ void stop_sound();
+
+
+
+
+
+ void set_noise(UINT8 tuning);
+# 59 "./psg.h"
+ void set_envelope(UINT8 shape, UINT16 sustain);
+# 66 "./psg.h"
+ UINT8 read_psg(int reg);
+# 12 "./effects.h" 2
+
+
+
+
+
+void play_shoot();
+
+
+
+
+void play_hit();
+
+
+
+
+void play_game_over();
+# 14 "./model.h" 2
 
 
 typedef struct Player {
@@ -61,27 +106,27 @@ typedef struct Model {
     int active_count;
     int quit;
 } Model;
-# 75 "./model.h"
+# 76 "./model.h"
 void move_player(Player *player);
-# 83 "./model.h"
+# 84 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 91 "./model.h"
+# 92 "./model.h"
 int move_aliens(Aliens *aliens);
-# 99 "./model.h"
+# 100 "./model.h"
 int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx);
-# 107 "./model.h"
+# 108 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 115 "./model.h"
+# 116 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 123 "./model.h"
+# 124 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 130 "./model.h"
+# 131 "./model.h"
 void update_score(Score *score);
-# 139 "./model.h"
+# 140 "./model.h"
 int check_aliens_hit(Model *model, Bullet *bullet);
-# 148 "./model.h"
+# 149 "./model.h"
 int check_row_hit(Alien row[], Bullet *bullet);
-# 157 "./model.h"
+# 158 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
 # 1 "model.c" 2
 
@@ -207,6 +252,7 @@ int check_row_hit(Alien row[], Bullet *bullet) {
             if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 22))) {
 
                 row[i].alive = 0;
+                play_hit();
                 return 1;
             }
         }

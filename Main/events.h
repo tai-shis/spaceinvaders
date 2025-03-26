@@ -10,6 +10,7 @@
 #define EVENTS_H
 
 #include "model.h"
+#include "effects.h"
 
 /**
  * @brief Handles player movement based on the key pressed

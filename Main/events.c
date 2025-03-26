@@ -41,6 +41,7 @@ void async_shoot(Model *model, int cooldown) {
             if(!model->active[i].is_active) {
                 model->active[i] = temp;
                 model->active_count += 1;
+                play_shoot();
                 return;
             }
         }
