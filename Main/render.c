@@ -11,6 +11,8 @@ void render(Model *model, void *base, int f) {
 
     render_lives(model->player.lives, base);
 
+    render_border(model, base);
+
     /* If aliens need to be rendered, also render score probably */ 
     if (model->aliens.render == 1) {
         render_aliens(&model->aliens, base, (f&1));
@@ -112,3 +114,8 @@ void render_lives(UINT8 lives, UINT16 *base) {
             break;
     }
 };
+
+void render_border(Model *model, void *base){
+    plot_hline(base, model->lowbound_x, model->highbound_x, (model->player.y) + 33);
+    plot_hline(base, model->lowbound_x, model->highbound_x, 32);
+}

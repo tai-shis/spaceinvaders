@@ -77,13 +77,13 @@ void plot_vline (UINT8 *base, int x, int y1, int y2){
 	return;
 }
 
-void plot_hline(UINT8 *base, int x1, int x2, int y) {
+void plot_hline(UINT32 *base, int x1, int x2, int y) {
 	/* Essentially very similar to plot_vline func */
 	int temp;
 	UINT8 start;
 	UINT8 end;
-	UINT8 *screen_byte;
-	UINT8 *line_end;
+	UINT32 *screen_long;
+	UINT32 *line_end;
 
 	if (y >= 0 && y < 400) { /* Make sure y is in bounds */
 		/* If line call with x is backwards, flip */
@@ -104,23 +104,22 @@ void plot_hline(UINT8 *base, int x1, int x2, int y) {
 		}
 
 		/* THIS DOES NOT COVER THE CASE WHERE x2-x1 IS < 8 */
-		start = 0xFF >> ((x1 & 7));
-		end = 0xFF << (7 - (x2 & 7));
-		screen_byte = base + y * 80 + (x1 >> 3);
-		line_end = base + y * 80 + (x2 >> 3); /* End address (rounded down by 8) */
+		start = 0xFF >> ((x1 & 31));
+		end = 0xFF << (31 - (x2 & 31));
+		screen_long = base + y * 20 + (x1 >> 5);
+		line_end = base + y * 20 + ((x2 + 31) >> 5); /* End address (adjusted for remaining bits) */
 
 		/* Plot start line */
-		*screen_byte = start;	
-		screen_byte += 1;
+		*screen_long = start;
 
 		/* Plot 0xFFs */
-		while (screen_byte < line_end) {
-			*screen_byte |= 0xFF;
-			screen_byte += 1;
+		while (screen_long < line_end) {
+			*screen_long |= 0xFFFFFFFF;
+			screen_long += 1;
 		}
 		
 		/* Plot end line */
-		*screen_byte = end;
+		*screen_long = end;
 	}
 	return;
 }

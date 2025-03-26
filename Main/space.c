@@ -10,7 +10,7 @@ int main() {
     void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
     Model model = {
-        { 288, 368, 32, 32, 3, 0, 1 },
+        { 288, 336, 32, 32, 3, 0, 1 },
         {
             { /* r1 */
                 { 0, 32, 32, 32, 250, 1},

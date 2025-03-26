@@ -56,7 +56,7 @@ void plot_vline(UINT8 *base, int x, int y1, int y2);
  * @param x2 The ending x coordinate of the line
  * @param y The y coordinate of the line
  */
-void plot_hline(UINT8 *base, int x1, int x2, int y);
+void plot_hline(UINT32 *base, int x1, int x2, int y);
 
 /**
  * @brief Plots a character on the screen

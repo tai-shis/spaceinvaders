@@ -70,4 +70,12 @@ void render_score(const Score *score, UINT16 *base);
  * @param base The base address of the screen
  */
 void render_lives(UINT8 lives, UINT16 *base);
+
+/**
+ * @brief Renders the border of the screen
+ * 
+ * @param model The model to obtain position information
+ * @param base The base address of the screen
+ */
+void render_border(Model *model, void *base);
 #endif
