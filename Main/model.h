@@ -29,11 +29,11 @@ typedef struct Alien {
 } Alien;
 
 typedef struct Aliens{
-    Alien r1[11];
-    Alien r2[11];
-    Alien r3[11];
-    Alien r4[11];
-    Alien r5[11];
+    Alien r1[9];
+    Alien r2[9];
+    Alien r3[9];
+    Alien r4[9];
+    Alien r5[9];
     UINT8 totalAliens;
     int delta_x;           /* -8(left) or 8(right) depending on direction of movement */
     int bullet_type;       /* Will be -1 */

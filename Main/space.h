@@ -6,8 +6,8 @@
     * @details Functions for handling player input, synchrounous game logic, double buffering, and getting clock time.
 */
 
-#ifndef GAME_H
-#define GAME_H
+#ifndef SPACE_H
+#define SPACE_H
 
 #include <stdio.h>
 #include <osbind.h>

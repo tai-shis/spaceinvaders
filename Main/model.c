@@ -19,7 +19,7 @@ void alien_direc_change(Aliens *alien_arr, int alien_dx) {
 int move_aliens(Aliens *aliens) {
     /* Should be called every time that aliens are set to move left/right */
     int i;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < 9; i++) {
         aliens->r1[i].x += aliens->delta_x;
         aliens->r2[i].x += aliens->delta_x;
         aliens->r3[i].x += aliens->delta_x;
@@ -33,7 +33,7 @@ int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx) {
     /* Called when aliens x position meets edge, edge detection happens in move_aliens */
     /* Also changes direction of travel */
     int i;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < 9; i++) {
         alien_arr->r1[i].y += 32;
         alien_arr->r2[i].y += 32;
         alien_arr->r3[i].y += 32;

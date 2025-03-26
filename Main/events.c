@@ -53,7 +53,7 @@ int update_aliens(Model *model) {
             return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
         }
     } else if (model->aliens.delta_x == 8) {
-        if ((int)(model->aliens.r1[10].x + model->aliens.delta_x + 16) > (int)model->highbound_x) {
+        if ((int)(model->aliens.r1[8].x + model->aliens.delta_x + 16) > (int)model->highbound_x) {
             return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
         }
     } 

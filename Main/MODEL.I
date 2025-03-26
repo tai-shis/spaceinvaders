@@ -25,11 +25,11 @@ typedef struct Alien {
 } Alien;
 
 typedef struct Aliens{
-    Alien r1[11];
-    Alien r2[11];
-    Alien r3[11];
-    Alien r4[11];
-    Alien r5[11];
+    Alien r1[9];
+    Alien r2[9];
+    Alien r3[9];
+    Alien r4[9];
+    Alien r5[9];
     UINT8 totalAliens;
     int delta_x;
     int bullet_type;
@@ -105,7 +105,7 @@ void alien_direc_change(Aliens *alien_arr, int alien_dx) {
 int move_aliens(Aliens *aliens) {
 
     int i;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < 9; i++) {
         aliens->r1[i].x += aliens->delta_x;
         aliens->r2[i].x += aliens->delta_x;
         aliens->r3[i].x += aliens->delta_x;
@@ -119,7 +119,7 @@ int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx) {
 
 
     int i;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < 9; i++) {
         alien_arr->r1[i].y += 32;
         alien_arr->r2[i].y += 32;
         alien_arr->r3[i].y += 32;
