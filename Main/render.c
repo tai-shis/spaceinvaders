@@ -9,6 +9,8 @@ void render(Model *model, void *base, int f) {
     /* Always render player for simplicity */
     render_player(&model->player, base);
 
+    render_lives(model->player.lives, base);
+
     /* If aliens need to be rendered, also render score probably */ 
     if (model->aliens.render == 1) {
         render_aliens(&model->aliens, base, (f&1));
@@ -88,5 +90,25 @@ void render_score(const Score *score, UINT16 *base) {
 
         /* Could also use plot ch, not too much of a difference */
         plot_bitmap16(base, score->x + i, score->y, nums[out], 16);
+    }
+};
+
+void render_lives(UINT8 lives, UINT16 *base) {
+    switch(lives) {
+        case 3:
+            plot_bitmap16(base, 16, 8, heart, 16);
+            plot_bitmap16(base, 36, 8, heart, 16);
+            plot_bitmap16(base, 56, 8, heart, 16);
+            break;
+        case 2:
+            plot_bitmap16(base, 16, 8, heart, 16);
+            plot_bitmap16(base, 36, 8, heart, 16);
+            plot_bitmap16(base, 56, 8, broken_heart, 16);
+            break;
+        case 1:
+            plot_bitmap16(base, 16, 8, heart, 16);
+            plot_bitmap16(base, 36, 8, broken_heart, 16);
+            plot_bitmap16(base, 56, 8, broken_heart, 16);
+            break;
     }
 };

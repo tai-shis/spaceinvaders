@@ -1,8 +1,9 @@
 /**
- * @file bitmaps.c
- * @brief Contains bitmap data for various game elements.
- * @date 2025-02-04
- * @details This file includes bitmap definitions for aliens, the player, bullets, and numbers used in the game.
+    * @authors Harinder Punia & Tai Shishiba
+    * @file bitmaps.c
+    * @brief Contains bitmap data for various game elements.
+    * @date 2025-02-04
+    * @details This file includes bitmap definitions for aliens, the player, bullets, and numbers used in the game.
  */
 
 #include "TYPES.H"
@@ -497,4 +498,42 @@ UINT16 nums[10][16] = {
         0x03E0,
         0x03E0
     }
+};
+
+UINT16 heart[16] = {
+    0x0000,
+    0x0000,
+    0x1C38,
+    0x3E7C,
+    0x7FFE,
+    0x7FFE,
+    0x7FFE,
+    0x7FFE,
+    0x3FFC,
+    0x1FF8,
+    0x0FF0,
+    0x07E0,
+    0x03C0,
+    0x0180,
+    0x0000,
+    0x0000
+};
+
+UINT16 broken_heart[16] = {
+    0x0000,
+    0x0000,
+    0x381C,
+    0x7C3E,
+    0xFE7F,
+    0xFCFF,
+    0xF9FF,
+    0xFCFF,
+    0x7E7E,
+    0x3CFC,
+    0x19F8,
+    0x0CF0,
+    0x0660,
+    0x0240,
+    0x0000,
+    0x0000
 };

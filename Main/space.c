@@ -193,7 +193,11 @@ void asyncHandle(Model *model) {
             break;
         case 's':
             async_shoot(model, 0);
-            break;  
+            break;
+        /* temp case below to see hearts deplete */
+        case 'k':
+            model->player.lives -= 1;
+            break;
     }
 }
 

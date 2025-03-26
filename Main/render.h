@@ -62,4 +62,12 @@ void render_bullet(const Bullet *bullet, UINT8 *base);
  * @param base The base address of the screen
  */
 void render_score(const Score *score, UINT16 *base);
+
+/**
+ * @brief Renders the current player lives on the screen
+ * 
+ * @param lives The number of lives to be rendered
+ * @param base The base address of the screen
+ */
+void render_lives(UINT8 lives, UINT16 *base);
 #endif
