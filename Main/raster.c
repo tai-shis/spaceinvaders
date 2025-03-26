@@ -115,7 +115,7 @@ void plot_hline(UINT32 *base, int x1, int x2, int y) {
 		/* Plot 0xFFs */
 		while (screen_long < line_end) {
 			*screen_long |= 0xFFFFFFFF;
-			screen_long += 1;
+			screen_long++;
 		}
 		
 		/* Plot end line */
