@@ -51,11 +51,11 @@ void async_shoot(Model *model, int cooldown) {
 int update_aliens(Model *model) {
     if (model->aliens.delta_x == -8) {
         if ((int)(model->aliens.array[0][0].x + model->aliens.delta_x) < (int)model->lowbound_x) {
-            return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
+            return lower_aliens(model, model->highbound_y, model->alien_dx);
         }
     } else if (model->aliens.delta_x == 8) {
         if ((int)(model->aliens.array[0][8].x + model->aliens.delta_x + 16) > (int)model->highbound_x) {
-            return lower_aliens(&model->aliens, model->highbound_y, model->alien_dx);
+            return lower_aliens(model, model->highbound_y, model->alien_dx);
         }
     } 
 

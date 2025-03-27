@@ -94,7 +94,7 @@ int move_aliens(Aliens *aliens);
  * @param model Model struct
  * @param alien_arr Aliens struct
  */
-int lower_aliens(Aliens *aliens, int highbound, int alien_dx);
+int lower_aliens(Model *model, int highbound, int alien_dx);
 
 /** 
  * @brief Called when bullet hitbox hits alien hitbox
@@ -153,5 +153,7 @@ int check_row_hit(Alien row[], Bullet *bullet);
  * @return 1 if player has been hit, 0 otherwise
  */
 int check_player_hit(Player *player, Bullet *bullet);
+
+void update_lowest (Model *model);
 
 #endif
