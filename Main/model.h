@@ -62,6 +62,8 @@ typedef struct Model {
     int active_count; 
     int quit;
     int lowest_alive; /* lowest alien alive, used for collision detection */
+    int right_alive; /* right most alien alive, used for collision detection */
+    int left_alive; /* left most alien alive, used for collision detection */
 } Model;
 
 /** 
@@ -139,11 +141,12 @@ int check_aliens_hit(Model *model, Bullet *bullet);
 /**
  * @brief Checks if a bullet has hit a specific alien in a row
  * 
+ * @param model Model struct
  * @param row Alien row
  * @param bullet Bullet struct
  * @return 1 if bullet has hit, 0 otherwise
  */
-int check_row_hit(Alien row[], Bullet *bullet);
+int check_row_hit(Model *model, Alien row[], Bullet *bullet);
 
 /**
  * @brief Checks if the player has been hit by a bullet
@@ -154,6 +157,15 @@ int check_row_hit(Alien row[], Bullet *bullet);
  */
 int check_player_hit(Player *player, Bullet *bullet);
 
+/**
+ * @brief Updates the lowest row of aliens alive
+ * 
+ * @param model Model struct
+ */
 void update_lowest (Model *model);
+
+void update_left (Model *model);
+
+void update_right (Model *model);
 
 #endif

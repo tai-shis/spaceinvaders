@@ -86,7 +86,7 @@ void update_score(Score *score) {
 int check_aliens_hit(Model *model, Bullet *bullet) {
     int i;
     for (i = 0; i < 5; i++) {
-        if (check_row_hit(model->aliens.array[i], bullet) == 1) {
+        if (check_row_hit(model, model->aliens.array[i], bullet) == 1) {
             model->aliens.totalAliens -= 1;
             model->score.score += model->aliens.array[i][0].score;
             if (i == model->lowest_alive) {
@@ -98,7 +98,7 @@ int check_aliens_hit(Model *model, Bullet *bullet) {
     return 0;
 }
 
-int check_row_hit(Alien row[], Bullet *bullet) {
+int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i].alive) {
@@ -106,6 +106,12 @@ int check_row_hit(Alien row[], Bullet *bullet) {
                 /* bullet hits alien */
                 row[i].alive = 0;
                 play_hit();
+
+                if (i == model->left_alive) {
+                    update_left(model);
+                } else if (i == model->right_alive) {
+                    update_right(model);
+                }
                 return 1;
             }
         }
@@ -129,5 +135,31 @@ void update_lowest (Model *model) {
             }
         }
         model->lowest_alive -= 1; /* No aliens in this row, check next row */
+    }
+}
+
+void update_left (Model *model) {
+    int i;
+
+    while (model->left_alive < 9) {
+        for (i = 0; i < 5; i++) {
+            if (model->aliens.array[i][model->left_alive].alive == 1) {
+                return; /* Found an alien in the column */
+            }
+        }
+        model->left_alive += 1; /* No aliens in this column, check next column */
+    }
+}
+
+void update_right (Model *model) {
+    int i;
+
+    while (model->right_alive >= 0) {
+        for (i = 0; i < 5; i++) {
+            if (model->aliens.array[i][model->right_alive].alive == 1) {
+                return; /* Found an alien in the column */
+            }
+        }
+        model->right_alive -= 1; /* No aliens in this column, check next column */
     }
 }

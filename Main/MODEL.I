@@ -102,31 +102,37 @@ typedef struct Model {
     int active_count;
     int quit;
     int lowest_alive;
+    int right_alive;
+    int left_alive;
 } Model;
-# 73 "./model.h"
+# 75 "./model.h"
 void move_player(Player *player);
-# 81 "./model.h"
+# 83 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 89 "./model.h"
+# 91 "./model.h"
 int move_aliens(Aliens *aliens);
-# 97 "./model.h"
+# 99 "./model.h"
 int lower_aliens(Model *model, int highbound, int alien_dx);
-# 105 "./model.h"
+# 107 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 113 "./model.h"
+# 115 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 121 "./model.h"
+# 123 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 128 "./model.h"
+# 130 "./model.h"
 void update_score(Score *score);
-# 137 "./model.h"
+# 139 "./model.h"
 int check_aliens_hit(Model *model, Bullet *bullet);
-# 146 "./model.h"
-int check_row_hit(Alien row[], Bullet *bullet);
-# 155 "./model.h"
+# 149 "./model.h"
+int check_row_hit(Model *model, Alien row[], Bullet *bullet);
+# 158 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
-
+# 165 "./model.h"
 void update_lowest (Model *model);
+
+void update_left (Model *model);
+
+void update_right (Model *model);
 # 1 "model.c" 2
 
 
@@ -216,7 +222,7 @@ void update_score(Score *score) {
 int check_aliens_hit(Model *model, Bullet *bullet) {
     int i;
     for (i = 0; i < 5; i++) {
-        if (check_row_hit(model->aliens.array[i], bullet) == 1) {
+        if (check_row_hit(model, model->aliens.array[i], bullet) == 1) {
             model->aliens.totalAliens -= 1;
             model->score.score += model->aliens.array[i][0].score;
             if (i == model->lowest_alive) {
@@ -228,7 +234,7 @@ int check_aliens_hit(Model *model, Bullet *bullet) {
     return 0;
 }
 
-int check_row_hit(Alien row[], Bullet *bullet) {
+int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i].alive) {
@@ -236,6 +242,12 @@ int check_row_hit(Alien row[], Bullet *bullet) {
 
                 row[i].alive = 0;
                 play_hit();
+
+                if (i == model->left_alive) {
+                    update_left(model);
+                } else if (i == model->right_alive) {
+                    update_right(model);
+                }
                 return 1;
             }
         }
@@ -259,5 +271,31 @@ void update_lowest (Model *model) {
             }
         }
         model->lowest_alive -= 1;
+    }
+}
+
+void update_left (Model *model) {
+    int i;
+
+    while (model->left_alive < 9) {
+        for (i = 0; i < 5; i++) {
+            if (model->aliens.array[i][model->left_alive].alive == 1) {
+                return;
+            }
+        }
+        model->left_alive += 1;
+    }
+}
+
+void update_right (Model *model) {
+    int i;
+
+    while (model->right_alive >= 0) {
+        for (i = 0; i < 5; i++) {
+            if (model->aliens.array[i][model->right_alive].alive == 1) {
+                return;
+            }
+        }
+        model->right_alive -= 1;
     }
 }
