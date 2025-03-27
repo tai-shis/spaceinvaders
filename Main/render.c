@@ -41,41 +41,37 @@ void render_alien(const Alien *alien, UINT32 *base, UINT32 *bitmap) {
 void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
     /* Assuming f is 0/1 based on odd/even frame */
     int i;
+    int j;
+    int k;
+    UINT32 old_frame = f;
     UINT32 opp_frame;
     if (f == 0){
         opp_frame = 1;
     } else {
         opp_frame = 0;
     }
-    
-    /* Render r1-r5 */
-    for(i = 0; i < 9; i++) {
-        if (aliens->r1[i].alive) {
-            render_alien(&aliens->r1[i], base, alien3_bitmap[f]);
-        }
-    }
 
-    for(i = 0; i < 9; i++) {
-        if (aliens->r2[i].alive) {
-            render_alien(&aliens->r2[i], base, alien1_bitmap[opp_frame]);
+    for (i = 0; i < 5; i++) {
+        /* if else chain below checks to see which row for getting correct bitmap */
+        if (i == 0) {
+            k = 2;
+        } else if (i <= 2) {
+            k = 1;
+            if (i == 2) {
+                f = opp_frame;
+            }
+        } else {
+            f = old_frame;
+            k = 0;
+            if (i == 4) {
+                f = opp_frame;
+            }
         }
-    }
 
-    for(i = 0; i < 9; i++) {
-        if (aliens->r3[i].alive) {
-            render_alien(&aliens->r3[i], base, alien1_bitmap[f]);
-        }
-    }
-
-    for(i = 0; i < 9; i++) {
-        if (aliens->r4[i].alive) {
-        render_alien(&aliens->r4[i], base, alien2_bitmap[opp_frame]);
-        }
-    }
-
-    for(i = 0; i < 9; i++) {
-        if (aliens->r5[i].alive) {
-        render_alien(&aliens->r5[i], base, alien2_bitmap[f]);
+        for (j = 0; j < 9; j++) {
+            if (aliens->array[i][j].alive) {
+                render_alien(&aliens->array[i][j], base, alien_maps[k][f]);
+            }
         }
     }
 }

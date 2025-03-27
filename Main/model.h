@@ -22,7 +22,7 @@ typedef struct Player {
 } Player;
 
 typedef struct Alien {
-    UINT16 x, y;               /* Position Coordinates */
+    UINT32 x, y;            /* Position Coordinates */
     UINT8 l, w;             /* Size of hitbox for collision detection */
     int score;              /* Score awarded to Player */
     int alive;              /* To be used as a boolean marker 0 = true, -1 = false */ 
@@ -30,15 +30,11 @@ typedef struct Alien {
 } Alien;
 
 typedef struct Aliens{
-    Alien r1[9];
-    Alien r2[9];
-    Alien r3[9];
-    Alien r4[9];
-    Alien r5[9];
+    Alien array[5][9];     /* 5 rows of 9 aliens each */
     UINT8 totalAliens;
     int delta_x;           /* -8(left) or 8(right) depending on direction of movement */
     int bullet_type;       /* Will be -1 */
-    char render;             /* For deciding if the whole aliens should be rendered */
+    char render;           /* For deciding if the whole aliens should be rendered */
 } Aliens;
 
 typedef struct Bullet {
@@ -46,7 +42,7 @@ typedef struct Bullet {
     UINT8 l, w;         /* Hitbox */
     int delta_y;        /* displacement of bullet (should be 4) */
     int direc;          /* -1 or 1, moving down or up respectively */
-    int is_active;     /* Tombstone for array check */
+    int is_active;      /* Tombstone for array check */
 } Bullet;
 
 typedef struct Score {
@@ -65,6 +61,7 @@ typedef struct Model {
     Bullet active[30];  /* max active bullet entities */
     int active_count; 
     int quit;
+    int lowest_alive; /* lowest alien alive, used for collision detection */
 } Model;
 
 /** 
@@ -97,7 +94,7 @@ int move_aliens(Aliens *aliens);
  * @param model Model struct
  * @param alien_arr Aliens struct
  */
-int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx);
+int lower_aliens(Aliens *aliens, int highbound, int alien_dx);
 
 /** 
  * @brief Called when bullet hitbox hits alien hitbox

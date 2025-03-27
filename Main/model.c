@@ -19,31 +19,29 @@ void alien_direc_change(Aliens *alien_arr, int alien_dx) {
 int move_aliens(Aliens *aliens) {
     /* Should be called every time that aliens are set to move left/right */
     int i;
-    for (i = 0; i < 9; i++) {
-        aliens->r1[i].x += aliens->delta_x;
-        aliens->r2[i].x += aliens->delta_x;
-        aliens->r3[i].x += aliens->delta_x;
-        aliens->r4[i].x += aliens->delta_x;
-        aliens->r5[i].x += aliens->delta_x;
+    int j;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 9; j++) {
+            aliens->array[i][j].x += aliens->delta_x;
+        }
     }
     return 0;
 }
 
-int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx) {
+int lower_aliens(Aliens *aliens, int highbound, int alien_dx) {
     /* Called when aliens x position meets edge, edge detection happens in move_aliens */
     /* Also changes direction of travel */
     int i;
-    for (i = 0; i < 9; i++) {
-        alien_arr->r1[i].y += 32;
-        alien_arr->r2[i].y += 32;
-        alien_arr->r3[i].y += 32;
-        alien_arr->r4[i].y += 32;
-        alien_arr->r5[i].y += 32;
+    int j;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 9; j++) {
+            aliens->array[i][j].y += 32; /* Move down */
+        }
     }
     
-    alien_direc_change(alien_arr, alien_dx);
+    alien_direc_change(aliens, alien_dx);
 
-    if((int)alien_arr->r5[0].y + 32 > highbound - 48) {
+    if(((int)aliens->array[4][0].y + 32) > (highbound - 48)) {
         return -1; /* Game over */
     } else {
         return 0;
@@ -86,29 +84,29 @@ void update_score(Score *score) {
 }
 
 int check_aliens_hit(Model *model, Bullet *bullet) {
-    if(check_row_hit(model->aliens.r1, bullet) == 1) {
+    if(check_row_hit(model->aliens.array[0], bullet) == 1) {
         model->aliens.totalAliens -= 1;
-        model->score.score += model->aliens.r1[0].score;
+        model->score.score += model->aliens.array[0][0].score;
         return 1;
     } 
-    if(check_row_hit(model->aliens.r2, bullet) == 1) {
+    if(check_row_hit(model->aliens.array[1], bullet) == 1) {
         model->aliens.totalAliens -= 1;
-        model->score.score += model->aliens.r2[0].score;
+        model->score.score += model->aliens.array[1][0].score;
         return 1;
     } 
-    if(check_row_hit(model->aliens.r3, bullet) == 1) {
+    if(check_row_hit(model->aliens.array[2], bullet) == 1) {
         model->aliens.totalAliens -= 1;
-        model->score.score += model->aliens.r3[0].score;
+        model->score.score += model->aliens.array[2][0].score;
         return 1;
     } 
-    if(check_row_hit(model->aliens.r4, bullet) == 1) {
+    if(check_row_hit(model->aliens.array[3], bullet) == 1) {
         model->aliens.totalAliens -= 1;
-        model->score.score += model->aliens.r4[0].score;
+        model->score.score += model->aliens.array[3][0].score;
         return 1;
     } 
-    if(check_row_hit(model->aliens.r5, bullet) == 1) {
+    if(check_row_hit(model->aliens.array[4], bullet) == 1) {
         model->aliens.totalAliens -= 1;
-        model->score.score += model->aliens.r5[0].score;
+        model->score.score += model->aliens.array[4][0].score;
         return 1;
     }
     return 0;
@@ -133,4 +131,4 @@ int check_player_hit(Player *player, Bullet *bullet) {
         player->lives -= 1;
         return 1;
     }
-} 
+}
