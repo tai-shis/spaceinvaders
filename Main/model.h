@@ -92,7 +92,7 @@ void alien_direc_change(Aliens *alien_arr, int alien_dx);
 int move_aliens(Aliens *aliens);
 
 /** 
- * @brief Called when aliens x position meets edge, edge detection happens in move_aliens
+ * @brief Called when aliens x position meets edge, edge detection happens in update_aliens (events.c)
  * 
  * @param model Model struct
  * @param alien_arr Aliens struct
