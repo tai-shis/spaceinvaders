@@ -162,7 +162,7 @@ int main() {
 
         /* Speeds up aliens after they reach a certain point vertically */
         if (model.aliens.array[model.lowest_alive][0].y > 150) {
-            alienInterval = 50;
+            alienInterval = 40;
         }
         if (model.aliens.array[model.lowest_alive][0].y > 200) {
             alienInterval = 25;
