@@ -10,7 +10,7 @@ int main() {
     void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
     Model model = {
-        { 288, 336, 32, 32, 3, 0, 1 },
+        { 288, 336, 32, 32, 3, 0, 1},
         {
             {
                 { /* r1 */
@@ -116,6 +116,7 @@ int main() {
     int f = 0;
     int note = 0;
     int temp;
+    int alienInterval = 75;
     UINT32 timeStart, timeNow, timeElapsed, timeBefore;
 
     /* Line below clears screen from cursor and mouse */
@@ -137,26 +138,37 @@ int main() {
 
         asyncHandle(&model);
         
-        if(timeElapsed > 0){
+        if (timeElapsed > alienInterval) {
             syncHandle(&model, timeElapsed);
-            
-            if((timeElapsed & 0x7F) > 122) { 
-                f++;
-            }
+            f++;
+            timeStart = timeNow;
         }
 
+        syncBullets(&model);
+        
         clear_screen((UINT32)inactive);
 
         render(&model, inactive, f);
         swapBuffers(&active, &inactive);
 
-        temp = update_music(timeElapsed, timeBefore, note);
+        temp = update_music(timeNow, timeBefore, note);
         if (temp == 1) {        
-            timeBefore = timeElapsed;
+            timeBefore = timeNow;
             note++;
             if (note == 48) {
                 note = 0;
             }
+        }
+
+        /* Speeds up aliens after they reach a certain point vertically */
+        if (model.aliens.array[model.lowest_alive][0].y > 150) {
+            alienInterval = 50;
+        }
+        if (model.aliens.array[model.lowest_alive][0].y > 200) {
+            alienInterval = 25;
+        }
+        if (model.aliens.array[model.lowest_alive][0].y > 250) {
+            alienInterval = 10;
         }
     }
 
@@ -197,21 +209,21 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     /* Update aliens based on clock cycle, perhaps double buffer can be done every 1/2th cycle */
     /* Essentially check if elapsed time % 128 == 0 */
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
-    int game_state;
-    if((timeElapsed & 0x7F) > 122) { 
-        game_state = update_aliens(model);
-        if (game_state == -1) {
-            model->quit = 1;
-        }
+    int game_state; 
+    game_state = update_aliens(model);
+    if (game_state == -1) {
+        model->quit = 1;
     }
-    /* Update bullets */
-    if (model->active_count > 0) {
-        update_bullets(model);
-    }
-
+    
     /* Check for endgame */
     if (check_endgame(model)) {
         model->quit = 1;
+    }
+}
+
+void syncBullets(Model *model) {
+    if (model->active_count > 0) {
+        update_bullets(model);
     }
 }
 

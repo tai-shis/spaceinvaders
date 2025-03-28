@@ -56,6 +56,6 @@
   * @param note The note index from song array to play.
   * @return Whether or not the note was updated.
   */
- char update_music(UINT32 time_elapsed, UINT32 time_before, int note);
+ char update_music(UINT32 time_now, UINT32 time_before, int note);
  
  #endif

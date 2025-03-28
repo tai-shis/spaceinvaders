@@ -60,7 +60,6 @@ UINT16 song_a[48][2] = {
 };
 
 void start_music() {
-
     /* First notes */
     set_tone(0, noteTunings[F_SHARP][2]);
     
@@ -68,7 +67,6 @@ void start_music() {
 
     enable_channel(0, 1, 0);
     
-
     /* Disabled for now */
     /*
     set_tone(1, noteTunings[B][1]);
@@ -77,11 +75,9 @@ void start_music() {
     */
 }
 
-char update_music(UINT32 time_elapsed, UINT32 time_before, int note) {
-    
-
+char update_music(UINT32 time_now, UINT32 time_before, int note) {
     /* 3/4 Time Signature, updates every 1/8th note */
-    if ((time_elapsed - time_before) > 20) {
+    if ((time_now - time_before) > 20) {
        set_tone(0, noteTunings[song_a[note][0]][song_a[note][1]]); 
        return 1;
     }
