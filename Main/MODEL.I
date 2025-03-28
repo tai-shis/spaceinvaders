@@ -129,9 +129,9 @@ int check_row_hit(Model *model, Alien row[], Bullet *bullet);
 int check_player_hit(Player *player, Bullet *bullet);
 # 165 "./model.h"
 void update_lowest (Model *model);
-
+# 172 "./model.h"
 void update_left (Model *model);
-
+# 179 "./model.h"
 void update_right (Model *model);
 # 1 "model.c" 2
 
@@ -201,7 +201,7 @@ int move_bullet(Model *model, Bullet *bullet) {
         bullet->y -= bullet->delta_y;
     }
 
-    if (bullet->y <= model->lowbound_y) {
+    if (bullet->y <= (model->lowbound_y + 32)) {
         return -1;
     } else if ((bullet->y + 16) >= model->highbound_y) {
         return -1;

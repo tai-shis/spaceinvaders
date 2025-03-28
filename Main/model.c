@@ -65,9 +65,9 @@ int move_bullet(Model *model, Bullet *bullet) {
         bullet->y -= bullet->delta_y;
     }
 
-    if (bullet->y <= model->lowbound_y) {
+    if (bullet->y <= (model->lowbound_y + 32)) {
         return -1;
-    } else if ((bullet->y + 16) >= model->highbound_y) {
+    } else if ((bullet->y + 16) >= (model->highbound_y - 32)) {
         return -1;
     } else {
         return 0;
