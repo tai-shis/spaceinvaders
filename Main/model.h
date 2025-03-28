@@ -164,8 +164,18 @@ int check_player_hit(Player *player, Bullet *bullet);
  */
 void update_lowest (Model *model);
 
+/**
+ * @brief Updates the leftmost alien alive
+ * 
+ * @param model Model struct
+ */
 void update_left (Model *model);
 
+/**
+ * @brief Updates the rightmost alien alive
+ * 
+ * @param model Model struct
+ */
 void update_right (Model *model);
 
 #endif
