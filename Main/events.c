@@ -105,7 +105,7 @@ void respawn_aliens(Model *model) {
             }
         }
         model->aliens.totalAliens = 45;
-        model->aliens.lowest_alive = 0;
+        model->aliens.lowest_alive = 4;
         model->aliens.right_alive = 8;
         model->aliens.left_alive = 0;
         model->aliens.delta_x = 8;

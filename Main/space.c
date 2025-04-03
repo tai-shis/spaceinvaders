@@ -191,7 +191,7 @@ int main() {
         timeElapsed = timeNow - timeStart;
 
         asyncHandle(&model);
-        
+
         if (timeElapsed > alienInterval) {
             syncHandle(&model, timeElapsed);
             f++;
@@ -215,6 +215,7 @@ int main() {
         }
 
         /* Speeds up aliens after they reach a certain point vertically */
+        /* For some reason if below is abstracted into a function, speed no longer changes */
         if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
             alienInterval = 40;
         }
