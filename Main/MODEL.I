@@ -71,6 +71,7 @@ typedef struct Alien {
 
 typedef struct Aliens{
     Alien array[5][9];
+    Alien orig[5][9];
     UINT8 totalAliens;
     int delta_x;
     int bullet_type;
@@ -105,33 +106,33 @@ typedef struct Model {
     int active_count;
     int quit;
 } Model;
-# 75 "./model.h"
+# 76 "./model.h"
 void move_player(Player *player);
-# 83 "./model.h"
+# 84 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 91 "./model.h"
+# 92 "./model.h"
 int move_aliens(Aliens *aliens);
-# 99 "./model.h"
+# 100 "./model.h"
 int lower_aliens(Model *model, int highbound, int alien_dx);
-# 107 "./model.h"
+# 108 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 115 "./model.h"
+# 116 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 123 "./model.h"
+# 124 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 130 "./model.h"
+# 131 "./model.h"
 void update_score(Score *score);
-# 139 "./model.h"
+# 140 "./model.h"
 int check_aliens_hit(Model *model, Bullet *bullet);
-# 149 "./model.h"
+# 150 "./model.h"
 int check_row_hit(Model *model, Alien row[], Bullet *bullet);
-# 158 "./model.h"
+# 159 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
-# 165 "./model.h"
+# 166 "./model.h"
 void update_lowest (Model *model);
-# 172 "./model.h"
+# 173 "./model.h"
 void update_left (Model *model);
-# 179 "./model.h"
+# 180 "./model.h"
 void update_right (Model *model);
 # 1 "model.c" 2
 

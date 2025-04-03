@@ -43,6 +43,13 @@ int update_aliens(Model *model);
 void update_bullets(Model *model);
 
 /**
+ * @brief Resets aliens classes to their original positions
+ * 
+ * @param model The game model to be updated
+ */
+void respawn_aliens(Model *model);
+
+/**
  * @brief Checks if the game has ended
  * 
  * @param model The game model to be updated

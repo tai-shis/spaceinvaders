@@ -60,6 +60,7 @@ int update_aliens(Model *model) {
     } 
 
     move_aliens(&model->aliens);
+    respawn_aliens(model);
     model->aliens.render = 1;
     return 0;
 }
@@ -93,14 +94,30 @@ void update_bullets(Model *model) {
     }
 }
 
+void respawn_aliens(Model *model) {
+    int i;
+    int j;
+
+    if (model->aliens.totalAliens == 0) {
+        for (i = 0; i < 5; i++) {
+            for (j = 0; j < 9; j++) {
+                model->aliens.array[i][j] = model->aliens.orig[i][j];
+            }
+        }
+        model->aliens.totalAliens = 45;
+        model->aliens.lowest_alive = 0;
+        model->aliens.right_alive = 8;
+        model->aliens.left_alive = 0;
+        model->aliens.delta_x = 8;
+    }
+}
+
 int check_endgame(Model *model) {
     /* TODO: move game over from lower aliens to here */
     if (model->player.lives == 0) {
         return 1;
     }
-    if (model->aliens.totalAliens == 0) {
-        return 1;
-    }
+
     /* possibly missing other game over conditions */
     return 0;
 }

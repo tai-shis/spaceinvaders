@@ -31,6 +31,7 @@ typedef struct Alien {
 
 typedef struct Aliens{
     Alien array[5][9];      /* 5 rows of 9 aliens each */
+    Alien orig[5][9];   /* Original positions of aliens */
     UINT8 totalAliens;
     int delta_x;            /* -8(left) or 8(right) depending on direction of movement */
     int bullet_type;        /* Will be -1 */
