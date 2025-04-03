@@ -41,7 +41,7 @@ int lower_aliens(Model *model, int highbound, int alien_dx) {
     
     alien_direc_change(&model->aliens, alien_dx);
 
-    if(((int)model->aliens.array[model->lowest_alive][0].y + 32) > (highbound - 48)) {
+    if(((int)model->aliens.array[model->aliens.lowest_alive][0].y + 32) > (highbound - 48)) {
         return -1; /* Game over */
     } else {
         return 0;
@@ -89,7 +89,7 @@ int check_aliens_hit(Model *model, Bullet *bullet) {
         if (check_row_hit(model, model->aliens.array[i], bullet) == 1) {
             model->aliens.totalAliens -= 1;
             model->score.score += model->aliens.array[i][0].score;
-            if (i == model->lowest_alive) {
+            if (i == model->aliens.lowest_alive) {
                 update_lowest(model);
             }
             return 1;
@@ -107,9 +107,9 @@ int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
                 row[i].alive = 0;
                 play_hit();
 
-                if (i == model->left_alive) {
+                if (i == model->aliens.left_alive) {
                     update_left(model);
-                } else if (i == model->right_alive) {
+                } else if (i == model->aliens.right_alive) {
                     update_right(model);
                 }
                 return 1;
@@ -128,38 +128,38 @@ int check_player_hit(Player *player, Bullet *bullet) {
 void update_lowest (Model *model) {
     int i;
 
-    while (model->lowest_alive >= 0) {
+    while (model->aliens.lowest_alive >= 0) {
         for (i = 0; i < 9; i++) {
-            if (model->aliens.array[model->lowest_alive][i].alive == 1) {
+            if (model->aliens.array[model->aliens.lowest_alive][i].alive == 1) {
                 return; /* Found an alien in the row */
             }
         }
-        model->lowest_alive -= 1; /* No aliens in this row, check next row */
+        model->aliens.lowest_alive -= 1; /* No aliens in this row, check next row */
     }
 }
 
 void update_left (Model *model) {
     int i;
 
-    while (model->left_alive < 9) {
+    while (model->aliens.left_alive < 9) {
         for (i = 0; i < 5; i++) {
-            if (model->aliens.array[i][model->left_alive].alive == 1) {
+            if (model->aliens.array[i][model->aliens.left_alive].alive == 1) {
                 return; /* Found an alien in the column */
             }
         }
-        model->left_alive += 1; /* No aliens in this column, check next column */
+        model->aliens.left_alive += 1; /* No aliens in this column, check next column */
     }
 }
 
 void update_right (Model *model) {
     int i;
 
-    while (model->right_alive >= 0) {
+    while (model->aliens.right_alive >= 0) {
         for (i = 0; i < 5; i++) {
-            if (model->aliens.array[i][model->right_alive].alive == 1) {
+            if (model->aliens.array[i][model->aliens.right_alive].alive == 1) {
                 return; /* Found an alien in the column */
             }
         }
-        model->right_alive -= 1; /* No aliens in this column, check next column */
+        model->aliens.right_alive -= 1; /* No aliens in this column, check next column */
     }
 }

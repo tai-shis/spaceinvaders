@@ -69,10 +69,7 @@ int main() {
                     {256, 160, 32, 32, 50, 1}
                 }
             },
-            45,
-            8,
-            -1,
-            1
+            45, 8, -1, 1, 4, 8, 0
         },
         { 0, 544, 8},
         0, 0, 630, 400,
@@ -111,7 +108,7 @@ int main() {
             {0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0}
         },
-        0,0,4,8,0
+        0,0
     };
     int f = 0;
     int note = 0;
@@ -161,13 +158,13 @@ int main() {
         }
 
         /* Speeds up aliens after they reach a certain point vertically */
-        if (model.aliens.array[model.lowest_alive][0].y > 150) {
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
             alienInterval = 40;
         }
-        if (model.aliens.array[model.lowest_alive][0].y > 200) {
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
             alienInterval = 25;
         }
-        if (model.aliens.array[model.lowest_alive][0].y > 250) {
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
             alienInterval = 10;
         }
     }

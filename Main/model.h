@@ -30,40 +30,40 @@ typedef struct Alien {
 } Alien;
 
 typedef struct Aliens{
-    Alien array[5][9];     /* 5 rows of 9 aliens each */
+    Alien array[5][9];      /* 5 rows of 9 aliens each */
     UINT8 totalAliens;
-    int delta_x;           /* -8(left) or 8(right) depending on direction of movement */
-    int bullet_type;       /* Will be -1 */
-    char render;           /* For deciding if the whole aliens should be rendered */
+    int delta_x;            /* -8(left) or 8(right) depending on direction of movement */
+    int bullet_type;        /* Will be -1 */
+    char render;            /* For deciding if the whole aliens should be rendered */
+    int lowest_alive;       /* lowest alien alive, used for collision detection */
+    int right_alive;        /* right most alien alive, used for collision detection */
+    int left_alive;         /* left most alien alive, used for collision detection */
 } Aliens;
 
 typedef struct Bullet {
-    UINT16 x, y;        /* x coordinate should be set and not changed when the object is created */
-    UINT8 l, w;         /* Hitbox */
-    int delta_y;        /* displacement of bullet (should be 4) */
-    int direc;          /* -1 or 1, moving down or up respectively */
-    int is_active;      /* Tombstone for array check */
+    UINT16 x, y;            /* x coordinate should be set and not changed when the object is created */
+    UINT8 l, w;             /* Hitbox */
+    int delta_y;            /* displacement of bullet (should be 4) */
+    int direc;              /* -1 or 1, moving down or up respectively */
+    int is_active;          /* Tombstone for array check */
 } Bullet;
 
 typedef struct Score {
-    UINT16 score;       /* Score number */
-    UINT16 x, y;        /* Position of score sign */
+    UINT16 score;           /* Score number */
+    UINT16 x, y;            /* Position of score sign */
 } Score;
 
 typedef struct Model {
     Player player;
     Aliens aliens;
     Score score;
-    UINT16 lowbound_x, lowbound_y, highbound_x, highbound_y; /* Bounds of play area. highbounds should be bound - alien_w */ 
-    UINT8 alien_l, alien_w; /* Used for movement and collision detection */      
+    UINT16 lowbound_x, lowbound_y, highbound_x, highbound_y;    /* Bounds of play area. highbounds should be bound - alien_w */ 
+    UINT8 alien_l, alien_w;                                     /* Used for movement and collision detection */      
     int alien_dx;
     int bullet_dy;
-    Bullet active[30];  /* max active bullet entities */
+    Bullet active[30];      /* max active bullet entities */
     int active_count; 
     int quit;
-    int lowest_alive; /* lowest alien alive, used for collision detection */
-    int right_alive; /* right most alien alive, used for collision detection */
-    int left_alive; /* left most alien alive, used for collision detection */
 } Model;
 
 /** 
