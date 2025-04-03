@@ -102,7 +102,7 @@ int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
     int i;
     for(i = 0; i < 11; i += 1) {
         if (row[i].alive) {
-            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 22))) {
+            if((bullet->x >= row[i].x) && (bullet->x <= (row[i].x + 32)) && (bullet->y <= ((row[i].y) + 22)) && (bullet->y >= row[i].y)) {
                 /* bullet hits alien */
                 row[i].alive = 0;
                 play_hit();
