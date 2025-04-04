@@ -55,8 +55,8 @@ void aliens_shoot(Model *model) {
     for (i = 0; i < 9; i++) {
         if (model->aliens.lowest_alien[i] != -1) {
             if (((rand() & 0xFF) < 10) && model->active_count < 30) {
-                temp.x = (int)model->aliens.array[model->aliens.array[model->aliens.lowest_alien[i]][i].x] + 14; /* Center of alien */
-                temp.y = (int)model->aliens.array[model->aliens.array[model->aliens.lowest_alien[i]][i].y] + 38; /* Top of alien - bullet height (and some change)*/
+                temp.x = (int)model->aliens.array[model->aliens.lowest_alien[i]][i].x + 6; /* Center of alien */
+                temp.y = (int)model->aliens.array[model->aliens.lowest_alien[i]][i].y + 38; /* Top of alien - bullet height (and some change)*/
                 /* Find next empty location in bullet array */
                 for(i = 0; i < 30; i+=1) {
                     if(!model->active[i].is_active) {
