@@ -63,4 +63,9 @@ void respawn_aliens(Model *model);
  */
 int check_endgame(Model *model);
 
+/**
+ * @brief Returns a random number
+ */
+int rand();
+
 #endif
