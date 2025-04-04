@@ -79,10 +79,6 @@ void add_score (int score_to_add, Score curr_score) {
     curr_score.score += score_to_add;
 }
 
-void update_score(Score *score) {
-    /* redisplay score */
-}
-
 int check_aliens_hit(Model *model, Bullet *bullet) {
     int i;
     for (i = 0; i < 5; i++) {
@@ -161,5 +157,19 @@ void update_right (Model *model) {
             }
         }
         model->aliens.right_alive -= 1; /* No aliens in this column, check next column */
+    }
+}
+
+void lowest_alive (Aliens *aliens) {
+    int i;
+    int j;
+    for (i = 0; i < 9; i++) {
+        aliens->lowest_alien[i] = -1; /* Default to -1, means no aliens in column */
+        for (j = 4; j >= 0; j--) {
+            if (aliens->array[j][i].alive == 1) {
+                aliens->lowest_alien[i] = j;
+                break;
+            }
+        }
     }
 }

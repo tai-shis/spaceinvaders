@@ -1,5 +1,6 @@
 #include "events.h"
 #include <stdio.h>
+#include <osbind.h>
 
 void async_move_player(Model *model, char key) {
     if(key == 'a') {
@@ -43,6 +44,28 @@ void async_shoot(Model *model, int cooldown) {
                 model->active_count += 1;
                 play_shoot();
                 return;
+            }
+        }
+    }
+}
+
+void aliens_shoot(Model *model) {
+    int i;
+    Bullet temp = {0, 0, 8, 16, 8, -1, 1};
+    for (i = 0; i < 9; i++) {
+        if (model->aliens.lowest_alien[i] != -1) {
+            if (((rand() & 0xFF) < 10) && model->active_count < 30) {
+                temp.x = (int)model->aliens.array[model->aliens.array[model->aliens.lowest_alien[i]][i].x] + 14; /* Center of alien */
+                temp.y = (int)model->aliens.array[model->aliens.array[model->aliens.lowest_alien[i]][i].y] + 38; /* Top of alien - bullet height (and some change)*/
+                /* Find next empty location in bullet array */
+                for(i = 0; i < 30; i+=1) {
+                    if(!model->active[i].is_active) {
+                        model->active[i] = temp;
+                        model->active_count += 1;
+                        play_shoot();
+                        return;
+                    }
+                }
             }
         }
     }

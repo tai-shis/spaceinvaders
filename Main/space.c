@@ -126,7 +126,8 @@ int main() {
                     {256, 160, 32, 32, 25, 1}
                 }
             },
-            45, 8, -1, 1, 4, 8, 0
+            45, 8, -1, 1, 4, 8, 0,
+            {4,4,4,4,4,4,4,4,4}
         },
         { 0, 544, 8},
         0, 0, 630, 400,
@@ -266,6 +267,7 @@ void syncHandle(Model *model, UINT32 timeElapsed) {
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
     int game_state; 
     game_state = update_aliens(model);
+    aliens_shoot(model);
     if (game_state == -1) {
         model->quit = 1;
     }

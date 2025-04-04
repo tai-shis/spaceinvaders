@@ -7,6 +7,7 @@ void render(const Model *model, void *base, int f) {
     render_aliens(&model->aliens, base, f);
     /* Not used for now */
     render_bullet(&model->active[0], base);
+    render_bullet(&model->active[1], base);
     render_score(&model->score, base);
 }
 

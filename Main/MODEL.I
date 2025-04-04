@@ -79,6 +79,7 @@ typedef struct Aliens{
     int lowest_alive;
     int right_alive;
     int left_alive;
+    int lowest_alien[9];
 } Aliens;
 
 typedef struct Bullet {
@@ -106,34 +107,34 @@ typedef struct Model {
     int active_count;
     int quit;
 } Model;
-# 76 "./model.h"
+# 77 "./model.h"
 void move_player(Player *player);
-# 84 "./model.h"
+# 85 "./model.h"
 void alien_direc_change(Aliens *alien_arr, int alien_dx);
-# 92 "./model.h"
+# 93 "./model.h"
 int move_aliens(Aliens *aliens);
-# 100 "./model.h"
+# 101 "./model.h"
 int lower_aliens(Model *model, int highbound, int alien_dx);
-# 108 "./model.h"
+# 109 "./model.h"
 void destroy_alien(Alien alien, Score curr_score);
-# 116 "./model.h"
+# 117 "./model.h"
 int move_bullet(Model *model, Bullet *bullet);
-# 124 "./model.h"
+# 125 "./model.h"
 void add_score (int score_to_add, Score curr_score);
-# 131 "./model.h"
-void update_score(Score *score);
-# 140 "./model.h"
+# 134 "./model.h"
 int check_aliens_hit(Model *model, Bullet *bullet);
-# 150 "./model.h"
+# 144 "./model.h"
 int check_row_hit(Model *model, Alien row[], Bullet *bullet);
-# 159 "./model.h"
+# 153 "./model.h"
 int check_player_hit(Player *player, Bullet *bullet);
-# 166 "./model.h"
+# 160 "./model.h"
 void update_lowest (Model *model);
-# 173 "./model.h"
+# 167 "./model.h"
 void update_left (Model *model);
-# 180 "./model.h"
+# 174 "./model.h"
 void update_right (Model *model);
+# 181 "./model.h"
+void lowest_alive(Aliens *aliens);
 # 1 "model.c" 2
 
 
@@ -216,10 +217,6 @@ void add_score (int score_to_add, Score curr_score) {
     curr_score.score += score_to_add;
 }
 
-void update_score(Score *score) {
-
-}
-
 int check_aliens_hit(Model *model, Bullet *bullet) {
     int i;
     for (i = 0; i < 5; i++) {
@@ -298,5 +295,19 @@ void update_right (Model *model) {
             }
         }
         model->aliens.right_alive -= 1;
+    }
+}
+
+void lowest_alive (Aliens *aliens) {
+    int i;
+    int j;
+    for (i = 0; i < 9; i++) {
+        aliens->lowest_alien[i] = -1;
+        for (j = 4; j >= 0; j--) {
+            if (aliens->array[j][i].alive == 1) {
+                aliens->lowest_alien[i] = j;
+                break;
+            }
+        }
     }
 }

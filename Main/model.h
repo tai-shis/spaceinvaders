@@ -31,14 +31,15 @@ typedef struct Alien {
 
 typedef struct Aliens{
     Alien array[5][9];      /* 5 rows of 9 aliens each */
-    Alien orig[5][9];   /* Original positions of aliens */
-    UINT8 totalAliens;
+    Alien orig[5][9];       /* Original positions of aliens */
+    UINT8 totalAliens;      /* Total number of aliens alive */
     int delta_x;            /* -8(left) or 8(right) depending on direction of movement */
     int bullet_type;        /* Will be -1 */
     char render;            /* For deciding if the whole aliens should be rendered */
     int lowest_alive;       /* lowest alien alive, used for collision detection */
     int right_alive;        /* right most alien alive, used for collision detection */
     int left_alive;         /* left most alien alive, used for collision detection */
+    int lowest_alien[9];    /* Used to keep track of lowest alive alien in a column */
 } Aliens;
 
 typedef struct Bullet {
@@ -123,13 +124,6 @@ int move_bullet(Model *model, Bullet *bullet);
  */
 void add_score (int score_to_add, Score curr_score);
 
-/** 
- * @brief Updates the score
- * 
- * @param score Score struct
- */
-void update_score(Score *score);
-
 /**
  * @brief Checks if a bullet has hit an alien
  * 
@@ -178,5 +172,12 @@ void update_left (Model *model);
  * @param model Model struct
  */
 void update_right (Model *model);
+
+/**
+ * @brief gets the lowest alive alien
+ * 
+ * @param aliens Aliens struct
+ */
+void lowest_alive(Aliens *aliens); 
 
 #endif

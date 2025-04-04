@@ -23,7 +23,7 @@ void render(Model *model, void *base, int f) {
     /* Check if there are any bullets that need to be rendered */
     if (model->active_count > 0) {
         for (i = 0; i < 30; i += 1) {
-            if (model->active[i].is_active) {   
+            if (model->active[i].is_active == 1) {   
                 render_bullet(&model->active[i], base);
             }
         }
@@ -77,8 +77,12 @@ void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
 }
 
 void render_bullet(const Bullet *bullet, UINT8 *base) {
-    /* Change height based on length of bullet */
-    plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[0], 16);
+    /* Change height based on length of bullet */\
+    if (bullet->direc > 0) {
+        plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[0], 16);
+    } else {
+        plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[1], 16);
+    }
 }
 
 void render_score(const Score *score, UINT16 *base) {

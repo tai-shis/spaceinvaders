@@ -29,6 +29,13 @@ void async_move_player(Model *model, char key);
 void async_shoot(Model *model, int cooldown);
 
 /**
+ * @brief Makes aliens shoot
+ * 
+ * @param model The game model to be updated
+ */
+void aliens_shoot(Model *model);
+
+/**
  * @brief Updates the aliens positions and checks boundaries
  * 
  * @param model The game model to be updated
