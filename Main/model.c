@@ -113,7 +113,7 @@ int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
 }
 
 int check_player_hit(Player *player, Bullet *bullet) {
-    if ((bullet->x >= player->x) && (bullet->x <= (player->x + 32)) && ((bullet->y + 16) <= player->y)) {
+    if ((bullet->x >= player->x) && (bullet->x <= (player->x + 32)) && ((bullet->y + 16) >= player->y)) {
         player->lives -= 1;
         return 1;
     }
