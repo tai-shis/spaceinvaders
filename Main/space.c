@@ -251,12 +251,8 @@ void asyncHandle(Model *model) {
         case 'd':
             async_move_player(model, ch);
             break;
-        case 's':
+        case ' ':
             async_shoot(model, 0);
-            break;
-        /* temp case below to see hearts deplete */
-        case 'k':
-            model->player.lives -= 1;
             break;
     }
 }
