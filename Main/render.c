@@ -77,8 +77,8 @@ void render_aliens(const Aliens *aliens, UINT32 *base, UINT32 f) {
 }
 
 void render_bullet(const Bullet *bullet, UINT8 *base) {
-    /* Change height based on length of bullet */\
-    if (bullet->direc > 0) {
+    /* Change height based on length of bullet */
+    if (bullet->direc == 1) {
         plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[0], 16);
     } else {
         plot_bitmap8(base, bullet->x, bullet->y, bullet_bitmaps[1], 16);

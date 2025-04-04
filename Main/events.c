@@ -55,8 +55,8 @@ void aliens_shoot(Model *model) {
     for (i = 0; i < 9; i++) {
         if (model->aliens.lowest_alien[i] != -1) {
             if (((rand() & 0xFF) < 10) && model->active_count < 30) {
-                temp.x = (int)model->aliens.array[model->aliens.lowest_alien[i]][i].x + 6; /* Center of alien */
-                temp.y = (int)model->aliens.array[model->aliens.lowest_alien[i]][i].y + 38; /* Top of alien - bullet height (and some change)*/
+                temp.x = (model->aliens.array[model->aliens.lowest_alien[i]][i].x) + 14; /* Center of alien */
+                temp.y = (model->aliens.array[model->aliens.lowest_alien[i]][i].y) + 32; /* Top of alien + alien height (and some change)*/
                 /* Find next empty location in bullet array */
                 for(i = 0; i < 30; i+=1) {
                     if(!model->active[i].is_active) {
@@ -100,7 +100,7 @@ void update_bullets(Model *model) {
             if(model->active[i].direc == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(model, &model->active[i]);
-                if(hit == 1) {
+                if(hit) {
                     /* Done specifically this way so we dont override if render is already on */
                     model->aliens.render = 1; /* If collision is detected, make sure to render next render cycle */
                 }
@@ -109,7 +109,7 @@ void update_bullets(Model *model) {
                 hit = check_player_hit(&model->player, &model->active[i]);
             }
     
-            if((deactivate == -1) || hit) {
+            if(deactivate || hit) {
                 model->active[i].is_active = 0;
                 model->active_count -= 1;
             }

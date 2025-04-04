@@ -195,21 +195,18 @@ void destroy_alien(Alien alien, Score curr_score) {
 }
 
 int move_bullet(Model *model, Bullet *bullet) {
-
-
-    if (bullet->direc == -1) {
-        bullet->y += bullet->delta_y;
-    } else {
+    if (bullet->direc == 1) {
         bullet->y -= bullet->delta_y;
-    }
-
-    if (bullet->y <= (model->lowbound_y + 32)) {
-        return -1;
-    } else if ((bullet->y + 16) >= (model->highbound_y - 32)) {
-        return -1;
+        if (bullet->y <= (model->lowbound_y + 32)) {
+            return 1;
+        }
     } else {
-        return 0;
+        bullet->y += bullet->delta_y;
+        if ((bullet->y + 14) >= (model->highbound_y - 32)) {
+            return 1;
+        }
     }
+    return 0;
 }
 
 void add_score (int score_to_add, Score curr_score) {
@@ -226,6 +223,7 @@ int check_aliens_hit(Model *model, Bullet *bullet) {
             if (i == model->aliens.lowest_alive) {
                 update_lowest(model);
             }
+            lowest_alive(&model->aliens);
             return 1;
         }
     }
@@ -253,10 +251,11 @@ int check_row_hit(Model *model, Alien row[], Bullet *bullet) {
 }
 
 int check_player_hit(Player *player, Bullet *bullet) {
-    if ((bullet->x >= player->x) && (bullet->x <= (player->x + 32)) && ((bullet->y + 8) >= player->y)) {
+    if ((bullet->x >= player->x) && (bullet->x <= (player->x + 32)) && ((bullet->y + 16) <= player->y)) {
         player->lives -= 1;
         return 1;
     }
+    return 0;
 }
 
 void update_lowest (Model *model) {
