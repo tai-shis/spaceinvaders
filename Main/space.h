@@ -20,6 +20,14 @@
 #include "input.h"
 #include "psg.h"
 #include "music.h"
+#include "isr.h"
+
+extern Model model;
+extern unsigned int note;
+extern unsigned int animation_frame;
+extern int render_request;
+extern int alien_interval;
+extern int play;
 
 /**
  * @brief Main function for the Space Invaders game
@@ -38,7 +46,7 @@ int title();
  * 
  * @param model The game model to be updated
  */
-void asyncHandle(Model *model);
+void asyncHandle();
 
 /**
  * @brief Handles synchronous events
@@ -46,14 +54,14 @@ void asyncHandle(Model *model);
  * @param model The game model to be updated
  * @param timeElapsed The time elapsed since the last frame
  */
-void syncHandle(Model *model);
+void syncHandle();
 
 /**
  * @brief Updates the bullets in the game
  * 
  * @param model The game model to be updated
  */
-void syncBullets(Model *model);
+void syncBullets();
 
 /**
  * @brief Swaps the active and inactive buffers

@@ -3,19 +3,18 @@
 #define VBL_ISR 28
 
 extern void clear_screen(UINT32 base);
-
 extern void set_video_base(UINT16 *address);
+extern void vbl_isr();
 
-static unsigned int note;
-static int render_request;
-static int alienInterval;
-static int animation_frame;
-
-
+unsigned int animation_frame;
+unsigned int note;
+int render_request;
+int alien_interval;
+int play;
 
 UINT8 preBuffer[32255];
 
-static Model model = {
+Model model = {
     {288, 336, 32, 32, 3, 0, 1},
     {
         { /* Aliens being updated throughout gameplay */
@@ -177,8 +176,8 @@ static Model model = {
 
 
 int main() {
-    int play = 0;
     Vector orig_VBL;
+    play = 0;
 
     orig_VBL = install_vector(VBL_ISR, vbl_isr);
 
@@ -221,44 +220,25 @@ void space(int play) {
 
 
         while (!model.quit) {
-            timeNow = getTime();
-            timeElapsed = timeNow - timeStart;
-
             asyncHandle(&model);
-
-            if (timeElapsed > alienInterval) {
-                syncHandle(&model, timeElapsed);
-                f++;
-                timeStart = timeNow;
-            }
             
-            if (render_request) {
+            if (render_request == 1) {
                 clear_screen((UINT32)inactive);
                 render(&model, inactive, (animation_frame & 1));
                 swapBuffers(&active, &inactive);
                 render_request = 0;
             }
-            
-
-            temp = update_music(timeNow, timeBefore, note);
-            if (temp == 1) {        
-                timeBefore = timeNow;
-                note++;
-                if (note == 48) {
-                    note = 0;
-                }
-            }
 
             /* Speeds up aliens after they reach a certain point vertically */
             /* For some reason if below is abstracted into a function, interval no longer changes */
             if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
-                alienInterval = 40;
+                alien_interval = 40;
             }
             if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
-                alienInterval = 25;
+                alien_interval = 25;
             }
             if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
-                alienInterval = 10;
+                alien_interval = 10;
             }
         }
 
@@ -294,45 +274,45 @@ int title() {
     }
 }
 
-void asyncHandle(Model *model) {
+void asyncHandle() {
     char ch = keystroke();
 
     switch (ch) {
         case 'q':
-            model->quit = 1;
+            model.quit = 1;
             break;
         case 'a':
-            async_move_player(model, ch);
+            async_move_player(&model, ch);
             break;
         case 'd':
-            async_move_player(model, ch);
+            async_move_player(&model, ch);
             break;
         case ' ':
-            async_shoot(model, 0);
+            async_shoot(&model, 0);
             break;
     }
 }
 
-void syncHandle(Model *model) {
+void syncHandle() {
     /* Update aliens based on clock cycle, perhaps double buffer can be done every 1/2th cycle */
     /* Essentially check if elapsed time % 128 == 0 */
     /* change bitmask to change movement time, preferrably a power of 2 for efficiency */
     int game_state; 
-    game_state = update_aliens(model);
-    aliens_shoot(model);
+    game_state = update_aliens(&model);
+    aliens_shoot(&model);
     if (game_state == -1) {
-        model->quit = 1;
+        model.quit = 1;
     }
     
     /* Check for endgame */
-    if (check_endgame(model)) {
-        model->quit = 1;
+    if (check_endgame(&model)) {
+        model.quit = 1;
     }
 }
 
-void syncBullets(Model *model) {
-    if (model->active_count > 0) {
-        update_bullets(model);
+void syncBullets() {
+    if (model.active_count > 0) {
+        update_bullets(&model);
     }
 }
 
@@ -341,7 +321,6 @@ void swapBuffers (void **active, void **inactive) {
     *active = *inactive;
     *inactive = temp;
     set_video_base((UINT16*)*active);
-    Vsync();
 }
 
 UINT32 getTime() {

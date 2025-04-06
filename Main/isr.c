@@ -1,9 +1,6 @@
 #include "isr.h"
 #include <osbind.h>
 
-extern Model model;
-extern unsigned int note;
-extern int alienInterval;
 
 Vector install_vector(int num, Vector vector) {
     Vector orig;
@@ -17,22 +14,26 @@ Vector install_vector(int num, Vector vector) {
 
 void do_VBL_ISR() {
     static int note_timing;
-    static int ticks
-    ticks++;
-    note_timing++;
+    static int ticks;
     
-    syncBullets(&model);
-    if (ticks == alienInterval) {
-        ticks = 0;
-        animation_frame++;
-        syncHandle(&model);
-    }
+    if (play == 0) {
+        ticks++;
+        note_timing++;
+        syncBullets();
+        if (ticks == alien_interval) {
+            ticks = 0;
+            animation_frame++;
+            syncHandle();
+        }
 
-    if (note_timing == 100) {
-        note_timing = 0;
-        note++;
-        update_music(); /* Essentially changes to the next note */
-    }
+        if (note_timing == 100) {
+            note_timing = 0;
+            note++;
+            if(note == 48)
+                note = 0;
+            update_music(); /* Essentially changes to the next note */
+        }
+    }   
 
     render_request = 1;
 }

@@ -2,9 +2,8 @@
 #define ISR_H
 
 #include "music.h"
-#include "space.c"
-
-typedef void (*Vector)();
+#include "space.h"
+#include "types.h"
 
 Vector install_vector(int num, Vector vector);
 

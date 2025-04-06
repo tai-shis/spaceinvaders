@@ -5,6 +5,8 @@
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
+
+typedef void (*Vector)();
 # 13 "./model.h" 2
 # 1 "./effects.h" 1
 # 1 "./psg.h" 1
