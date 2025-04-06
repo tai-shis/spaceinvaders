@@ -1,5 +1,7 @@
 #include "music.h"
 
+extern unsigned int note;
+
 const UINT16 noteTunings[12][3] = {
     /* Goes note->octave */
     /* Aren't enharmonic equivalents fun? */
@@ -93,12 +95,7 @@ void start_music() {
     */
 }
 
-char update_music(UINT32 time_now, UINT32 time_before, int note) {
+void update_music() {
     /* 3/4 Time Signature, updates every 1/8th note */
-    if ((time_now - time_before) > 20) {
-       set_tone(0, noteTunings[song_a[note][0]][song_a[note][1]]); 
-       return 1;
-    }
-
-    return 0;
+    set_tone(0, noteTunings[song_a[note][0]][song_a[note][1]]); 
 }

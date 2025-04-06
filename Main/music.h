@@ -34,12 +34,8 @@
  void start_music();
  
  /**
-  * @brief Updates the music based on the elapsed time and the current note.
-  * @param time_elapsed The time elapsed in-game
-  * @param time_before The time since the last update.
-  * @param note The note index from song array to play.
-  * @return Whether or not the note was updated.
+  * @brief Updates the music to the next note
   */
- char update_music(UINT32 time_now, UINT32 time_before, int note);
+ void update_music();
  
  #endif

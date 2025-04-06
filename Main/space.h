@@ -46,7 +46,7 @@ void asyncHandle(Model *model);
  * @param model The game model to be updated
  * @param timeElapsed The time elapsed since the last frame
  */
-void syncHandle(Model *model, UINT32 timeElapsed);
+void syncHandle(Model *model);
 
 /**
  * @brief Updates the bullets in the game
