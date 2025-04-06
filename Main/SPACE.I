@@ -475,7 +475,10 @@ int rand();
 
 
 extern char keyboard_buffer[256];
-extern int buffer_index, buffer_fill;
+extern int buffer_index;
+extern int buffer_fill;
+
+char keystroke();
 
 void do_IKBD_ISR();
 
@@ -565,8 +568,14 @@ UINT32 getTime();
 # 1 "space.c" 2
 
 
+
+
+
 extern void clear_screen(UINT32 base);
 extern void set_video_base(UINT16 *address);
+
+extern void vbl_isr();
+extern void ikbd_isr();
 
 unsigned int animation_frame;
 unsigned int note;
@@ -739,17 +748,19 @@ Model model = {
 
 
 int main() {
-    Vector orig_VBL;
+    Vector orig_VBL, orig_IKBD;
     int play = 0;
-    install_vectors();
+
+    orig_VBL = install_vector(28 , vbl_isr);
+    orig_IKBD = install_vector(70 , ikbd_isr);
 
     while (!play) {
         play = title();
         space(play);
     }
 
-    uninstall_vectors();
-
+    install_vector(28 , orig_VBL);
+    install_vector(70 , orig_IKBD);
     return 0;
 }
 
@@ -783,15 +794,8 @@ void space(int play) {
 
 
         while (!model.quit) {
-            if (buffer_fill > 0) {
-                asyncHandle(&model);
-                buffer_index--;
-                buffer_fill--;
 
-                if (buffer_index < 0) {
-                    buffer_index = 255;
-                }
-            }
+            asyncHandle(&model);
 
             if (render_request == 1) {
                 clear_screen((UINT32)inactive);
@@ -833,27 +837,19 @@ int title() {
     render_title((UINT32 *)base);
 
     while (1) {
-        printf("bruh\n");
-        if (buffer_fill > 0) {
-            printf("hurb\n");
-            switch (keyboard_buffer[buffer_index]) {
-                case 's':
-                    return 0;
-                case 'q':
-                    clear_screen((UINT32)base);
-                    return 1;
-            }
-            buffer_index--;
-            buffer_fill--;
-            if (buffer_index < 0) {
-                buffer_index = 255;
-            }
+        char ch = keystroke();
+        switch (ch) {
+            case 's':
+                return 0;
+            case 'q':
+                clear_screen((UINT32)base);
+                return 1;
         }
     }
 }
 
 void asyncHandle() {
-    char ch = keyboard_buffer[buffer_index];
+    char ch = keystroke();
     switch (ch) {
         case 'q':
             model.quit = 1;

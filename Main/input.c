@@ -10,7 +10,26 @@ volatile const UINT8 *const IKBD_status = 0xFFFC00;
 volatile const UINT8 *const IKBD_RDR = 0xFFFC02;
 
 char keyboard_buffer[256];
-int buffer_index, buffer_fill;
+int buffer_index = 0;
+int buffer_open = 0;
+int buffer_fill = 0;
+
+char keystroke() {
+    char ch;
+    if (buffer_fill > 0) {
+        ch = keyboard_buffer[buffer_index];
+        buffer_index++;
+        buffer_fill--;
+        
+        if (buffer_index < 0) {
+            buffer_index = 255;
+        }
+
+        return ch;
+    }  else {
+        return '\0';
+    }
+}
 
 void do_IKBD_ISR() {
     UINT8 scancode;
@@ -29,14 +48,13 @@ void do_IKBD_ISR() {
 
 void add_to_buffer(char ch) {
     if (buffer_fill <= 256) {
-        buffer_index++;
+        keyboard_buffer[buffer_open] = ch;
+        buffer_open++;
         buffer_fill++;
 
-        if (buffer_index > 256) {
-            buffer_index = 0;
+        if (buffer_open > 256) {
+            buffer_open = 0;
         }
-
-        keyboard_buffer[buffer_index] = ch;
     } else {
         return;
     }

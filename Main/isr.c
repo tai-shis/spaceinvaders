@@ -2,22 +2,22 @@
 #include <osbind.h>
 
 #define VBL_ISR 28
-#define IKBD_ISR 7
+#define IKBD_ISR 70
 
 extern void vbl_isr();
 extern void ikbd_isr();
 
-static Vector orig_VBL;
-static Vector orig_IKBD;
+/* static Vector orig_VBL;
+static Vector orig_IKBD; */
 
 void install_vectors() {
-    orig_VBL = install_vector(VBL_ISR, vbl_isr);
-    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr);
+    /* orig_VBL = install_vector(VBL_ISR, vbl_isr);
+    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr); */
 }
 
 void uninstall_vectors() {
-    install_vector(VBL_ISR, orig_VBL);
-    install_vector(IKBD_ISR, orig_IKBD);
+    /* install_vector(VBL_ISR, orig_VBL);
+    install_vector(IKBD_ISR, orig_IKBD); */
 }
 
 Vector install_vector(int num, Vector vector) {

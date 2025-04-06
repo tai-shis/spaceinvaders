@@ -1,7 +1,13 @@
 #include "space.h"
 
+#define VBL_ISR 28
+#define IKBD_ISR 70
+
 extern void clear_screen(UINT32 base);
 extern void set_video_base(UINT16 *address);
+
+extern void vbl_isr();
+extern void ikbd_isr();
 
 unsigned int animation_frame;
 unsigned int note;
@@ -174,17 +180,19 @@ Model model = {
 
 
 int main() {
-    Vector orig_VBL;
+    Vector orig_VBL, orig_IKBD;
     int play = 0;
-    install_vectors();
+
+    orig_VBL = install_vector(VBL_ISR, vbl_isr);
+    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr);
 
     while (!play) {
         play = title();
         space(play);
     }
 
-    uninstall_vectors();
-
+    install_vector(VBL_ISR, orig_VBL);
+    install_vector(IKBD_ISR, orig_IKBD);
     return 0;
 }
 
@@ -218,15 +226,8 @@ void space(int play) {
 
 
         while (!model.quit) {
-            if (buffer_fill > 0) {
-                asyncHandle(&model);
-                buffer_index--;
-                buffer_fill--;
-                
-                if (buffer_index < 0) {
-                    buffer_index = 255;
-                }
-            }   
+            
+            asyncHandle(&model);
 
             if (render_request == 1) {
                 clear_screen((UINT32)inactive);
@@ -268,27 +269,19 @@ int title() {
     render_title((UINT32 *)base);
 
     while (1) {
-        printf("bruh\n");
-        if (buffer_fill > 0) {
-            printf("hurb\n");
-            switch (keyboard_buffer[buffer_index]) {
-                case 's':
-                    return 0; /* Start game */
-                case 'q':
-                    clear_screen((UINT32)base);
-                    return 1; /* Quit game */
-            }
-            buffer_index--;
-            buffer_fill--;
-            if (buffer_index < 0) {
-                buffer_index = 255;
-            }
-        }     
+        char ch = keystroke();
+        switch (ch) {
+            case 's':
+                return 0; /* Start game */
+            case 'q':
+                clear_screen((UINT32)base);
+                return 1; /* Quit game */     
+        }
     }
 }
 
 void asyncHandle() {
-    char ch = keyboard_buffer[buffer_index];
+    char ch = keystroke();
     switch (ch) {
         case 'q':
             model.quit = 1;
