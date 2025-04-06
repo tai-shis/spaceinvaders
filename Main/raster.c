@@ -171,3 +171,16 @@ UINT16 *get_video_base() {
 
 	return (UINT16 *)vid_base;
 }
+
+extern void edit_video_base(UINT16 *address);
+
+UINT16 *set_video_base(UINT16 *address) {
+	UINT32 oldSsp;
+
+	/* Enter supervisor mode then call an asm function? */
+	oldSsp = Super(0);
+	edit_video_base(address);	/* Untested */
+	Super(oldSsp);
+
+	return (UINT16 *)vid_base;
+}

@@ -88,4 +88,6 @@ void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, i
  */
 UINT16 *get_video_base();
 
+void set_video_base(UINT16 *address);
+
 #endif

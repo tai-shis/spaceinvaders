@@ -322,7 +322,7 @@ void swapBuffers (void **active, void **inactive) {
     void *temp = *active;
     *active = *inactive;
     *inactive = temp;
-    Setscreen(-1, *active, -1);
+    set_video_base(*active);
     Vsync();
 }
 

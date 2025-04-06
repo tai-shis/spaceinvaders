@@ -4,6 +4,7 @@
 ; so runs in about 1/100th of a second (at 8MHz) instead of 1/50th
 
 		xdef		_clear_screen
+		xdef		_edit_video_base
 
 base		equ		64		; offset from SP, not A6
 
@@ -22,3 +23,14 @@ fill_loop:
 		rts
 
 zeros:		ds.l		13
+
+address		equ		12
+vid_hi		equ 	0xFFFF8201
+
+_edit_video_base:
+		movem.l	d0/a0,-(sp)
+		move.w	address(sp),d0
+		lea		vid_hi,a0
+		movep.w d0,0(a0)
+		movem.l (sp)+,d0/a0
+		rts
