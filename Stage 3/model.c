@@ -34,11 +34,11 @@ int lower_aliens(Aliens *alien_arr, int highbound, int alien_dx) {
     /* Also changes direction of travel */
     int i;
     for (i = 0; i < 11; i++) {
-        alien_arr->r1[i].y -= 32;
-        alien_arr->r2[i].y -= 32;
-        alien_arr->r3[i].y -= 32;
-        alien_arr->r4[i].y -= 32;
-        alien_arr->r5[i].y -= 32;
+        alien_arr->r1[i].y += 32;
+        alien_arr->r2[i].y += 32;
+        alien_arr->r3[i].y += 32;
+        alien_arr->r4[i].y += 32;
+        alien_arr->r5[i].y += 32;
     }
     
     alien_direc_change(alien_arr, alien_dx);

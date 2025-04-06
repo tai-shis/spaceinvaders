@@ -243,8 +243,8 @@ void space(int play) {
                 alienInterval = 10;
             }
         }
-
         stop_sound();
+        play_game_over();
 
         /* Clear both buffers when done game */
         clear_screen((UINT32)active);
