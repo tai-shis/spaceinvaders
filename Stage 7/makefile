@@ -1,5 +1,5 @@
 driver: driver.o psg.o music.o effects.o
-	cc68x -g driver.o psg.o music.o effects.o -o driver
+	cc68x -g driver.o psg.o music.o effects.o -o driver.prg
 
 driver.o: driver.c psg.h music.h effects.h
 	cc68x -g -c driver.c

@@ -1,5 +1,5 @@
 tst_s3: tst_s3.o model.o events.o
-	cc68x -g tst_s3.o model.o events.o -o tst_s3
+	cc68x -g tst_s3.o model.o events.o -o tst_s3.prg
 
 tst_s3.o: tst_s3.c model.h events.h
 	cc68x -g -c tst_s3.c
@@ -9,4 +9,6 @@ model.o: model.c model.h
 
 events.o: events.c events.h
 	cc68x -g -c events.c
-	
+
+clean:
+	$(RM) *.o *.prg

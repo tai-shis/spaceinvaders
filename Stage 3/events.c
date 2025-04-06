@@ -15,10 +15,8 @@ void async_move_player(Model *model, char key) {
         model->player.x = model->lowbound_x;
     } else if (model->player.x >= model->highbound_x) {
         model->player.x = model->highbound_x;
-    } else {
-        return;
     }
-}    
+}
 
 void async_shoot(Model *model, int cooldown) {
     /* cooldown will probably just be the clock counter or something, */
@@ -69,14 +67,14 @@ void update_bullets(Model *model) {
         /* Find only active bullets */
         if(model->active[i].is_active == 1) {
             /* Update position, use return to deactivate or not */
-            deactivate = move_bullet(&model, &model->active[i]);
+            deactivate = move_bullet(model, &model->active[i]);
             
             if(model->active[i].delta_y == 1) { 
                 /* Check for alien collision */
                 hit = check_aliens_hit(&model->aliens, &model->active[i]);
             } else {
                 /* Otherwise check for player collision */
-                hit = check_player_hit(&model->player, model->active[i])
+                hit = check_player_hit(&model->player, &model->active[i]);
             }
 
             if((deactivate == -1) || hit) {

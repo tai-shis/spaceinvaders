@@ -145,6 +145,6 @@ int check_player_hit(Player *player, Bullet *bullet);
  * 
  * @param model Gamestate
  */
-int check_endgame(Model *model)
+int check_endgame(Model *model);
 
 #endif

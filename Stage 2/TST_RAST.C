@@ -10,10 +10,15 @@ int main()
 	plot_vline(base, 319, 0, 400);
 	
 	plot_bitmap32(base, 320, 200, player_bitmap, 32);
-	plot_bitmap32(base, 320, 232, alien1_bitmap_1, 32);
-	plot_bitmap32(base, 320, 264, alien2_bitmap_1, 32);
-	plot_bitmap32(base, 320, 296, alien3_bitmap_1, 32);
-	plot_bitmap32(base, 320, 328, mothership, 32);
+	plot_bitmap32(base, 352, 205, alien_maps[0][0], 32);
+	plot_bitmap32(base, 384, 205, alien_maps[1][0], 32);
+	plot_bitmap32(base, 416, 205, alien_maps[2][0], 32);
+
+	plot_bitmap8(base, 325, 180, bullet_bitmaps[0], 16);
+	plot_bitmap8(base, 335, 180, bullet_bitmaps[1], 16);
+
+	plot_bitmap16(base, 345, 180, heart, 16);
+	plot_bitmap16(base, 365, 180, broken_heart, 16);
 
 	return 0;
 }

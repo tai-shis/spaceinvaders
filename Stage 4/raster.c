@@ -1,12 +1,17 @@
 #include "raster.h"
+#include <osbind.h>
+
 
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
-	start = (start + (y * 80) + (x >> 3)); /* Get to relative byte */
+	start = (start + (y * 80) + (x >> 3));
 
-	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7)); /* Shift the bitmap to correct bit */
+	for (i = 0; i < height; i++) {
+		*start |= (bitmap[i] >> (x & 7));
+		if ((x & 7) > 0) {
+			*(start + 1) |= (bitmap[i] << (8 - (x & 7)));
+		}
 		start += 80;
 	}
 }
@@ -16,8 +21,11 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 	UINT16 *start = base;
 	start = (start + (y * 40) + (x >> 4));
 
-	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7));
+	for (i = 0; i < height; i++) {
+		*start |= (bitmap[i] >> (x & 15));
+		if ((x & 15) > 0) {
+			*(start + 1) |= (bitmap[i] << (16 - (x & 15)));
+		}
 		start += 40;
 	}
 }
@@ -27,8 +35,11 @@ void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned in
 	UINT32 *start = base;
 	start = (start + (y * 20) + (x >> 5));
 
-	for (i = 0; i < height; i += 1) {
-		*start |= (bitmap[i] >> (x & 7));
+	for (i = 0; i < height; i++) {
+		*start |= (bitmap[i] >> (x & 31));
+		if ((x & 31) > 0) {
+			*(start + 1) |= (bitmap[i] << (32 - (x & 31)));
+		}
 		start += 20;
 	}
 }
@@ -68,13 +79,13 @@ void plot_vline (UINT8 *base, int x, int y1, int y2){
 	return;
 }
 
-void plot_hline(UINT8 *base, int x1, int x2, int y) {
+void plot_hline(UINT32 *base, int x1, int x2, int y) {
 	/* Essentially very similar to plot_vline func */
 	int temp;
 	UINT8 start;
 	UINT8 end;
-	UINT8 *screen_byte;
-	UINT8 *line_end;
+	UINT32 *screen_long;
+	UINT32 *line_end;
 
 	if (y >= 0 && y < 400) { /* Make sure y is in bounds */
 		/* If line call with x is backwards, flip */
@@ -95,27 +106,25 @@ void plot_hline(UINT8 *base, int x1, int x2, int y) {
 		}
 
 		/* THIS DOES NOT COVER THE CASE WHERE x2-x1 IS < 8 */
-		start = 0xFF >> ((x1 & 7));
-		end = 0xFF << (7 - (x2 & 7));
-		screen_byte = base + y * 80 + (x1 >> 3);
-		line_end = base + y * 80 + (x2 >> 3); /* End address (rounded down by 8) */
+		start = 0xFF >> ((x1 & 31));
+		end = 0xFF << (31 - (x2 & 31));
+		screen_long = base + y * 20 + (x1 >> 5);
+		line_end = base + y * 20 + ((x2 + 31) >> 5); /* End address (adjusted for remaining bits) */
 
 		/* Plot start line */
-		*screen_byte = start;	
-		screen_byte += 1;
+		*screen_long = start;
 
 		/* Plot 0xFFs */
-		while (screen_byte < line_end) {
-			*screen_byte |= 0xFF;
-			screen_byte += 1;
+		while (screen_long < line_end) {
+			*screen_long |= 0xFFFFFFFF;
+			screen_long++;
 		}
 		
 		/* Plot end line */
-		*screen_byte = end;
+		*screen_long = end;
 	}
 	return;
 }
-
 
 /* for 8 bit font sizes */
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
@@ -129,4 +138,37 @@ void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
 		start += 80;
 		ch++;
 	}
+}
+
+void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, int longWidth) {
+	int i,j,k = 0;
+	UINT32 *start = base;
+	start += ((y * 20) + (x >> 5));
+
+	for (i = 0; i < height; i++) {
+
+		for (j = 0; j < longWidth; j++) {
+			*(start + (i * 20) + j) |= (bitmap[k] >> (x & 31));
+			if ((x & 31) > 0) {
+				*(start + (i * 20) + j + 1) |= (bitmap[k] << (32 - (x & 31)));
+			}
+			k++;
+		}
+	}
+}
+
+UINT16 *get_video_base() {
+	UINT8 *vid_hi = 0xFF8201;
+	UINT8 *vid_mi = 0xFF8203;
+	UINT32 vid_base;
+	UINT32 oldSsp;
+
+	oldSsp = Super(0);
+	vid_base = ((UINT32)*vid_hi);
+	vid_base = vid_base << 8;
+	vid_base |= ((UINT32)*vid_mi);
+	vid_base = vid_base << 8;
+	Super(oldSsp);
+
+	return (UINT16 *)vid_base;
 }
