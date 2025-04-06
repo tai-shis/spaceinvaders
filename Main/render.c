@@ -128,6 +128,6 @@ void render_border(Model *model, void *base){
 
 void render_title(UINT32 *base) {
     plot_custom(base, 125, 125, title_bitmap, 24, 12);
-    plot_custom(base, 200, 200, start_bitmap, 40, 6);
-    plot_custom(base, 255, 250, quit_bitmap, 40, 3);
+    plot_custom(base, 215, 200, start_bitmap, 40, 6);
+    plot_custom(base, 270, 250, quit_bitmap, 40, 3);
 }
