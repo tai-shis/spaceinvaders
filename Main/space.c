@@ -1,7 +1,5 @@
 #include "space.h"
 
-#define yield while(!Cconis()){} Cnecin();
-
 extern void clear_screen(UINT32 base);
 
 extern void set_video_base(UINT16 *address);
