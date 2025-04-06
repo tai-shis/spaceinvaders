@@ -468,14 +468,18 @@ int rand();
 # 1 "./raster.h" 1
 # 19 "./space.h" 2
 # 1 "./input.h" 1
+# 1 "./types.h" 1
+# 11 "./input.h" 2
 # 1 "C:/c68/include/osbind.h" 1
-# 9 "./input.h" 2
+# 12 "./input.h" 2
 
 
+extern char keyboard_buffer[256];
+extern int buffer_index, buffer_fill;
 
+void do_IKBD_ISR();
 
-
-char keystroke();
+void add_to_buffer(char ch);
 # 20 "./space.h" 2
 # 1 "./psg.h" 1
 # 21 "./space.h" 2
@@ -518,7 +522,13 @@ extern const UINT16 noteTunings[12][3];
 # 5 "./isr.h" 2
 # 1 "./types.h" 1
 # 6 "./isr.h" 2
+# 1 "./input.h" 1
+# 7 "./isr.h" 2
 
+
+void uninstall_vectors();
+
+void install_vectors();
 
 Vector install_vector(int num, Vector vector);
 
@@ -555,11 +565,8 @@ UINT32 getTime();
 # 1 "space.c" 2
 
 
-
-
 extern void clear_screen(UINT32 base);
 extern void set_video_base(UINT16 *address);
-extern void vbl_isr();
 
 unsigned int animation_frame;
 unsigned int note;
@@ -734,15 +741,14 @@ Model model = {
 int main() {
     Vector orig_VBL;
     int play = 0;
-
-    orig_VBL = install_vector(28 , vbl_isr);
+    install_vectors();
 
     while (!play) {
-    play = title();
-    space(play);
+        play = title();
+        space(play);
     }
 
-    install_vector(28 , orig_VBL);
+    uninstall_vectors();
 
     return 0;
 }
@@ -761,6 +767,8 @@ void space(int play) {
 
         alien_interval = 75;
         animation_frame = 0;
+        buffer_index = 0;
+        buffer_fill = 0;
 
 
 
@@ -775,7 +783,15 @@ void space(int play) {
 
 
         while (!model.quit) {
-            asyncHandle(&model);
+            if (buffer_fill > 0) {
+                asyncHandle(&model);
+                buffer_index--;
+                buffer_fill--;
+
+                if (buffer_index < 0) {
+                    buffer_index = 255;
+                }
+            }
 
             if (render_request == 1) {
                 clear_screen((UINT32)inactive);
@@ -809,7 +825,6 @@ void space(int play) {
 
 int title() {
     UINT16 *base = get_video_base();
-    char ch = keystroke();
 
 
 
@@ -818,20 +833,27 @@ int title() {
     render_title((UINT32 *)base);
 
     while (1) {
-        ch = keystroke();
-        switch (ch) {
-            case 's':
-                return 0;
-            case 'q':
-                clear_screen((UINT32)base);
-                return 1;
+        printf("bruh\n");
+        if (buffer_fill > 0) {
+            printf("hurb\n");
+            switch (keyboard_buffer[buffer_index]) {
+                case 's':
+                    return 0;
+                case 'q':
+                    clear_screen((UINT32)base);
+                    return 1;
+            }
+            buffer_index--;
+            buffer_fill--;
+            if (buffer_index < 0) {
+                buffer_index = 255;
+            }
         }
     }
 }
 
 void asyncHandle() {
-    char ch = keystroke();
-
+    char ch = keyboard_buffer[buffer_index];
     switch (ch) {
         case 'q':
             model.quit = 1;

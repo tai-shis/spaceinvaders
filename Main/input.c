@@ -7,7 +7,7 @@
 
 volatile UINT8 *const IKBD_control = 0xFFFC00;
 volatile const UINT8 *const IKBD_status = 0xFFFC00;
-volatile const SCANCODE *const IKBD_RDR = 0xFFFC02;
+volatile const UINT8 *const IKBD_RDR = 0xFFFC02;
 
 char keyboard_buffer[256];
 int buffer_index, buffer_fill;
@@ -41,3 +41,4 @@ void add_to_buffer(char ch) {
         return;
     }
 }
+

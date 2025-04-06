@@ -260,7 +260,6 @@ void space(int play) {
 
 int title() {
     UINT16 *base = get_video_base();
-    char ch = keystroke();
 
     /* printf clears screen from cursor and mouse */
     /* printf("\033E\033f\n"); */
@@ -269,28 +268,27 @@ int title() {
     render_title((UINT32 *)base);
 
     while (1) {
-        ch = keystroke();
-        switch (ch) {
-            case 's':
-                return 0; /* Start game */
-            case 'q':
-                clear_screen((UINT32)base);
-                return 1; /* Quit game */
-        }
+        printf("bruh\n");
+        if (buffer_fill > 0) {
+            printf("hurb\n");
+            switch (keyboard_buffer[buffer_index]) {
+                case 's':
+                    return 0; /* Start game */
+                case 'q':
+                    clear_screen((UINT32)base);
+                    return 1; /* Quit game */
+            }
+            buffer_index--;
+            buffer_fill--;
+            if (buffer_index < 0) {
+                buffer_index = 255;
+            }
+        }     
     }
 }
 
 void asyncHandle() {
-    if (buffer_fill > 0) {
-        asyncHandle(&model);
-        buffer_index--;
-        buffer_fill--;
-        
-        if (buffer_index < 0) {
-            buffer_index = 255;
-        }
-    } 
-
+    char ch = keyboard_buffer[buffer_index];
     switch (ch) {
         case 'q':
             model.quit = 1;

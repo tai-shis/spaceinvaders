@@ -17,3 +17,5 @@ extern int buffer_index, buffer_fill;
 void do_IKBD_ISR();
 
 void add_to_buffer(char ch);
+
+#endif
