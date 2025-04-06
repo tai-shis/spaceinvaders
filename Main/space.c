@@ -261,7 +261,7 @@ int title() {
     /* printf clears screen from cursor and mouse */
     printf("\033E\033f\n");
 
-    clear_screen((UINT32 *)base);
+    clear_screen((UINT32)base);
     render_title((UINT32 *)base);
 
     while (1) {
@@ -270,7 +270,7 @@ int title() {
             case 's':
                 return 0; /* Start game */
             case 'q':
-                clear_screen((UINT32 *)base);
+                clear_screen((UINT32)base);
                 return 1; /* Quit game */
         }
     }
