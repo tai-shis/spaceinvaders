@@ -1,8 +1,26 @@
-driver: driver.o psg.o music.o effects.o
-	cc68x -g driver.o psg.o music.o effects.o -o driver.prg
+space: space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o clear_qk.o
+	cc68x -g space.o events.o render.o raster.o model.o input.o clear_qk.o psg.o music.o effects.o -o space.prg
 
-driver.o: driver.c psg.h music.h effects.h
-	cc68x -g -c driver.c
+space.o: space.c space.h 
+	cc68x -g -c space.c 
+
+render.o: render.c render.h
+	cc68x -g -c render.c
+
+raster.o: raster.c raster.h
+	cc68x -g -c raster.c
+
+events.o: events.c events.h
+	cc68x -g -c events.c
+
+input.o: input.c input.h
+	cc68x -g -c input.c
+
+model.o: model.c model.h
+	cc68x -g -c model.c
+
+clear_qk.o: clear_qk.s
+	gen -D -L2 clear_qk.s
 
 psg.o: psg.c psg.h
 	cc68x -g -c psg.c
@@ -12,6 +30,13 @@ music.o: music.c music.h
 
 effects.o: effects.c effects.h
 	cc68x -g -c effects.c
+
+# This is the make for the PSG sound test driver
+tst_s7: driver.o psg.o music.o effects.o
+	cc68x -g driver.o psg.o music.o effects.o -o tst_s7.prg
+
+driver.o: driver.c psg.h music.h effects.h
+	cc68x -g -c driver.c
 
 clean:
 	$(RM) *.o *.prg 
