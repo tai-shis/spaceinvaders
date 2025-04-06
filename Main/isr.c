@@ -1,6 +1,23 @@
 #include "isr.h"
 #include <osbind.h>
 
+#define VBL_ISR 28
+#define IKBD_ISR 7
+
+extern void vbl_isr();
+extern void ikbd_isr();
+
+Vector orig_VBL, orig_IKBD;
+
+void install_vectors() {
+    orig_VBL = install_vector(VBL_ISR, do_VBL_ISR);
+    orig_IKBD = install_vector(IKBD_ISR, do_IKBD_ISR);
+}
+
+void uninstall_vectors() {
+    install_vector(VBL_ISR, orig_VBL);
+    install_vector(IKBD_ISR, orig_IKBD);
+}
 
 Vector install_vector(int num, Vector vector) {
     Vector orig;
@@ -37,3 +54,4 @@ void do_VBL_ISR() {
 
     render_request = 1;
 }
+

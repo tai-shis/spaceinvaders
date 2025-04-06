@@ -1,10 +1,7 @@
 #include "space.h"
 
-#define VBL_ISR 28
-
 extern void clear_screen(UINT32 base);
 extern void set_video_base(UINT16 *address);
-extern void vbl_isr();
 
 unsigned int animation_frame;
 unsigned int note;
@@ -179,15 +176,14 @@ Model model = {
 int main() {
     Vector orig_VBL;
     int play = 0;
-
-    orig_VBL = install_vector(VBL_ISR, vbl_isr);
+    install_vectors();
 
     while (!play) {
-    play = title();
-    space(play);
+        play = title();
+        space(play);
     }
 
-    install_vector(VBL_ISR, orig_VBL);
+    uninstall_vectors();
 
     return 0;
 }
@@ -206,6 +202,8 @@ void space(int play) {
 
         alien_interval = 75;
         animation_frame = 0;
+        buffer_index = 0;
+        buffer_fill = 0;
 
         /* printf clears screen from cursor and mouse */
         /* printf("\033E\033f\n"); */
@@ -220,8 +218,16 @@ void space(int play) {
 
 
         while (!model.quit) {
-            asyncHandle(&model);
-            
+            if (buffer_fill > 0) {
+                asyncHandle(&model);
+                buffer_index--;
+                buffer_fill--;
+                
+                if (buffer_index < 0) {
+                    buffer_index = 255;
+                }
+            }   
+
             if (render_request == 1) {
                 clear_screen((UINT32)inactive);
                 render(&model, inactive, (animation_frame & 1));
@@ -275,7 +281,15 @@ int title() {
 }
 
 void asyncHandle() {
-    char ch = keystroke();
+    if (buffer_fill > 0) {
+        asyncHandle(&model);
+        buffer_index--;
+        buffer_fill--;
+        
+        if (buffer_index < 0) {
+            buffer_index = 255;
+        }
+    } 
 
     switch (ch) {
         case 'q':

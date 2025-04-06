@@ -4,6 +4,11 @@
 #include "music.h"
 #include "space.h"
 #include "types.h"
+#include "input.h"
+
+void uninstall_vectors();
+
+void install_vectors();
 
 Vector install_vector(int num, Vector vector);
 
