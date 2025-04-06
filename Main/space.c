@@ -10,7 +10,8 @@ unsigned int animation_frame;
 unsigned int note;
 int render_request;
 int alien_interval;
-int play;
+int in_game;
+
 
 UINT8 preBuffer[32255];
 
@@ -177,7 +178,7 @@ Model model = {
 
 int main() {
     Vector orig_VBL;
-    play = 0;
+    int play = 0;
 
     orig_VBL = install_vector(VBL_ISR, vbl_isr);
 
@@ -209,14 +210,13 @@ void space(int play) {
         /* printf clears screen from cursor and mouse */
         /* printf("\033E\033f\n"); */
 
-        timeStart = getTime();
-
         clear_screen((UINT32)active);
         clear_screen((UINT32)inactive);
 
         render(&model, active, 0);
         
         start_music();
+        in_game = 1;
 
 
         while (!model.quit) {

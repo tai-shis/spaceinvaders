@@ -13,20 +13,20 @@ Vector install_vector(int num, Vector vector) {
 }
 
 void do_VBL_ISR() {
-    static int note_timing;
-    static int ticks;
+    static int note_timing = 0;
+    static int ticks = 0;
     
-    if (play == 0) {
+    if (in_game == 1) {
         ticks++;
         note_timing++;
         syncBullets();
-        if (ticks == alien_interval) {
+        if (ticks >= alien_interval) {
             ticks = 0;
             animation_frame++;
             syncHandle();
         }
 
-        if (note_timing == 100) {
+        if (note_timing >= 30) {
             note_timing = 0;
             note++;
             if(note == 48)

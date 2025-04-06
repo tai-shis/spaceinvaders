@@ -470,39 +470,38 @@ _model:
 	text
 	even
 _main:
-	link	a6,#-4
-	move.l	a3,-(a7)
-	lea	_play,a3
-	;line	180
-	clr.w	(a3)
-	;line	182
+	link	a6,#-6
+	move.l	d3,-(a7)
+	;line	183
+	moveq	#0,d3
+	;line	183
 	pea	_vbl_isr
 	move.w	#28,-(a7)
 	jsr	_install_vector
 	addq.l	#6,a7
 	move.l	d0,-4(a6)
-	;line	184
+	;line	185
 	bra	L2
 L1:
-	;line	185
-	jsr	_title
-	move.w	d0,(a3)
 	;line	186
-	move.w	(a3),-(a7)
+	jsr	_title
+	move.w	d0,d3
+	;line	187
+	move.w	d3,-(a7)
 	jsr	_space
 	addq.l	#2,a7
 L2:
-	tst.w	(a3)
+	tst.w	d3
 	beq	L1
 L3:
-	;line	189
+	;line	190
 	move.l	-4(a6),-(a7)
 	move.w	#28,-(a7)
 	jsr	_install_vector
-	;line	191
+	;line	192
 	moveq	#0,d0
 L4:
-	move.l	-8(a6),a3
+	move.l	-10(a6),d3
 	unlk	a6
 	rts
 _space:
@@ -514,14 +513,14 @@ _space:
 	lea	-8(a6),a0
 	move.l	a0,d3
 	move.l	#_alien_interval,d5
-	;line	195
+	;line	196
 	cmp.w	#1,8(a6)
 	bne	L5
-	;line	196
+	;line	197
 	bra	L6
 	bra	L7
 L5:
-	;line	206
+	;line	207
 	jsr	_get_video_base
 	move.l	d0,d4
 	move.l	d3,a0
@@ -530,32 +529,31 @@ L5:
 	add.l	#255,d0
 	and.l	#-256,d0
 	move.l	d0,(a4)
-	;line	206
+	;line	207
 	move.l	d5,a0
 	move.w	#75,(a0)
-	;line	207
+	;line	208
 	clr.w	_animation_frame
-	;line	212
-	jsr	_getTime
-	move.l	d0,-18(a6)
-	;line	214
+	;line	213
 	move.l	d3,a0
 	move.l	(a0),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	215
+	;line	214
 	move.l	(a4),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	217
+	;line	216
 	clr.w	-(a7)
 	move.l	d3,a0
 	move.l	(a0),-(a7)
 	move.l	a3,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	219
+	;line	218
 	jsr	_start_music
+	;line	219
+	move.w	#1,_in_game
 	;line	222
 	bra	L9
 L8:
@@ -623,8 +621,10 @@ L9:
 	tst.w	1686(a3)
 	beq	L8
 L10:
-	;line	245
+	;line	244
 	jsr	_stop_sound
+	;line	245
+	jsr	_play_game_over
 	;line	248
 	move.l	d3,a0
 	move.l	(a0),-(a7)
@@ -636,7 +636,7 @@ L10:
 	addq.l	#4,a7
 	;line	251
 	move.l	d4,-(a7)
-	jsr	_rst_SetVideoBase
+	jsr	_set_video_base
 L7:
 L6:
 	movem.l	-54(a6),d3/d4/d5/a3/a4/a5
@@ -798,7 +798,7 @@ _swapBuffers:
 	move.l	-4(a6),(a0)
 	;line	323
 	move.l	(a3),-(a7)
-	jsr	_rst_SetVideoBase
+	jsr	_set_video_base
 	move.l	-8(a6),a3
 	unlk	a6
 	rts
@@ -839,9 +839,9 @@ _render_request:
 _alien_interval:
 	ds.b	2
 	globl	_alien_interval
-_play:
+_in_game:
 	ds.b	2
-	globl	_play
+	globl	_in_game
 	globl	_space
 	globl	_title
 	globl	_asyncHandle

@@ -27,7 +27,7 @@ extern unsigned int note;
 extern unsigned int animation_frame;
 extern int render_request;
 extern int alien_interval;
-extern int play;
+extern int in_game;
 
 /**
  * @brief Main function for the Space Invaders game

@@ -416,9 +416,6 @@ void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
 void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, int longWidth);
 # 89 "./raster.h"
 UINT16 *get_video_base();
-
-
-void rst_SetVideoBase(UINT16* base);
 # 13 "./render.h" 2
 # 22 "./render.h"
 void render(const Model *model, void *base, int f);
@@ -487,22 +484,22 @@ char keystroke();
 # 12 "./music.h" 2
 
 
- typedef enum{
-     C = 0,
-     C_SHARP,
-     D,
-     D_SHARP,
-     E,
-     F,
-     F_SHARP,
-     G,
-     G_SHARP,
-     A,
-     A_SHARP,
-     B
- } Note;
+typedef enum{
+  C = 0,
+  C_SHARP,
+  D,
+  D_SHARP,
+  E,
+  F,
+  F_SHARP,
+  G,
+  G_SHARP,
+  A,
+  A_SHARP,
+  B
+} Note;
 
- extern const UINT16 noteTunings[12][3];
+extern const UINT16 noteTunings[12][3];
 
 
 
@@ -534,7 +531,7 @@ extern unsigned int note;
 extern unsigned int animation_frame;
 extern int render_request;
 extern int alien_interval;
-extern int play;
+extern int in_game;
 
 
 
@@ -561,14 +558,15 @@ UINT32 getTime();
 
 
 extern void clear_screen(UINT32 base);
-extern void rst_SetVideoBase(UINT16 *address);
+extern void set_video_base(UINT16 *address);
 extern void vbl_isr();
 
 unsigned int animation_frame;
 unsigned int note;
 int render_request;
 int alien_interval;
-int play;
+int in_game;
+
 
 UINT8 preBuffer[32255];
 
@@ -735,7 +733,7 @@ Model model = {
 
 int main() {
     Vector orig_VBL;
-    play = 0;
+    int play = 0;
 
     orig_VBL = install_vector(28 , vbl_isr);
 
@@ -767,14 +765,13 @@ void space(int play) {
 
 
 
-        timeStart = getTime();
-
         clear_screen((UINT32)active);
         clear_screen((UINT32)inactive);
 
         render(&model, active, 0);
 
         start_music();
+        in_game = 1;
 
 
         while (!model.quit) {
@@ -799,14 +796,14 @@ void space(int play) {
                 alien_interval = 10;
             }
         }
-
         stop_sound();
+        play_game_over();
 
 
         clear_screen((UINT32)active);
         clear_screen((UINT32)inactive);
 
-        rst_SetVideoBase((UINT16*)base);
+        set_video_base((UINT16*)base);
     }
 }
 
@@ -878,7 +875,7 @@ void swapBuffers (void **active, void **inactive) {
     void *temp = *active;
     *active = *inactive;
     *inactive = temp;
-    rst_SetVideoBase((UINT16*)*active);
+    set_video_base((UINT16*)*active);
 }
 
 UINT32 getTime() {

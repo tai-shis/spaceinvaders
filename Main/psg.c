@@ -5,12 +5,18 @@ volatile char *PSG_reg_select = 0xFF8800;
 volatile char *PSG_reg_write  = 0xFF8802;
 
 void write_psg(int reg, UINT8 val) {
-    long old_ssp = Super(0);
+    long old_ssp;
+    char isr; /* To remember if we are in an ISR already */
+    
+    isr = Super(1);
+    if(!isr)
+        old_ssp = Super(0);
 
     *PSG_reg_select = reg;
     *PSG_reg_write = val;
 
-    Super(old_ssp);
+    if(!isr)
+        Super(old_ssp);
 }
 
 void set_tone(int channel, int tuning) {
@@ -53,6 +59,7 @@ void set_volume(int channel, int volume) {
 
 void enable_channel(int channel, int tone_on, int noise_on) {
     long old_ssp;
+    char isr;
     UINT8 value;
 
     if ((tone_on > 1) || (tone_on < 0)) {
@@ -64,13 +71,15 @@ void enable_channel(int channel, int tone_on, int noise_on) {
     }
 
     /* Enter supervisor mode to grab current reg value */
-    old_ssp = Super(0);
+    isr = Super(1);
+    if (!isr)
+        old_ssp = Super(0);
 
     *PSG_reg_select = 7; /* We check the 7th register, and only edit the 7th register */
     value = *PSG_reg_select;
 
-    Super(old_ssp);
-
+    if(!isr)
+        Super(old_ssp);
 
     /* For both if blocks, we handle two other cases, when the value is being turned on or off */
     /* To do this, the specific bits are modified from the CURRENT register value, then writted to the PSG */
