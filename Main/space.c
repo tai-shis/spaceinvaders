@@ -4,6 +4,8 @@
 
 extern void clear_screen(UINT32 base);
 
+extern void set_video_base(UINT16 *address);
+
 UINT8 preBuffer[32255];
 
 int main() {
@@ -250,7 +252,7 @@ void space(int play) {
         clear_screen((UINT32)active);
         clear_screen((UINT32)inactive);
         /* Set base back */
-        Setscreen(-1, base, -1);
+        set_video_base((UINT16*)base);
     }
 }
 
@@ -322,7 +324,7 @@ void swapBuffers (void **active, void **inactive) {
     void *temp = *active;
     *active = *inactive;
     *inactive = temp;
-    set_video_base(*active);
+    set_video_base((UINT16*)*active);
     Vsync();
 }
 

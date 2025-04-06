@@ -4,7 +4,7 @@
 ; so runs in about 1/100th of a second (at 8MHz) instead of 1/50th
 
 		xdef		_clear_screen
-		xdef		_edit_video_base
+		xdef		_set_video_base
 
 base		equ		64		; offset from SP, not A6
 
@@ -24,13 +24,31 @@ fill_loop:
 
 zeros:		ds.l		13
 
-address		equ		12
-vid_hi		equ 	0xFFFF8201
 
-_edit_video_base:
-		movem.l	d0/a0,-(sp)
-		move.w	address(sp),d0
-		lea		vid_hi,a0
-		movep.w d0,0(a0)
-		movem.l (sp)+,d0/a0
+ADDRESS		equ		8
+VID_HI		equ 	$FFFF8201
+
+_set_video_base:
+		link	a6,#0
+		movem.l	d0-2/a0-2,-(sp)
+
+		; entering supervisor mode
+		clr.l 	-(sp)
+		move.w 	#$20,-(sp)
+		trap	#1	
+		addq.l	#6,sp
+
+		move.l	ADDRESS(a6),d1
+		lsr.l	#8,d1
+		lea		VID_HI,a0
+		movep.w d1,0(a0)
+
+		; exit supervisor mode
+		move.l	d0,-(sp)
+		move.w	#$20,-(sp)
+		trap	#1
+		addq.l	#6,sp
+
+		movem.l (sp)+,d0-2/a0-2
+		unlk	a6
 		rts

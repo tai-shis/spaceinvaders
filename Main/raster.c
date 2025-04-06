@@ -1,6 +1,7 @@
 #include "raster.h"
 #include <osbind.h>
 
+
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
@@ -167,19 +168,6 @@ UINT16 *get_video_base() {
 	vid_base = vid_base << 8;
 	vid_base |= ((UINT32)*vid_mi);
 	vid_base = vid_base << 8;
-	Super(oldSsp);
-
-	return (UINT16 *)vid_base;
-}
-
-extern void edit_video_base(UINT16 *address);
-
-UINT16 *set_video_base(UINT16 *address) {
-	UINT32 oldSsp;
-
-	/* Enter supervisor mode then call an asm function? */
-	oldSsp = Super(0);
-	edit_video_base(address);	/* Untested */
 	Super(oldSsp);
 
 	return (UINT16 *)vid_base;
