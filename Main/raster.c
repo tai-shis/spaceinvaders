@@ -1,11 +1,12 @@
 #include "raster.h"
+#include <osbind.h>
 
 void plot_bitmap8(UINT8 *base, int x, int y, const UINT8 *bitmap, unsigned int height) { /* Could replace the height to constant value in func? */
 	int i;
 	UINT8 *start = base;
 	start = (start + (y * 80) + (x >> 3));
 
-	for (i = 0; i < height; i += 1) {
+	for (i = 0; i < height; i++) {
 		*start |= (bitmap[i] >> (x & 7));
 		if ((x & 7) > 0) {
 			*(start + 1) |= (bitmap[i] << (8 - (x & 7)));
@@ -19,7 +20,7 @@ void plot_bitmap16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned in
 	UINT16 *start = base;
 	start = (start + (y * 40) + (x >> 4));
 
-	for (i = 0; i < height; i += 1) {
+	for (i = 0; i < height; i++) {
 		*start |= (bitmap[i] >> (x & 15));
 		if ((x & 15) > 0) {
 			*(start + 1) |= (bitmap[i] << (16 - (x & 15)));
@@ -33,7 +34,7 @@ void plot_bitmap32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned in
 	UINT32 *start = base;
 	start = (start + (y * 20) + (x >> 5));
 
-	for (i = 0; i < height; i += 1) {
+	for (i = 0; i < height; i++) {
 		*start |= (bitmap[i] >> (x & 31));
 		if ((x & 31) > 0) {
 			*(start + 1) |= (bitmap[i] << (32 - (x & 31)));
@@ -138,24 +139,35 @@ void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y) {
 	}
 }
 
-void clear_player(UINT32 *base) {
+void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, int longWidth) {
+	int i,j,k = 0;
 	UINT32 *start = base;
-	int i;
-	start += 360 * 20;
+	start += ((y * 20) + (x >> 5));
 
-	for (i = 0; i < 800; i++) {
-		*start = 0;
-		start += 1;
+	for (i = 0; i < height; i++) {
+
+		for (j = 0; j < longWidth; j++) {
+			*(start + (i * 20) + j) |= (bitmap[k] >> (x & 31));
+			if ((x & 31) > 0) {
+				*(start + (i * 20) + j + 1) |= (bitmap[k] << (32 - (x & 31)));
+			}
+			k++;
+		}
 	}
 }
 
-void clear_aliens(UINT32 *base, int y) {
-	UINT32 *start = base;
-	int i;
-	start += y * 20;
+UINT16 *get_video_base() {
+	UINT8 *vid_hi = 0xFF8201;
+	UINT8 *vid_mi = 0xFF8203;
+	UINT32 vid_base;
+	UINT32 oldSsp;
 
-	for (i = 0; i < 7200; i++) {
-		*start = 0;
-		start += 1;
-	}
+	oldSsp = Super(0);
+	vid_base = ((UINT32)*vid_hi);
+	vid_base = vid_base << 8;
+	vid_base |= ((UINT32)*vid_mi);
+	vid_base = vid_base << 8;
+	Super(oldSsp);
+
+	return (UINT16 *)vid_base;
 }

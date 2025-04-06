@@ -70,18 +70,22 @@ void plot_hline(UINT32 *base, int x1, int x2, int y);
 void plot_ch(UINT8 *base, UINT8 *font, char ch, int x, int y);
 
 /**
- * @brief Clears the screen in the player's area
+ * @brief Plots a custom bitmap on the screen
  * 
  * @param base The base address of the screen
+ * @param x The x coordinate of screen
+ * @param y The y coordinate of screen
+ * @param bitmap The bitmap to be plotted
+ * @param height The height of the bitmap
+ * @param longWidth The width of the bitmap in long words
  */
-void clear_player(UINT32 *base);
+void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, int longWidth);
 
 /**
- * @brief Clears the screen in the alien's area
+ * @brief Obtains the base address of the screen
  * 
- * @param base The base address of the screen
- * @param y The top y coordinate of the alien's area
+ * @return The base address of the screen
  */
-void clear_aliens(UINT32 *base, int y);
+UINT16 *get_video_base();
 
 #endif

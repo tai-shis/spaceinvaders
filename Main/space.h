@@ -22,6 +22,18 @@
 #include "music.h"
 
 /**
+ * @brief Main function for the Space Invaders game
+ */
+void space(int play);
+
+/**
+ * @brief Displays the title screen
+ * 
+ * @return int Returns 0 to play game, 1 to quit
+ */
+int title();
+
+/**
  * @brief Handles asynchronous events
  * 
  * @param model The game model to be updated

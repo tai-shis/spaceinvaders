@@ -78,4 +78,11 @@ void render_lives(UINT8 lives, UINT16 *base);
  * @param base The base address of the screen
  */
 void render_border(Model *model, void *base);
+
+/**
+ * @brief Renders the title screen
+ * 
+ * @param base The base address of the screen
+ */
+void render_title(UINT32 *base);
 #endif
