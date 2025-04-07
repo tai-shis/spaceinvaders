@@ -29,7 +29,7 @@ void async_shoot(Model *model, int cooldown) {
     /* For now, make a new bullet object when this is called, is ineffecient though */
     /* 1 for moving up, edit bulletX once mapping is done */
     int i;
-    Bullet temp = {0, 0, 8, 16, 8, 1, 1};
+    Bullet temp = {0, 0, 8, 16, 3, 1, 1};
     temp.x = model->player.x + 14;  /* Center of player */
     temp.y = model->player.y - 6;  /* Top of player - bullet height (and some change)*/
     
@@ -51,7 +51,7 @@ void async_shoot(Model *model, int cooldown) {
 
 void aliens_shoot(Model *model) {
     int i;
-    Bullet temp = {0, 0, 8, 16, 8, -1, 1};
+    Bullet temp = {0, 0, 8, 16, 3, -1, 1};
     for (i = 0; i < 9; i++) {
         if (model->aliens.lowest_alien[i] != -1) {
             if (((rand() & 0xFF) < 10) && model->active_count < 30) {
