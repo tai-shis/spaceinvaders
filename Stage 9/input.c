@@ -52,7 +52,7 @@ void add_to_buffer(char ch) {
         buffer_open++;
         buffer_fill++;
 
-        if (buffer_open > 256) {
+        if (buffer_open > 255) {
             buffer_open = 0;
         }
     } else {
