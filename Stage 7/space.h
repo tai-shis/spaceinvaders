@@ -32,7 +32,7 @@ void space();
  * 
  * @param model The game model to be updated
  */
-void asyncHandle();
+void asyncHandle(Model *model);
 
 /**
  * @brief Handles synchronous events
@@ -40,14 +40,14 @@ void asyncHandle();
  * @param model The game model to be updated
  * @param timeElapsed The time elapsed since the last frame
  */
-void syncHandle();
+void syncHandle(Model *model, UINT32 timeElapsed);
 
 /**
  * @brief Updates the bullets in the game
  * 
  * @param model The game model to be updated
  */
-void syncBullets();
+void syncBullets(Model *model);
 
 /**
  * @brief Swaps the active and inactive buffers
