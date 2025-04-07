@@ -474,10 +474,16 @@ int rand();
 # 12 "./input.h" 2
 
 
+
+
+
 char keystroke();
 
-void do_IKBD_ISR();
 
+
+
+void do_IKBD_ISR();
+# 29 "./input.h"
 void add_to_buffer(char ch);
 # 20 "./space.h" 2
 # 1 "./psg.h" 1
