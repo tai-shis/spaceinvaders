@@ -132,7 +132,6 @@ void respawn_aliens(Model *model) {
         model->aliens.right_alive = 8;
         model->aliens.left_alive = 0;
         model->aliens.delta_x = 8;
-        model->quit = 0;
     }
 }
 
