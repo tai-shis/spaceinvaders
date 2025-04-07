@@ -195,7 +195,7 @@ int main() {
     }
 
     uninstall_vectors();
-    
+
     return 0;
 }
 
@@ -210,8 +210,6 @@ void space() {
 
     alien_interval = 75;
     animation_frame = 0;
-    buffer_index = 0;
-    buffer_fill = 0;
 
     /* printf clears screen from cursor and mouse */
     /* printf("\033E\033f\n"); */

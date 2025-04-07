@@ -474,10 +474,6 @@ int rand();
 # 12 "./input.h" 2
 
 
-extern char keyboard_buffer[256];
-extern int buffer_index;
-extern int buffer_fill;
-
 char keystroke();
 
 void do_IKBD_ISR();
@@ -778,8 +774,6 @@ void space() {
 
     alien_interval = 75;
     animation_frame = 0;
-    buffer_index = 0;
-    buffer_fill = 0;
 
 
 

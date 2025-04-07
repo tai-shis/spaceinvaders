@@ -56,13 +56,9 @@ char keystroke() {
     char ch;
     if (buffer_fill > 0) {
         ch = keyboard_buffer[buffer_index];
-        buffer_index++;
+        buffer_index = (buffer_index + 1) & 255;
         buffer_fill--;
         
-        if (buffer_index < 0) {
-            buffer_index = 255;
-        }
-
         return ch;
     }  else {
         return '\0';
@@ -116,12 +112,8 @@ void do_IKBD_ISR() {
 void add_to_buffer(char ch) {
     if (buffer_fill <= 256) {
         keyboard_buffer[buffer_open] = ch;
-        buffer_open++;
+        buffer_open = (buffer_open + 1) & 255;
         buffer_fill++;
-
-        if (buffer_open > 255) {
-            buffer_open = 0;
-        }
     } else {
         return;
     }
