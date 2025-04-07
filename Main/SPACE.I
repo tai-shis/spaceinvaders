@@ -549,7 +549,7 @@ extern int in_game;
 
 
 
-void space(int play);
+void space();
 # 42 "./space.h"
 int title();
 # 49 "./space.h"
@@ -749,14 +749,18 @@ Model model = {
 
 int main() {
     Vector orig_VBL, orig_IKBD;
-    int play = 0;
+    int play;
 
     orig_VBL = install_vector(28 , vbl_isr);
     orig_IKBD = install_vector(70 , ikbd_isr);
 
-    while (!play) {
+    while (1) {
         play = title();
-        space(play);
+        if (play == 1) {
+            break;
+        }
+        space();
+        break;
     }
 
     install_vector(28 , orig_VBL);
@@ -764,67 +768,64 @@ int main() {
     return 0;
 }
 
-void space(int play) {
-    if (play == 1) {
-        return;
-    } else {
-        UINT16 *base = get_video_base();
-        void *active = (void *)base;
-        void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
+void space() {
+    UINT16 *base = get_video_base();
+    void *active = (void *)base;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
-        int temp;
+    int temp;
 
-        UINT32 timeStart, timeNow, timeElapsed, timeBefore;
+    UINT32 timeStart, timeNow, timeElapsed, timeBefore;
 
-        alien_interval = 75;
-        animation_frame = 0;
-        buffer_index = 0;
-        buffer_fill = 0;
+    alien_interval = 75;
+    animation_frame = 0;
+    buffer_index = 0;
+    buffer_fill = 0;
 
 
 
 
-        clear_screen((UINT32)active);
-        clear_screen((UINT32)inactive);
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
 
-        render(&model, active, 0);
+    render(&model, active, 0);
 
-        start_music();
-        in_game = 1;
-
-
-        while (!model.quit) {
-
-            asyncHandle(&model);
-
-            if (render_request == 1) {
-                clear_screen((UINT32)inactive);
-                render(&model, inactive, (animation_frame & 1));
-                swapBuffers(&active, &inactive);
-                render_request = 0;
-            }
+    start_music();
+    in_game = 1;
 
 
+    while (!model.quit) {
 
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
-                alien_interval = 40;
-            }
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
-                alien_interval = 25;
-            }
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
-                alien_interval = 10;
-            }
+        asyncHandle(&model);
+
+        if (render_request == 1) {
+            clear_screen((UINT32)inactive);
+            render(&model, inactive, (animation_frame & 1));
+            swapBuffers(&active, &inactive);
+            render_request = 0;
         }
-        stop_sound();
-        play_game_over();
 
 
-        clear_screen((UINT32)active);
-        clear_screen((UINT32)inactive);
 
-        set_video_base((UINT16*)base);
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
+            alien_interval = 40;
+        }
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
+            alien_interval = 25;
+        }
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
+            alien_interval = 10;
+        }
     }
+    stop_sound();
+    play_game_over();
+
+
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
+
+    set_video_base((UINT16*)base);
+
 }
 
 int title() {

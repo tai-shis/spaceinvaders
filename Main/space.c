@@ -181,14 +181,18 @@ Model model = {
 
 int main() {
     Vector orig_VBL, orig_IKBD;
-    int play = 0;
+    int play;
 
     orig_VBL = install_vector(VBL_ISR, vbl_isr);
     orig_IKBD = install_vector(IKBD_ISR, ikbd_isr);
 
-    while (!play) {
+    while (1) {
         play = title();
-        space(play);
+        if (play == 1) {
+            break;
+        }
+        space();
+        break;
     }
 
     install_vector(VBL_ISR, orig_VBL);
@@ -196,67 +200,64 @@ int main() {
     return 0;
 }
 
-void space(int play) {
-    if (play == 1) {
-        return;
-    } else {
-        UINT16 *base = get_video_base();
-        void *active = (void *)base;
-        void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
+void space() {
+    UINT16 *base = get_video_base();
+    void *active = (void *)base;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
-        int temp;
+    int temp;
+    
+    UINT32 timeStart, timeNow, timeElapsed, timeBefore;
+
+    alien_interval = 75;
+    animation_frame = 0;
+    buffer_index = 0;
+    buffer_fill = 0;
+
+    /* printf clears screen from cursor and mouse */
+    /* printf("\033E\033f\n"); */
+
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
+
+    render(&model, active, 0);
+    
+    start_music();
+    in_game = 1;
+
+
+    while (!model.quit) {
         
-        UINT32 timeStart, timeNow, timeElapsed, timeBefore;
+        asyncHandle(&model);
 
-        alien_interval = 75;
-        animation_frame = 0;
-        buffer_index = 0;
-        buffer_fill = 0;
-
-        /* printf clears screen from cursor and mouse */
-        /* printf("\033E\033f\n"); */
-
-        clear_screen((UINT32)active);
-        clear_screen((UINT32)inactive);
-
-        render(&model, active, 0);
-        
-        start_music();
-        in_game = 1;
-
-
-        while (!model.quit) {
-            
-            asyncHandle(&model);
-
-            if (render_request == 1) {
-                clear_screen((UINT32)inactive);
-                render(&model, inactive, (animation_frame & 1));
-                swapBuffers(&active, &inactive);
-                render_request = 0;
-            }
-
-            /* Speeds up aliens after they reach a certain point vertically */
-            /* For some reason if below is abstracted into a function, interval no longer changes */
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
-                alien_interval = 40;
-            }
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
-                alien_interval = 25;
-            }
-            if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
-                alien_interval = 10;
-            }
+        if (render_request == 1) {
+            clear_screen((UINT32)inactive);
+            render(&model, inactive, (animation_frame & 1));
+            swapBuffers(&active, &inactive);
+            render_request = 0;
         }
-        stop_sound();
-        play_game_over();
 
-        /* Clear both buffers when done game */
-        clear_screen((UINT32)active);
-        clear_screen((UINT32)inactive);
-        /* Set base back */
-        set_video_base((UINT16*)base);
+        /* Speeds up aliens after they reach a certain point vertically */
+        /* For some reason if below is abstracted into a function, interval no longer changes */
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 150) {
+            alien_interval = 40;
+        }
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 200) {
+            alien_interval = 25;
+        }
+        if (model.aliens.array[model.aliens.lowest_alive][0].y > 250) {
+            alien_interval = 10;
+        }
     }
+    stop_sound();
+    play_game_over();
+
+    /* Clear both buffers when done game */
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
+    /* Set base back */
+    set_video_base((UINT16*)base);
+
 }
 
 int title() {

@@ -32,7 +32,7 @@ extern int in_game;
 /**
  * @brief Main function for the Space Invaders game
  */
-void space(int play);
+void space();
 
 /**
  * @brief Displays the title screen
