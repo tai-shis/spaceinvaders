@@ -183,8 +183,7 @@ int main() {
     Vector orig_VBL, orig_IKBD;
     int play;
 
-    orig_VBL = install_vector(VBL_ISR, vbl_isr);
-    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr);
+    install_vectors();
 
     while (1) {
         play = title();
@@ -195,8 +194,8 @@ int main() {
         break;
     }
 
-    install_vector(VBL_ISR, orig_VBL);
-    install_vector(IKBD_ISR, orig_IKBD);
+    uninstall_vectors();
+
     return 0;
 }
 
@@ -211,8 +210,6 @@ void space() {
 
     alien_interval = 75;
     animation_frame = 0;
-    buffer_index = 0;
-    buffer_fill = 0;
 
     /* printf clears screen from cursor and mouse */
     /* printf("\033E\033f\n"); */

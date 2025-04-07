@@ -474,10 +474,6 @@ int rand();
 # 12 "./input.h" 2
 
 
-extern char keyboard_buffer[256];
-extern int buffer_index;
-extern int buffer_fill;
-
 char keystroke();
 
 void do_IKBD_ISR();
@@ -751,8 +747,7 @@ int main() {
     Vector orig_VBL, orig_IKBD;
     int play;
 
-    orig_VBL = install_vector(28 , vbl_isr);
-    orig_IKBD = install_vector(70 , ikbd_isr);
+    install_vectors();
 
     while (1) {
         play = title();
@@ -763,8 +758,8 @@ int main() {
         break;
     }
 
-    install_vector(28 , orig_VBL);
-    install_vector(70 , orig_IKBD);
+    uninstall_vectors();
+
     return 0;
 }
 
@@ -779,8 +774,6 @@ void space() {
 
     alien_interval = 75;
     animation_frame = 0;
-    buffer_index = 0;
-    buffer_fill = 0;
 
 
 

@@ -11,10 +11,6 @@
 #include "types.h"
 #include <osbind.h>
 
-extern char keyboard_buffer[256];
-extern int buffer_index;
-extern int buffer_fill;
-
 char keystroke();
 
 void do_IKBD_ISR();
