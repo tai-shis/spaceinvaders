@@ -274,7 +274,7 @@ int title() {
             render_request = 0;
         }
 
-        ch = keystroke();
+        ch = mouse_bound();
         switch (ch) {
             case 's':
                 clear_screen((UINT32)active);

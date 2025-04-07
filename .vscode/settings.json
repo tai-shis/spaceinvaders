@@ -17,6 +17,7 @@
         "stdio.h": "c",
         "space.h": "c",
         "raster.h": "c",
-        "space.c": "cpp"
+        "space.c": "cpp",
+        "TYPES.H": "cpp"
     }
 }

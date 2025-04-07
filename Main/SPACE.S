@@ -896,7 +896,7 @@ L13:
 	clr.w	_render_request
 L16:
 	;line	277
-	jsr	_keystroke
+	jsr	_mouse_bound
 	move.b	d0,-1(a6)
 	;line	278
 	move.b	-1(a6),d0

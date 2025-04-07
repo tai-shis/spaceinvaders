@@ -129,7 +129,7 @@ void do_IKBD_ISR() {
                 mouse_y = 0;
             }
 
-            mouse_click = (mouse_info[0] & 0x1) ? 1 : 0;
+            mouse_click = (mouse_info[0] & 0x2) ? 1 : 0;
         }
     }
 
@@ -146,3 +146,17 @@ void add_to_buffer(char ch) {
     }
 }
 
+char mouse_bound(){
+    int click = get_mouse_click();
+    int x = get_mouse_x();
+    int y = get_mouse_y();
+
+    if (click == 1) {
+        if ((x >= 215) && (x <= 407) && (y >= 200) && (y <= 240)) {
+            return 's';
+        } else if ((x >= 270) && (x <= 356) && (y >= 250) && (y <= 290)) {
+            return 'q';
+        }
+    }
+    return '\0';
+}

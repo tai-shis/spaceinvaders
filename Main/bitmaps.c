@@ -6,7 +6,7 @@
     * @details This file includes bitmap definitions for aliens, the player, bullets, and numbers used in the game.
  */
 
-#include "TYPES.H"
+#include "types.h"
 
 UINT32 alien_maps [3][2][32] = {
     { /* alien 1 */

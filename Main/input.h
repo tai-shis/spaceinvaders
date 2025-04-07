@@ -17,6 +17,13 @@
 char keystroke();
 
 /**
+ * @brief Funtion returns an ASCII character in correlation to region of screen, that mouse is clicked on.
+ * 
+ * @return 's' if in start game area, 'q' if in quit game area
+ */
+char mouse_bound();
+
+/**
  * @brief Function to handle the keyboard/mouse ISR.
  */
 void do_IKBD_ISR();

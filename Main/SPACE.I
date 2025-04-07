@@ -418,7 +418,7 @@ void plot_custom(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, i
 UINT16 *get_video_base();
 # 13 "./render.h" 2
 # 1 "./bitmaps.c" 1
-# 1 "./TYPES.H" 1
+# 1 "./types.h" 1
 # 9 "./bitmaps.c" 2
 
 
@@ -1019,18 +1019,20 @@ int rand();
 
 
 char keystroke();
+# 24 "./input.h"
+char mouse_bound();
 
 
 
 
 void do_IKBD_ISR();
-# 29 "./input.h"
-void add_to_buffer(char ch);
 # 36 "./input.h"
-int get_mouse_x();
+void add_to_buffer(char ch);
 # 43 "./input.h"
-int get_mouse_y();
+int get_mouse_x();
 # 50 "./input.h"
+int get_mouse_y();
+# 57 "./input.h"
 int get_mouse_button();
 # 20 "./space.h" 2
 # 1 "./psg.h" 1
@@ -1394,7 +1396,7 @@ int title() {
             render_request = 0;
         }
 
-        ch = keystroke();
+        ch = mouse_bound();
         switch (ch) {
             case 's':
                 clear_screen((UINT32)active);
