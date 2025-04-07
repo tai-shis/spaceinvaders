@@ -754,6 +754,8 @@ int main() {
     orig_VBL = install_vector(28 , vbl_isr);
     orig_IKBD = install_vector(70 , ikbd_isr);
 
+    get_mouse_x();
+
     while (1) {
         play = title();
         if (play == 1) {

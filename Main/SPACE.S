@@ -486,34 +486,36 @@ _main:
 	addq.l	#6,a7
 	move.l	d0,-8(a6)
 	;line	189
+	jsr	_get_mouse_x
+	;line	191
 	bra	L2
 L1:
-	;line	190
+	;line	192
 	jsr	_title
 	move.w	d0,-10(a6)
-	;line	191
+	;line	193
 	cmp.w	#1,-10(a6)
 	bne	L4
-	;line	192
+	;line	194
 	bra	L3
 L4:
-	;line	194
+	;line	196
 	jsr	_space
-	;line	195
+	;line	197
 	bra	L3
 L2:
 	bra	L1
 L3:
-	;line	198
+	;line	200
 	move.l	-4(a6),-(a7)
 	move.w	#28,-(a7)
 	jsr	(a3)
 	addq.l	#6,a7
-	;line	199
+	;line	201
 	move.l	-8(a6),-(a7)
 	move.w	#70,-(a7)
 	jsr	(a3)
-	;line	200
+	;line	202
 	moveq	#0,d0
 L5:
 	move.l	-14(a6),a3
@@ -528,7 +530,7 @@ _space:
 	lea	-8(a6),a0
 	move.l	a0,d3
 	move.l	#_alien_interval,d5
-	;line	212
+	;line	214
 	jsr	_get_video_base
 	move.l	d0,d4
 	move.l	d3,a0
@@ -537,50 +539,50 @@ _space:
 	add.l	#255,d0
 	and.l	#-256,d0
 	move.l	d0,(a4)
-	;line	212
+	;line	214
 	move.l	d5,a0
 	move.w	#75,(a0)
-	;line	213
-	clr.w	_animation_frame
-	;line	214
-	clr.w	_buffer_index
 	;line	215
+	clr.w	_animation_frame
+	;line	216
+	clr.w	_buffer_index
+	;line	217
 	clr.w	_buffer_fill
-	;line	220
+	;line	222
 	move.l	d3,a0
 	move.l	(a0),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	221
+	;line	223
 	move.l	(a4),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	223
+	;line	225
 	clr.w	-(a7)
 	move.l	d3,a0
 	move.l	(a0),-(a7)
 	move.l	a3,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	225
+	;line	227
 	jsr	_start_music
-	;line	226
+	;line	228
 	move.w	#1,_in_game
-	;line	229
+	;line	231
 	bra	L7
 L6:
-	;line	231
+	;line	233
 	move.l	a3,-(a7)
 	jsr	_asyncHandle
 	addq.l	#4,a7
-	;line	233
+	;line	235
 	cmp.w	#1,_render_request
 	bne	L9
-	;line	234
+	;line	236
 	move.l	(a4),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	235
+	;line	237
 	move.w	_animation_frame,d0
 	and.w	#1,d0
 	move.w	d0,-(a7)
@@ -588,44 +590,44 @@ L6:
 	move.l	a3,-(a7)
 	jsr	_render
 	lea	10(a7),a7
-	;line	236
+	;line	238
 	move.l	a4,-(a7)
 	move.l	d3,-(a7)
 	jsr	_swapBuffers
 	addq.l	#8,a7
-	;line	237
+	;line	239
 	clr.w	_render_request
 L9:
-	;line	242
+	;line	244
 	move.w	1280(a3),d0
 	muls	#126,d0
 	move.l	d0,a0
 	add.l	a3,a0
 	cmp.l	#150,16(a0)
 	bls	L10
-	;line	243
+	;line	245
 	move.l	d5,a0
 	move.w	#40,(a0)
 L10:
-	;line	245
+	;line	247
 	move.w	1280(a3),d0
 	muls	#126,d0
 	move.l	d0,a0
 	add.l	a3,a0
 	cmp.l	#200,16(a0)
 	bls	L11
-	;line	246
+	;line	248
 	move.l	d5,a0
 	move.w	#25,(a0)
 L11:
-	;line	248
+	;line	250
 	move.w	1280(a3),d0
 	muls	#126,d0
 	move.l	d0,a0
 	add.l	a3,a0
 	cmp.l	#250,16(a0)
 	bls	L12
-	;line	249
+	;line	251
 	move.l	d5,a0
 	move.w	#10,(a0)
 L12:
@@ -633,20 +635,20 @@ L7:
 	tst.w	1686(a3)
 	beq	L6
 L8:
-	;line	252
+	;line	254
 	jsr	_stop_sound
-	;line	253
+	;line	255
 	jsr	_play_game_over
-	;line	256
+	;line	258
 	move.l	d3,a0
 	move.l	(a0),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	257
+	;line	259
 	move.l	(a4),-(a7)
 	jsr	(a5)
 	addq.l	#4,a7
-	;line	259
+	;line	261
 	move.l	d4,-(a7)
 	jsr	_set_video_base
 	movem.l	-54(a6),d3/d4/d5/a3/a4/a5
@@ -655,24 +657,24 @@ L8:
 _title:
 	link	a6,#-6
 	move.l	d3,-(a7)
-	;line	269
+	;line	271
 	jsr	_get_video_base
 	move.l	d0,d3
-	;line	269
+	;line	271
 	move.l	d3,-(a7)
 	jsr	_clear_screen
 	addq.l	#4,a7
-	;line	270
+	;line	272
 	move.l	d3,-(a7)
 	jsr	_render_title
 	addq.l	#4,a7
-	;line	272
+	;line	274
 	bra	L14
 L13:
-	;line	274
+	;line	276
 	jsr	_keystroke
 	move.b	d0,-5(a6)
-	;line	274
+	;line	276
 	move.b	-5(a6),d0
 	sub.b	#115,d0
 	beq	L17
@@ -680,14 +682,14 @@ L13:
 	beq	L18
 	bra	L16
 L17:
-	;line	276
+	;line	278
 	moveq	#0,d0
 	bra	L19
 L18:
-	;line	278
+	;line	280
 	move.l	d3,-(a7)
 	jsr	_clear_screen
-	;line	279
+	;line	281
 	moveq	#1,d0
 	bra	L19
 L16:
@@ -702,10 +704,10 @@ _asyncHandle:
 	link	a6,#-2
 	movem.l	d3/d4,-(a7)
 	move.l	#_model,d4
-	;line	286
+	;line	288
 	jsr	_keystroke
 	move.b	d0,d3
-	;line	286
+	;line	288
 	move.b	d3,d0
 	sub.b	#113,d0
 	beq	L21
@@ -717,36 +719,36 @@ _asyncHandle:
 	beq	L24
 	bra	L20
 L21:
-	;line	288
+	;line	290
 	move.l	d4,a0
 	move.w	#1,1686(a0)
-	;line	289
+	;line	291
 	bra	L20
 L22:
-	;line	291
+	;line	293
 	move.b	d3,d0
 	ext.w	d0
 	move.w	d0,-(a7)
 	move.l	d4,-(a7)
 	jsr	_async_move_player
-	;line	292
+	;line	294
 	bra	L20
 L23:
-	;line	294
+	;line	296
 	move.b	d3,d0
 	ext.w	d0
 	move.w	d0,-(a7)
 	move.l	d4,-(a7)
 	jsr	_async_move_player
-	;line	295
+	;line	297
 	bra	L20
 L24:
-	;line	297
+	;line	299
 	clr.w	-(a7)
 	move.l	d4,-(a7)
 	jsr	_async_shoot
 L20:
-	;line	298
+	;line	300
 	movem.l	-10(a6),d3/d4
 	unlk	a6
 	rts
@@ -754,28 +756,28 @@ _syncHandle:
 	link	a6,#-2
 	move.l	a3,-(a7)
 	lea	_model,a3
-	;line	307
+	;line	309
 	move.l	a3,-(a7)
 	jsr	_update_aliens
 	addq.l	#4,a7
 	move.w	d0,-2(a6)
-	;line	308
+	;line	310
 	move.l	a3,-(a7)
 	jsr	_aliens_shoot
 	addq.l	#4,a7
-	;line	309
+	;line	311
 	cmp.w	#-1,-2(a6)
 	bne	L25
-	;line	310
+	;line	312
 	move.w	#1,1686(a3)
 L25:
-	;line	314
+	;line	316
 	move.l	a3,-(a7)
 	jsr	_check_endgame
 	addq.l	#4,a7
 	tst.w	d0
 	beq	L26
-	;line	315
+	;line	317
 	move.w	#1,1686(a3)
 L26:
 	move.l	-6(a6),a3
@@ -783,10 +785,10 @@ L26:
 	rts
 _syncBullets:
 	link	a6,#0
-	;line	320
+	;line	322
 	tst.w	1684+_model
 	ble	L27
-	;line	321
+	;line	323
 	pea	_model
 	jsr	_update_bullets
 L27:
@@ -796,15 +798,15 @@ _swapBuffers:
 	link	a6,#-4
 	move.l	a3,-(a7)
 	move.l	8(a6),a3
-	;line	327
+	;line	329
 	move.l	(a3),-4(a6)
-	;line	327
+	;line	329
 	move.l	12(a6),a0
 	move.l	(a0),(a3)
-	;line	328
+	;line	330
 	move.l	12(a6),a0
 	move.l	-4(a6),(a0)
-	;line	329
+	;line	331
 	move.l	(a3),-(a7)
 	jsr	_set_video_base
 	move.l	-8(a6),a3
@@ -812,22 +814,22 @@ _swapBuffers:
 	rts
 _getTime:
 	link	a6,#-12
-	;line	337
+	;line	339
 	move.l	#1122,-4(a6)
-	;line	337
+	;line	339
 	pea	0
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
 	addq.l	#6,a7
 	move.l	d0,-12(a6)
-	;line	338
+	;line	340
 	move.l	-4(a6),a0
 	move.l	(a0),-8(a6)
-	;line	339
+	;line	341
 	move.l	-12(a6),-(a7)
 	move.w	#32,-(a7)
 	jsr	__trap_1_wl
-	;line	341
+	;line	343
 	move.l	-8(a6),d0
 L28:
 	unlk	a6

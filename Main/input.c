@@ -5,6 +5,8 @@
 #define DEFAULT_NO_IRQ 0x16
 #define DEFAULT 0x96
 
+extern int isr_pause(int new_mask);
+
 volatile UINT8 *const IKBD_control = 0xFFFC00;
 volatile const UINT8 *const IKBD_status = 0xFFFC00;
 volatile const UINT8 *const IKBD_RDR = 0xFFFC02;
@@ -19,6 +21,36 @@ int mouse_x = 0;
 int mouse_y = 0;
 int mouse_click = 0;
 int mouse_prog = 0;
+
+int get_mouse_x() {
+    int temp;
+
+    int old_mask = isr_pause(6);
+    temp = mouse_x;
+    isr_pause(old_mask);
+
+    return temp;
+}
+
+int get_mouse_y() {
+    int temp;
+
+    int old_mask = isr_pause(6);
+    temp = mouse_y;
+    isr_pause(old_mask);
+
+    return temp;
+}
+
+int get_mouse_click() {
+    int temp;
+
+    int old_mask = isr_pause(6);
+    temp = mouse_click;
+    isr_pause(old_mask);
+
+    return temp;
+}
 
 char keystroke() {
     char ch;
@@ -48,7 +80,7 @@ void do_IKBD_ISR() {
         if ((scancode < 0x80) && (mouse_prog == 0)) { /* Key Pressed */
             add_to_buffer(scancode_2_ascii[scancode]);
         }
-        
+
         if ((scancode >= 0xF8) && (mouse_prog == 0)) { /* Mouse Packet */
             mouse_info[0] = scancode;
             mouse_prog = 1;
