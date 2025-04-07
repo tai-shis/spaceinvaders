@@ -35,7 +35,7 @@ _isr_pause:
 		addq.l	#6,sp
 
 		move.w  sr,d0
-                move.w  d0,d3           ; saving old sr
+                move.w  d0,d3                   ; saving old sr
                 move.w  NEW_MASK(a6),d1
                 lsl.w   #8,d1
                 and.w   #$F8FF,d0

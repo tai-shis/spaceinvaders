@@ -7,17 +7,29 @@
 extern void vbl_isr();
 extern void ikbd_isr();
 
-/* static Vector orig_VBL;
-static Vector orig_IKBD; */
+static Vector orig_VBL;
+static Vector orig_IKBD;
 
 void install_vectors() {
-    /* orig_VBL = install_vector(VBL_ISR, vbl_isr);
-    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr); */
+    long oldSsp;
+    volatile UINT32 *MIDI_stat = 0xFFFC04;
+    orig_VBL = install_vector(VBL_ISR, vbl_isr);
+    orig_IKBD = install_vector(IKBD_ISR, ikbd_isr);
+    
+    oldSsp = Super(0);
+    *MIDI_stat &= 0x7F; /* Disable MIDI interrupts */
+    Super(oldSsp);
 }
 
 void uninstall_vectors() {
-    /* install_vector(VBL_ISR, orig_VBL);
-    install_vector(IKBD_ISR, orig_IKBD); */
+    long oldSsp;
+    volatile UINT32 *MIDI_stat = 0xFFFC04;
+    install_vector(VBL_ISR, orig_VBL);
+    install_vector(IKBD_ISR, orig_IKBD);
+
+    oldSsp = Super(0);
+    *MIDI_stat |= 0x80; /* Enable MIDI interrupts */
+    Super(oldSsp);
 }
 
 Vector install_vector(int num, Vector vector) {

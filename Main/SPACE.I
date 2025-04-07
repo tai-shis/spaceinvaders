@@ -751,10 +751,7 @@ int main() {
     Vector orig_VBL, orig_IKBD;
     int play;
 
-    orig_VBL = install_vector(28 , vbl_isr);
-    orig_IKBD = install_vector(70 , ikbd_isr);
-
-    get_mouse_x();
+    install_vectors();
 
     while (1) {
         play = title();
@@ -765,8 +762,8 @@ int main() {
         break;
     }
 
-    install_vector(28 , orig_VBL);
-    install_vector(70 , orig_IKBD);
+    uninstall_vectors();
+
     return 0;
 }
 
