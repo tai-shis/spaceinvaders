@@ -1,5 +1,4 @@
 #include "render.h"
-#include "bitmaps.c"
 
 extern void clear_screen(UINT32 base);
 

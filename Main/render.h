@@ -11,6 +11,7 @@
 
 #include "model.h"
 #include "raster.h"
+#include "bitmaps.c"
 
 /**
  * @brief Renders a model on the screen

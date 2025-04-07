@@ -1,30 +1,5 @@
-# Make for stage 2 of the project
-#tst_rast: tst_rast.o raster.o rast_asm.o bitmaps.o
-#	cc68x -g tst_rast.o raster.o rast_asm.o bitmaps.o -o tst_rast.prg
-
-#tst_rast.o: tst_rast.c raster.h
-#	cc68x -g -c tst_rast.c
-
-#rast_asm.o: rast_asm.s
-#	gen -D -L2 rast_asm.s
-
-# Make for stage 3 of the project
-#tst_s3: tst_s3.o model.o events.o
-#	cc68x -g tst_s3.o model.o events.o -o tst_s3.prg
-
-#tst_s3.o: tst_s3.c model.h events.h
-#	cc68x -g -c tst_s3.c
-
-# Make for stage 4 of the project
-#tst_s4: tst_s4.o render.o raster.o
-#	cc68x -g tst_s4.o render.o raster.o -o tst_s4.prg
-
-#tst_s4.o: tst_s4.c model.h render.h
-#	cc68x -g -c tst_s4.c
-
-# Make for game
-space: space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o clear_qk.o isr.o isr_asm.o
-	cc68x -g space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o clear_qk.o isr.o isr_asm.o -o space.prg
+space: space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o isr.o clear_qk.o isr_asm.o
+	cc68x -g space.o events.o render.o raster.o model.o input.o psg.o music.o effects.o isr.o clear_qk.o isr_asm.o -o space.prg
 
 space.o: space.c space.h 
 	cc68x -g -c space.c 
@@ -43,9 +18,6 @@ input.o: input.c input.h
 
 model.o: model.c model.h
 	cc68x -g -c model.c
-
-bitmaps.o: bitmaps.c
-	cc68x -g -c bitmaps.c
 
 clear_qk.o: clear_qk.s
 	gen -D -L2 clear_qk.s

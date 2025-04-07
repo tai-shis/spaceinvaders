@@ -71,6 +71,7 @@ void syncBullets();
  */
 void swapBuffers (void **active, void **inactive);
 
+
 /**
  * @brief Reads the clock to get the current time
  */

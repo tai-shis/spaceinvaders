@@ -45,6 +45,14 @@ Vector install_vector(int num, Vector vector) {
 void do_VBL_ISR() {
     static int note_timing = 0;
     static int ticks = 0;
+
+    if (in_game == 2) {
+        int mouse_x = get_mouse_x();
+        int mouse_y = get_mouse_y();
+        
+        UINT16 *base = get_video_base();
+        plot_bitmap8((UINT8 *)base, mouse_x, mouse_y, mouse, 8);
+    }
     
     if (in_game == 1) {
         ticks++;
@@ -63,7 +71,7 @@ void do_VBL_ISR() {
                 note = 0;
             update_music(); /* Essentially changes to the next note */
         }
-    }   
+    }
 
     render_request = 1;
 }

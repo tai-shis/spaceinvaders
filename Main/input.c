@@ -23,31 +23,58 @@ int mouse_click = 0;
 int mouse_prog = 0;
 
 int get_mouse_x() {
+    UINT32 oldSsp;
     int temp;
+    int old_mask;
+    int isr = Super(1);
 
-    int old_mask = isr_pause(6);
+    if(!isr)
+        oldSsp = Super(0);
+
+    old_mask = isr_pause(6);
     temp = mouse_x;
     isr_pause(old_mask);
+
+    if(!isr)
+        Super(oldSsp);
 
     return temp;
 }
 
 int get_mouse_y() {
+    UINT32 oldSsp;
     int temp;
+    int old_mask;
+    int isr = Super(1);
 
-    int old_mask = isr_pause(6);
+    if(!isr)
+        oldSsp = Super(0);
+
+    old_mask = isr_pause(6);
     temp = mouse_y;
     isr_pause(old_mask);
+
+    if(!isr)
+        Super(oldSsp);
 
     return temp;
 }
 
 int get_mouse_click() {
+    UINT32 oldSsp;
     int temp;
+    int old_mask;
+    int isr = Super(1);
 
-    int old_mask = isr_pause(6);
+    if(!isr)
+        oldSsp = Super(0);
+
+    old_mask = isr_pause(6);
     temp = mouse_click;
     isr_pause(old_mask);
+
+    if(!isr)
+        Super(oldSsp);
 
     return temp;
 }

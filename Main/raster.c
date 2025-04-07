@@ -162,13 +162,18 @@ UINT16 *get_video_base() {
 	UINT8 *vid_mi = 0xFF8203;
 	UINT32 vid_base;
 	UINT32 oldSsp;
+	int isr = Super(1);
 
-	oldSsp = Super(0);
+    if(!isr)
+        oldSsp = Super(0);
+
 	vid_base = ((UINT32)*vid_hi);
 	vid_base = vid_base << 8;
 	vid_base |= ((UINT32)*vid_mi);
 	vid_base = vid_base << 8;
-	Super(oldSsp);
+
+	if(!isr)
+		Super(oldSsp);
 
 	return (UINT16 *)vid_base;
 }

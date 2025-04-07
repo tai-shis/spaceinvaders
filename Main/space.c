@@ -15,7 +15,6 @@ int render_request;
 int alien_interval;
 int in_game;
 
-
 UINT8 preBuffer[32255];
 
 Model model = {
@@ -211,9 +210,6 @@ void space() {
     alien_interval = 75;
     animation_frame = 0;
 
-    /* printf clears screen from cursor and mouse */
-    /* printf("\033E\033f\n"); */
-
     clear_screen((UINT32)active);
     clear_screen((UINT32)inactive);
 
@@ -258,21 +254,37 @@ void space() {
 }
 
 int title() {
+    char ch;
     UINT16 *base = get_video_base();
+    void *active = (void *)base;
+    void *inactive = (void *)(((UINT32)preBuffer + 255) & 0xFFFFFF00L);
 
-    /* printf clears screen from cursor and mouse */
-    /* printf("\033E\033f\n"); */
+    clear_screen((UINT32)active);
+    clear_screen((UINT32)inactive);
 
-    clear_screen((UINT32)base);
-    render_title((UINT32 *)base);
+    render_title((UINT32 *)active);
+
+    in_game = 2;
 
     while (1) {
-        char ch = keystroke();
+        if (render_request == 1) {
+            clear_screen((UINT32)inactive);
+            render_title((UINT32 *)inactive);
+            swapBuffers(&active, &inactive);
+            render_request = 0;
+        }
+
+        ch = keystroke();
         switch (ch) {
             case 's':
+                clear_screen((UINT32)active);
+                clear_screen((UINT32)inactive);
+                set_video_base((UINT16*)base);
                 return 0; /* Start game */
             case 'q':
-                clear_screen((UINT32)base);
+                clear_screen((UINT32)active);
+                clear_screen((UINT32)inactive);
+                set_video_base((UINT16*)base);
                 return 1; /* Quit game */     
         }
     }

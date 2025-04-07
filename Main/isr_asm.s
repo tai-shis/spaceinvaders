@@ -28,25 +28,13 @@ _isr_pause:
                 link	a6,#0
 		movem.l	d1-3/a0-2,-(sp)
 
-		; entering supervisor mode
-		clr.l 	-(sp)
-		move.w 	#$20,-(sp)
-		trap	#1	
-		addq.l	#6,sp
-
 		move.w  sr,d0
-                move.w  d0,d3                   ; saving old sr
+                move.w  d0,d3           ; saving old sr
                 move.w  NEW_MASK(a6),d1
                 lsl.w   #8,d1
                 and.w   #$F8FF,d0
                 or.w    d1,d0
                 move.w  d0,sr
-
-		; exit supervisor mode
-		move.l	d0,-(sp)
-		move.w	#$20,-(sp)
-		trap	#1
-		addq.l	#6,sp
 
                 move.w  d3,d0
                 lsr.w   #8,d0

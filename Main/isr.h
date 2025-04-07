@@ -5,6 +5,7 @@
 #include "space.h"
 #include "types.h"
 #include "input.h"
+#include "raster.h"
 
 void uninstall_vectors();
 
